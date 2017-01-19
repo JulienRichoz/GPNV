@@ -51,6 +51,10 @@
             <!-- Authentication Links -->
             @if (Auth::user())
                 <ul class="nav navbar-nav">
+                    @if (Auth::user()->role->id == 2)
+                      <li><a>|</a></li>
+                      <li><a href="{{ url('/admin') }}">Admin</a></li>
+                    @endif
 
                     <li><a>|</a></li>
                     <li>
@@ -68,6 +72,7 @@
                             @endif
                         </a>
                     </li>
+
                 </ul>
 
 

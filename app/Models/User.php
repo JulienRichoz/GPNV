@@ -9,7 +9,7 @@ class User extends Authenticatable {
      */
     public $timestamps = false;
     protected $table = 'users';
-    protected $fillable = ['firstname', 'lastname', 'mail', 'role_id', 'password', 'avatar'];
+    protected $fillable = ['id', 'firstname', 'lastname', 'mail', 'role_id', 'password', 'avatar', 'class_id', 'state_id', "friendlyid"];
 
     public function getFullnameAttribute(){
         return $this->lastname." ".$this->firstname;
@@ -47,10 +47,17 @@ class User extends Authenticatable {
 //        return false;
         return UsersTask::select()->where("users_tasks.user_id", "=", $this->id)->join('durations_tasks','users_tasks.id', '=', 'durations_tasks.user_task_id')->whereNull("durations_tasks.ended_at")->get();
     }
-    
+
     public function comments()
     {
         return $this->hasMany(\App\Models\Comment::class, 'user_id');
     }
+
+    /*
+    function __construct($firstname=null, $lastname=null, $mail=null, $role_id=null, $class_id=null, $state_id=null) {
+      $this->id = $ID;
+      $this->friendlyId = $FriendlyID;
+      $this->name = $Name;
+    }*/
 
 }

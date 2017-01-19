@@ -14,10 +14,13 @@ class Users extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id')->index();
+            $table->string('friendlyid');
             $table->string('firstname', 20);
             $table->string('lastname', 20);
             $table->string('mail', 45);
             $table->integer('role_id')->unsigned();
+            $table->integer('class_id')->unsigned();
+            $table->integer('state_id')->unsigned();
             $table->string('password', 100);
             $table->longText('remember_token');
             $table->string('avatar', 45);
@@ -26,6 +29,8 @@ class Users extends Migration
 
         Schema::table('users', function($table) {
             $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('class_id')->references('id')->on('classes');
+            $table->foreign('state_id')->references('id')->on('states');
         });
     }
 
