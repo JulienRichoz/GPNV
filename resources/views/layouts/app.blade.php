@@ -189,6 +189,24 @@
             });
         });
 
+        // Add a new item on checkList
+        $('.addCheckList').click(function () {
+            var id = this.getAttribute('data-id');
+            $.get("{{ url('project') }}/checkList/"+id+"/create", {}, function (form) {
+                bootbox.dialog({
+                    title: "Insérer un nouvel élément",
+                    message: form
+                });
+                //$('#taskdetail').html(task);
+            });
+        });
+
+
+        $('.changeView').click(function(){
+          $('.completed').toggleClass('hidden');
+          $('.changeView').toggleClass('hidden');
+        });
+
         // Return the view to add a user for a task
         $('#app-layout').on('click', 'a.events', function () {
             var project = this.getAttribute('data-id');

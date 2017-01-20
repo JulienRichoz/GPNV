@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Livrable;
 use DB;
 use Redirect;
-use App\CheckList;
+use App\Models\CheckList;
 
 class CheckListController extends Controller
 {
@@ -18,14 +18,15 @@ class CheckListController extends Controller
       return view('welcome', compact('checkListItems'));
   }
 
-  function update(Request $requete, $id)
+  function update(Request $requete,  $id)
   {
     CheckList::validate($id, $requete->get('done'));
-    return Redirect::to('livrable');
+    return redirect()->back();
   }
 
-  function store()
+  function store(Request $requete, $checkListId)
   {
-
+    CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
+    return redirect()->back();
   }
 }

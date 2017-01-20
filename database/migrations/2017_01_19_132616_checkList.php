@@ -38,6 +38,15 @@ class CheckList extends Migration
         $table->integer('fkLinkedTo')->unsigned();
       });
 
+      //Insert default values and foreign keys
+      Schema::table('CheckListTables', function($table){
+        $table->insert(array('name'=>'projet'));
+      });
+
+      Schema::table('CheckListTypes', function($table){
+        $table->insert(array('name'=>'livrables'));
+      });
+
       Schema::table('CheckListLinkedTo', function($table){
         $table->foreign('fkTable')->references('id')->on('CheckListTables');
         $table->foreign('fkType')->references('id')->on('CheckListTypes');
