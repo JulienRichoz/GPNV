@@ -92,5 +92,8 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::get('admin', 'AdminController@show');
         Route::get('admin/sync', 'AdminController@test');
+
+        /*CheckList*/
+        Route::resource('project/{id}/checkList/{element}/type/{checkListType}', 'CheckListController',array('only' => array('index', 'update','store')));
     });
 });
