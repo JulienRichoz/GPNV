@@ -3,11 +3,10 @@
     {!! csrf_field() !!}
         <div class="checkbox">
             @foreach($users as $user)
-                    <!-- Display all users which aren't in the project and didn't invite -->
-                    <label>
-                        <input type="checkbox" name="user[{{$user->id}}]">
-                        @include('user.avatar', ['user' => $user])
-                    </label>
+                <label>
+                    <input type="checkbox" name="user[{{$user->id}}]">
+                    @include('user.avatar', ['user' => $user])
+                </label>
             @endforeach
         </div>
         <br>
