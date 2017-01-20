@@ -9,6 +9,7 @@ use App\Models\Invitation;
 use App\Models\Project;
 use App\Models\ProjectsUser;
 use App\Models\User;
+use App\Models\StudentClass;
 
 class InvitationController extends Controller
 {
@@ -31,7 +32,47 @@ class InvitationController extends Controller
                 array_push($usersDontNeed, $guestId['guest_id']);
             }
         }
-        $users = User::whereNotIn('users.id', $usersDontNeed)->select('users.id', 'avatar', 'mail', 'firstname', 'lastname')->join('roles', 'users.role_id', '=', 'roles.id')->where('roles.name', '!=', 'Prof')->get();
+
+        if(Auth::user()->role_id==1){
+          $UserClassID = Auth::user()->class_id;
+          $Classes = StudentClass::all();
+          foreach ($Classes as $Classe) {
+            if(preg_match("/SI-(MI)1a|SI-[C]1a/", $Classe->name)){
+              if($UserClassID!=$Classe->id){
+                $AddClass = $Classe->id;
+                break;
+              }
+            }
+          }
+        }
+
+        if(isset($AddClass)){
+          $users = User::whereNotIn('users.id', $usersDontNeed)
+            ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
+            ->where('class_id', '=', $UserClassID)
+            ->orWhere('class_id', '=', $AddClass)
+            ->join('roles', 'users.role_id', '=', 'roles.id')
+            ->orderBy('lastname', 'asc')
+            ->get();
+        }
+        else{
+          if(Auth::user()->role_id==2){
+            $users = User::whereNotIn('users.id', $usersDontNeed)
+              ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
+              ->join('roles', 'users.role_id', '=', 'roles.id')
+              ->where('role_id', '=', 1)
+              ->orderBy('lastname', 'asc')
+              ->get();
+          }
+          else{
+            $users = User::whereNotIn('users.id', $usersDontNeed)
+              ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
+              ->join('roles', 'users.role_id', '=', 'roles.id')
+              ->orderBy('lastname', 'asc')
+              ->get();
+          }
+        }
+        #$users = User::whereNotIn('users.id', $usersDontNeed)->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')->join('roles', 'users.role_id', '=', 'roles.id')->where('roles.name', '!=', 'Prof')->get();
         return view('invitation.show', ['project' => $project, 'users' => $users]);
     }
 

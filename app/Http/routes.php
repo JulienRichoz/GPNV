@@ -15,7 +15,9 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('login', 'SessionController@create');
     Route::post('login', 'SessionController@store');
-    
+
+    Route::get('test', 'Welcome@Test');
+
     Route::group(['middleware' => 'auth'], function(){
 
         /* TASK */
@@ -37,7 +39,7 @@ Route::group(['middleware' => 'web'], function () {
 
         /* PROJECT */
         Route::resource('project','ProjectController',
-            ['parameters' => ['project' => 'id']], 
+            ['parameters' => ['project' => 'id']],
             ['only' => ['index']]
         );
         Route::get('/', 'ProjectController@index');
@@ -88,6 +90,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('project/{id}/formEvents', ['as' => 'project.formEvents', 'uses' => 'EventController@formEvent'])->where('id', '[0-9]+');
         Route::post('project/{id}/events', ['as' => 'project.storeEvents', 'uses' => 'EventController@store'])->where('id', '[0-9]+');
 
-
+        Route::get('admin', 'AdminController@show');
+        Route::get('admin/sync', 'AdminController@test');
     });
 });
