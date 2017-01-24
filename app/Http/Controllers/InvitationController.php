@@ -33,6 +33,7 @@ class InvitationController extends Controller
             }
         }
 
+        // Try to get CFC and Matu classes of the User StudentClass
         if(Auth::user()->role_id==1){
           $UserClassID = Auth::user()->class_id;
           $Classes = StudentClass::all();
@@ -46,6 +47,7 @@ class InvitationController extends Controller
           }
         }
 
+        // Add user from same classes if needed
         if(isset($AddClass)){
           $users = User::whereNotIn('users.id', $usersDontNeed)
             ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
@@ -55,6 +57,7 @@ class InvitationController extends Controller
             ->orderBy('lastname', 'asc')
             ->get();
         }
+        // Get Only teacher user when the authentificated user is a teacher
         else{
           if(Auth::user()->role_id==2){
             $users = User::whereNotIn('users.id', $usersDontNeed)

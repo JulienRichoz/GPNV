@@ -17,8 +17,10 @@ class AdminController extends Controller
       return view('admin');
   }
 
-  function test()
+  // Synchronise intranet.cpnv.ch and gpnv
+  function synchro()
   {
+    // Use to get xml from intranet.cpnv.ch
     function GetXML($BaseUrl, $AlterStudents=false){
       $requestString = "api_key".env('CPNV_KEY');
       if($AlterStudents){
@@ -44,8 +46,10 @@ class AdminController extends Controller
       return $xml;
     }
 
+    // Get all classes from info section
     $MainXML = GetXML("http://intranet.cpnv.ch/info/classes.xml?alter[extra]=students",true);
 
+    // Use to get all the users and their categories
     $NewClasses = [];
     $UpdateClasses = [];
     $NewTeachers = [];
@@ -56,8 +60,6 @@ class AdminController extends Controller
     $UsersID = [];
 
     foreach ($MainXML as $C) {
-      #echo $C->Id.' -- '.$C->Name.' -- '.$C->FriendlyId.'<br/>';
-
       //Get Class and Save it
       $Class = new StudentClass(
         $C->Id,
@@ -67,7 +69,6 @@ class AdminController extends Controller
       try{
         if(!StudentClass::find($Class->id)){
           $Class->save();
-          #echo "Class save in db<br/>";
         }
       }
       catch (Exception $e) {
@@ -107,13 +108,14 @@ class AdminController extends Controller
           else{
             array_push($NewTeachers, $Teacher);
           }
-          #echo "Teacher ".$Teacher->friendlyid." save in db<br/>";
+
         }
       }
       catch (Exception $e) {
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
       }
 
+      // Get all the students from the classes
       foreach ($C->Students->Student as $S) {
         $StudentXML = GetXML("http://intranet.cpnv.ch/students/".$S->Link->Id.".xml");
 
@@ -164,14 +166,6 @@ class AdminController extends Controller
         array_push($DisabledUsers, $User);
       }
     }
-    /*
-    echo "New Teachers: ".count($NewTeachers)."</br>";
-    echo "Update Teachers: ".count($UpdateTeachers)."</br>";
-    echo "New Students: ".count($NewStudents)."</br>";
-    echo "Update Students: ".count($UpdateStudents)."</br>";
-
-    echo count($UsersID);
-    */
 
     return view('admin')->with(['NewTeachers' => $NewTeachers,
       'NewStudents' => $NewStudents,
