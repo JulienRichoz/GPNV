@@ -1,3 +1,7 @@
+<!--
+  Created By: Fabio Marques
+  Description: View to show each item of the checkList
+-->
 <li class="livrableShow">
   <form method="post" action="./id/{{$checkListItem->id}}">
     {{ csrf_field() }}

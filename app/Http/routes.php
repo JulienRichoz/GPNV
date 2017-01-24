@@ -51,9 +51,12 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('project/{id}/target', ['as' => 'project.storetarget', 'uses' => 'ProjectController@storeTarget'])->where('projectid', '[0-9]+');
         Route::post('target/{target}/valide', ['as' => 'project.validetarget', 'uses' => 'ProjectController@valideTarget'])->where('target', '[0-9]+');
         Route::get('project/{id}/target', ['as' => 'project.gettarget', 'uses' => 'ProjectController@getTarget'])->where('id', '[0-9]+');
+
+        /*-----------------------------Routes PRW2 --------------------------*/
         Route::put('project/id/{id}','CheckListController@update');
         Route::get('project/checkList/{id}/create','ProjectController@createCheckListItem');
         Route::post('project/checkList/{id}/create','CheckListController@store');
+        /*--------------------------------------------------------------------*/
 
 
         /* FILES */
@@ -98,7 +101,5 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('admin', 'AdminController@show');
         Route::get('admin/sync', 'AdminController@test');
 
-        /*CheckList*/
-        Route::resource('project/{id}/checkList/{element}/type/{checkListType}', 'CheckListController',array('only' => array('index', 'update','store')));
     });
 });

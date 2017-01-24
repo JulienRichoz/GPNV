@@ -40,7 +40,11 @@
                 </div>
                 <a class="btn btn-warning taskroot" data-id="{{$project->id}}">Créer une tâche racine</a>
 
-                <h1>Livrables</h1>
+                <!--*********************** partie PRW2***********************
+                  Created By: Fabio Marques
+                  Description: Show the checkList "Livrables"
+                -->
+                <h1>{{$livrables->getName()}}</h1>
                 <div class="livrables">
                   <div class="progressionLivrable">
                     <div class="barre" style="background: linear-gradient(90deg, #20DE13 {{$livrables->getCompletedPercent()}}%, #efefef 0%);"></div>
@@ -57,12 +61,15 @@
                         @each('checkList.show', $livrables->showCompleted(), 'checkListItem')
                       @endif
                     </ul>
+                    <a class="btn btn-warning addCheckList" data-id="{{$livrables->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
+                    @if($livrables->getNbItemsDone())
+                      <a class="btn btn-warning changeView">Voir les éléments effectués</a>
+                      <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>
+                    @endif
                 </div>
-                <a class="btn btn-warning addCheckList" data-id="1">Ajouter</a>
-                @if($livrables->getNbItemsDone())
-                  <a class="btn btn-warning changeView">Voir les éléments effectués</a>
-                  <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>
-                @endif
+
+                <!--******************************************************** -->
+
             </div>
             <div class="col-md-6"><h1>Détails de la tâche</h1>
                 <div id="taskdetail"></div>

@@ -33,18 +33,9 @@ class CheckList extends Migration
       Schema::create('CheckListItems', function(Blueprint $table){
         $table->increments('id')->index();
         $table->string('title', 45);
-        $table->longText('description');
+        $table->longText('description')->nullable();
         $table->boolean('done');
         $table->integer('fkLinkedTo')->unsigned();
-      });
-
-      //Insert default values and foreign keys
-      Schema::table('CheckListTables', function($table){
-        $table->insert(array('name'=>'projet'));
-      });
-
-      Schema::table('CheckListTypes', function($table){
-        $table->insert(array('name'=>'livrables'));
       });
 
       Schema::table('CheckListLinkedTo', function($table){

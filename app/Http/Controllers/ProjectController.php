@@ -64,9 +64,11 @@ class ProjectController extends Controller
             }
         }
 
-        $livrables = new CheckList('Projet', $id, 'livrables');
-
-
+        /* Created By Fabio Marques
+          Description: create a new CheckListObject
+        */
+        $livrables = new CheckList('Project', $id, 'Livrables');
+        
         return view('project/show', ['project' => $project, 'request' => $request,
                     'livrables'=>$livrables, 'duration' => $duration,
                     'taskactive' => $task]);
@@ -109,6 +111,12 @@ class ProjectController extends Controller
         $relation->project_id = $newProject->id;
         $relation->user_id = Auth::user()->id;
         $relation->save();
+
+        /*
+          Created By: Fabio Marques
+          Decription: create a new checkList for the new project
+        */
+        CheckList::newCheckList('Project',$newProject->id,'Livrables');
 
         return redirect()->route('project.index');
     }

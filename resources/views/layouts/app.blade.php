@@ -121,6 +121,7 @@
 <script src="{{ URL::asset('js/jquery.ntm.js') }}"></script>
 <script src="{{ URL::asset('js/bootbox.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('js/checkList.js') }}"></script>
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
 
@@ -187,24 +188,6 @@
                 });
                 //$('#taskdetail').html(task);
             });
-        });
-
-        // Add a new item on checkList
-        $('.addCheckList').click(function () {
-            var id = this.getAttribute('data-id');
-            $.get("{{ url('project') }}/checkList/"+id+"/create", {}, function (form) {
-                bootbox.dialog({
-                    title: "Insérer un nouvel élément",
-                    message: form
-                });
-                //$('#taskdetail').html(task);
-            });
-        });
-
-
-        $('.changeView').click(function(){
-          $('.completed').toggleClass('hidden');
-          $('.changeView').toggleClass('hidden');
         });
 
         // Return the view to add a user for a task
