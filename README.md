@@ -11,7 +11,7 @@
 
 Once this project is copy in your server, go to the project root and
 use the following command :`cp .env.example .env`.
-Don't forget to create the database.
+Don't forget to create the database and grant access to the user.
 
 > Eventually, you can open the file and change the database name, password, etc.
 > depends on your needs.
