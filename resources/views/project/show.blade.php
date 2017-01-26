@@ -49,9 +49,56 @@
         <!-- Display all project informations like the members, a description and so on -->
         @include('project.info', ['student' => $project])
 
-        <h1>Journal de Bord</h1>
-        <div class="panel panel-default" id="events"></div>
-        <a class="btn btn-warning events" data-id="{{$project->id}}">Ajouter un événement</a>
+        <!-- Custom journal -->
+        <div id="accordion">
+            <div id="logBookContainer" data-projectId="{{$project->id}}">
+                <h1 data-toggle="collapse" data-target="#logBook" aria-expanded="false" style="cursor: pointer">
+                    <span id="logBookBadge" class="badge">{{$badgeCount}}</span>
+                  {{$currentUser->firstname }} {{$currentUser->lastname}} - Journal de bord
+                </h1>
+                <div id="logBook" class="collapse">
+                    <div>
+                        <label><input type="checkbox" value="first_checkbox" id="toggleUserEntries">Avec mes entrées</label>
+                    </div>
+                    <div class="panel panel-default" id="logbookPanel">
+                        <table class='table'>
+                            <thead><tr><th>Qui</th><th>Quand</th><th>Quoi</th><th>Vu</th></tr></thead>
+                            @foreach($events as $event)
+                                {{-- Checking if the current user is the event creator --}}
+                                @if($currentUser->id == $event->user_id)
+                                    <tr class="userMade hidden" data-eventId="{{$event->id}}">
+                                @else
+                                    <tr data-eventId="{{$event->id}}">
+                                @endif
+                                    <td>{{$event->users->find($event->user_id)->firstname}} {{$event->users->find($event->user_id)->lastname}}</td>
+                                    <td>{{date('d.m.y H:i', strtotime($event->created_at))}}</td>
+                                    <td>{{$event->description}}</td>
+                                    <td>
+                                        {{-- Member event validation handling --}}
+                                        @foreach($members as $member)
+                                            <span title="{{ $member->firstname }} {{ $member->lastname }}" data-toggle="tooltip" data-placement="bottom">
+                                            {{-- Checking if the member has validated this event --}}
+                                            @if(in_array($member->id, $validations[$event->id]))
+                                                <span class="glyphicon glyphicon-stop validEvent" aria-hidden="true" data-userId="{{$member->id}}"></span>
+                                            @else
+                                                @if($member->id == $currentUser->id)
+                                                    <span class="glyphicon glyphicon-stop invalidEvent clickable" aria-hidden="true" data-userId="{{$member->id}}"></span>
+                                                @else
+                                                    <span class="glyphicon glyphicon-stop invalidEvent" aria-hidden="true" data-userId="{{$member->id}}"></span>
+                                                @endif
+                                            @endif
+                                            </span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                    <a class="btn btn-warning events" data-id="{{$project->id}}">Ajouter un événement</a>
+                </div>
+            </div>
+        </div>
+        <!-- End of custom journal -->
 
         <h1>Fichiers</h1>
         <div class="panel panel-default" id="files">
@@ -103,14 +150,3 @@
     </div>
 
 @endsection
-
-@section('script')
-    callEvents({{$project->id}});
-
-
-@endsection
-
-
-
-
-

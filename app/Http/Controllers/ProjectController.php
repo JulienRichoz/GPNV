@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Form;
 use Datetime;
 use App\Models\Target;
+use App\Models\EventsUser;
+use DB;
 
 class ProjectController extends Controller
 {
@@ -49,8 +51,11 @@ class ProjectController extends Controller
     // Display all informations like the user's tasks connected, all project tasks, and so on
     public function show(Request $request)
     {
-        $project = Project::find($request->id);
-        $userTasks = UsersTask::where("user_id", "=", Auth::user()->id)->get();
+        $projectId = $request->id;
+
+        $project = Project::find($projectId);
+        $currentUser = Auth::user();
+        $userTasks = UsersTask::where("user_id", "=", $currentUser->id)->get();
         $duration = null;
         $task = null;
         foreach ($userTasks as $userstask) {
@@ -62,7 +67,58 @@ class ProjectController extends Controller
             }
         }
 
-        return view('project/show', ['project' => $project, 'request' => $request, 'duration' => $duration, 'taskactive' => $task]);
+        $events = Event::where('project_id', '=', $projectId)
+            ->orderBy('created_at', 'desc')->get();
+
+        $projectMembers = $project->users->sortBy('id');
+
+        // Array containing lists of users that have validated events
+        $validations = array();
+
+        foreach ($events as $event) {
+            // Holds ids of users that have validated the event
+            $users = array();
+            foreach ($projectMembers as $member) {
+                $exists = EventsUser::where([
+                    ['user_id', '=', $member->id],
+                    ['event_id', '=', $event->id],
+                ])->exists();
+
+                if($exists) {
+                    $users[] = $member->id;
+                }
+            }
+            $validations[$event->id] = $users;
+        }
+
+        $unValidated = DB::table('events_users')
+            ->select('event_id')
+            ->distinct()
+            ->get();
+
+        // Events validated by the current user
+        $validated = DB::table('events_users')
+            ->select('event_id')
+            ->distinct()
+            ->where('user_id', '=', $currentUser->id)
+            ->get();
+
+        $unValidatedCount = count($unValidated);
+        $validatedCount = count($validated);
+
+        $badgeCount = $unValidatedCount - $validatedCount;
+
+        return view('project/show', [
+            'project' => $project, 
+            'request' => $request, 
+            'duration' => $duration, 
+            'taskactive' => $task, 
+            'currentUser' => $currentUser,
+            'members' => $projectMembers,
+            'events' => $events,
+            'validations' => $validations,
+            'badgeCount' => $badgeCount
+        ]);
     }
 
     // Return the view about files -> not yet made

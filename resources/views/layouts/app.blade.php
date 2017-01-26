@@ -185,17 +185,30 @@
 
         // Return the view to add a user for a task
         $('#app-layout').on('click', 'a.events', function () {
-            var project = this.getAttribute('data-id');
-            //alert(project);
-            $.ajax({
-                url: "{{ route('project.formEvents', '@') }}".replace('@', project),
-                type: 'get',
-                success: function (data) {
-                    bootbox.dialog({
-                        title: "Créer un événement",
-                        message: data
-                    });
-
+            var projectId = this.getAttribute('data-id');
+            bootbox.prompt({
+                size: "large",
+                backdrop: true,
+                title: "Insérez un évènement", 
+                callback: function(result){
+                    if (result != "") {
+                        $.ajax({
+                            url: "{{ route('project.storeEvents', '@') }}".replace('@', projectId),
+                            type: 'post',
+                            data: { description: result },
+                            success: function() {
+                                if (result != null) {
+                                    callEventz(projectId);
+                                    displayConfirmation(true);
+                                }
+                            },
+                            error: function() {
+                                displayConfirmation(false);
+                            }
+                        });
+                    } else {
+                        bootbox.alert("La description d'un évènement ne peut pas être vide");
+                    }
                 }
             });
         });
@@ -350,26 +363,78 @@
             });
         }
 
-        // Create a event
-        function callEvents(project) {
+        function callEventz(project) {
             $.ajax({
                 url: "{{ route('project.events', '@') }}".replace('@', project),
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
+                    console.log(data);
+                    var currentUserId = data.currentUser.id;
+                    var members = data.members;
+                    var validations = data.validations;
+                    var badgeCount = data.badgeCount;
+                    var content = ("<table class='table'><thead><tr><th>Qui</th><th>Quand</th><th>Quoi</th><th>Vu</th></tr></thead>");
 
-                    var content = ("<table class='table'><thead><tr><th>Qui</th><th>Description</th><th>Created_at</th></tr></thead>");
-                    $.each(data, function (key, data) {
-                        content += ("<tr>");
-                        content += ("<td>" + this.user_id + "</td>");
-                        content += ("<td>" + this.description + "</td>");
+                    $.each(data.eventInfos, function () {
+                        var eventId = this.eventId;
+
+                        // Basic opening row tag
+                        var openingRowTag = "<tr data-eventId=\"" + eventId + "\">";
+
+                        // Displaying / hiding the row according to the checkbox status and the currently logged user
+                        if (currentUserId == this.userId) {
+                            openingRowTag = "<tr class=\"userMade\" data-eventId=\"" + eventId + "\">";
+                            if (!$('#toggleUserEntries').prop( "checked" )) {
+                                openingRowTag = "<tr class=\"userMade hidden\" data-eventId=\"" + eventId + "\">";
+                            }
+                        }
+                        
+                        content += (openingRowTag);
+                        content += ("<td>" + this.firstname + " " + this.lastname + "</td>");
                         content += ("<td>" + this.created_at + "</td>");
+                        content += ("<td>" + this.description + "</td>");
+                        content += ("<td>");
+
+                        // Validation status management
+                        $.each(members, function() {
+                            content += ("<span title=\"" + this.firstname + " " + this.lastname 
+                                + "\" data-toggle=\"tooltip\" data-placement=\"bottom\">");
+
+                            var statusClass; // indicates whether the event has been validated or not
+
+                            // Checking whether the member has validated the event
+                            if ($.inArray(this.id, validations[eventId]) > -1) {
+                                statusClass = "validEvent";
+                            } else {
+                                if (this.id == currentUserId) {
+                                    statusClass = "invalidEvent clickable";
+                                } else {
+                                    statusClass = "invalidEvent";
+                                }
+                            }
+
+                            content += ("<span class=\"glyphicon glyphicon-stop " + statusClass + "\" aria-hidden=\"true\" data-userId=\"" + this.id + "\"></span>");
+                            content += ("</span>");
+                        });
+
+                        content += ("</td>");
                         content += ("</tr>");
                     });
 
                     content += ("</table>");
-                    $('#events').append(content);
+                    $('#logbookPanel').html(content);
 
+                    // enabling bootstrap tooltips
+                    $('[data-toggle="tooltip"]').tooltip();
+
+                    
+                    $('span.clickable').click(function() {
+                        updateValidationStatus(this);
+                    });
+
+                    // updating the badge count
+                    $('#logBookBadge').html(badgeCount);
                 },
                 error: function (data) {
                     console.log(data);
@@ -477,6 +542,67 @@
                 });
             });
         });
+
+        // ------------ Custom -------------
+
+        // Tooltip handling (enabling bootstrap tooltips)
+        $('[data-toggle="tooltip"]').tooltip();
+
+        function updateCheckBoxStatus() {
+            if ($('#toggleUserEntries').prop( "checked" )) {
+                $('.userMade').removeClass("hidden");
+            } else {
+                $('.userMade').addClass("hidden");
+            }
+        }
+
+        $('#toggleUserEntries').change(function() {
+            updateCheckBoxStatus()
+        });
+
+        function displayConfirmation(success) {
+            if (success) {
+                bootbox.alert("L'évènement a été ajouté avec succès.");
+            } else {
+                bootbox.alert("Erreur. L'évènement n'a pas pu être ajouté.");
+            }
+        }
+
+        function updateValidationStatus(elem) {
+            var projectId = $('#logBookContainer').attr('data-projectId');
+            var userId = $(elem).attr('data-userId');
+            var eventId = $(elem).closest('tr').attr('data-eventId');
+            console.log(eventId);
+
+            // updating the status box appearance
+            $(elem).removeClass('clickable');
+            $(elem).removeClass('invalidEvent');
+            $(elem).addClass('validEvent');
+
+            $.ajax({
+                url: "{{ route('project.storeEventsValidation', '@') }}".replace('@', projectId),
+                type: 'post',
+                data: { userId: userId, eventId: eventId },
+                success: function(data) {
+                    console.log(data);
+                    // updating the event list
+                    callEventz(projectId);
+                },
+                error: function(data) {
+                    console.log(data);
+                    console.log("couldn't save the event validation");
+                }
+            });
+        }
+
+        $('span.clickable').click(function() {
+            updateValidationStatus(this);
+        });
+
+        // Init
+        // Coping with the fact some browsers preserves the checkbox status after reloading pages
+        updateCheckBoxStatus();
+
         @yield('script')
 
     });

@@ -87,6 +87,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('project/{id}/events', ['as' => 'project.events', 'uses' => 'EventController@show'])->where('id', '[0-9]+');
         Route::get('project/{id}/formEvents', ['as' => 'project.formEvents', 'uses' => 'EventController@formEvent'])->where('id', '[0-9]+');
         Route::post('project/{id}/events', ['as' => 'project.storeEvents', 'uses' => 'EventController@store'])->where('id', '[0-9]+');
+        Route::post('project/{id}/events/validation', ['as' => 'project.storeEventsValidation', 'uses' => 'EventController@storeValidation'])->where('id', '[0-9]+');
 
 
     });
