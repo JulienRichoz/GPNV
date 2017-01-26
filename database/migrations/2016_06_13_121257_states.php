@@ -1,5 +1,11 @@
 <?php
 
+/*
+  Last update : 2017.01.19
+  Last Update by : Thomas Marcoup
+*/
+
+
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 

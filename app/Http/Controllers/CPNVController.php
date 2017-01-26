@@ -1,5 +1,10 @@
 <?php namespace App\Http\Controllers;
 
+/*
+  Last update : 2017.01.19
+  Last Update by : Thomas Marcoup
+*/
+
 use Illuminate\Routing\Controller;
 
 class CPNVController extends Controller {

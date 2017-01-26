@@ -1,5 +1,10 @@
 <?php
 
+/*
+  Last update : 2017.01.19
+  Last Update by : Thomas Marcoup
+*/
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;

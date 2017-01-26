@@ -1,5 +1,10 @@
 <?php
 
+/*
+  Last update : 2017.01.24
+  Last Update by : Thomas Marcoup
+*/
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

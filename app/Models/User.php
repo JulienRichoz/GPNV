@@ -1,5 +1,10 @@
 <?php namespace App\Models;
 
+/*
+  Last update : 2017.01.19
+  Last Update by : Thomas Marcoup
+*/
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable {
