@@ -1,5 +1,7 @@
 <?php
-
+/* Created By: Fabio Marques
+  Description: Model to interact with the checkList
+*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -10,7 +12,8 @@ use App\Models\CheckList;
 
 class CheckListController extends Controller
 {
-  function show($element,$checkListType)
+  //show checklist items
+  function show($element, $checkListType)
   {
       $checkList = new CheckList($element, $checkListType);
       $checkListItems = $checkList->showAll();
@@ -18,12 +21,14 @@ class CheckListController extends Controller
       return view('welcome', compact('checkListItems'));
   }
 
+  //update checklistItem
   function update(Request $requete,  $id)
   {
     CheckList::validate($id, $requete->get('done'));
     return redirect()->back();
   }
 
+  //create new checkList item 
   function store(Request $requete, $checkListId)
   {
     CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
