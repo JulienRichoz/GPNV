@@ -121,6 +121,7 @@
 <script src="{{ URL::asset('js/jquery.ntm.js') }}"></script>
 <script src="{{ URL::asset('js/bootbox.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('js/checkList.js') }}"></script>
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
 
