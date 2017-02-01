@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Form;
 use Datetime;
 use App\Models\Target;
+use App\Models\CheckList;
 
 class ProjectController extends Controller
 {
@@ -47,12 +48,13 @@ class ProjectController extends Controller
     }
 
     // Display all informations like the user's tasks connected, all project tasks, and so on
-    public function show(Request $request)
+    public function show($id)
     {
-        $project = Project::find($request->id);
+        $project = Project::find($id);
         $userTasks = UsersTask::where("user_id", "=", Auth::user()->id)->get();
         $duration = null;
         $task = null;
+        $request="";
         foreach ($userTasks as $userstask) {
             foreach ($userstask->durationsTasks()->get() as $durationtask) {
                 if ($durationtask->ended_at == null) {
@@ -62,7 +64,14 @@ class ProjectController extends Controller
             }
         }
 
-        return view('project/show', ['project' => $project, 'request' => $request, 'duration' => $duration, 'taskactive' => $task]);
+        /* Created By Fabio Marques
+          Description: create a new CheckListObject
+        */
+        $livrables = new CheckList('Project', $id, 'Livrables');
+        
+        return view('project/show', ['project' => $project, 'request' => $request,
+                    'livrables'=>$livrables, 'duration' => $duration,
+                    'taskactive' => $task]);
     }
 
     // Return the view about files -> not yet made
@@ -102,6 +111,12 @@ class ProjectController extends Controller
         $relation->project_id = $newProject->id;
         $relation->user_id = Auth::user()->id;
         $relation->save();
+
+        /*
+          Created By: Fabio Marques
+          Decription: create a new checkList for the new project
+        */
+        CheckList::newCheckList('Project',$newProject->id,'Livrables');
 
         return redirect()->route('project.index');
     }
@@ -160,8 +175,10 @@ class ProjectController extends Controller
         return view('target.store', ['project' => $id]);
     }
 
-
-
+    public function createCheckListItem( $checkListId)
+    {
+      return view('checkList.create', ['checkListId'=>$checkListId]);//view('checkList.create', ['checkListId' => $id]);
+    }
 
     /*public function getTask(Request $request){
 
