@@ -41,12 +41,23 @@ class InvitationController extends Controller
         // Try to get CFC and Matu classes of the User StudentClass
         if(Auth::user()->role_id==1){
           $UserClassID = Auth::user()->class_id;
-          $Classes = StudentClass::all();
-          foreach ($Classes as $Classe) {
-            if(preg_match("/SI-(MI)1a|SI-[C]1a/", $Classe->name)){
-              if($UserClassID!=$Classe->id){
-                $AddClass = $Classe->id;
-                break;
+          $UserClass = StudentClass::find($UserClassID);
+          $ClassYearSection = substr($UserClass->name, -2);
+
+          $Test = str_replace('SI-','',$UserClass->name);
+          $Test = str_replace($ClassYearSection,'',$Test);
+
+          if($Test!='T'){
+            $Regex = "SI-(MI)".$ClassYearSection."|SI-[C]".$ClassYearSection;
+            $Regex = '/'.$Regex.'/';
+
+            $Classes = StudentClass::all();
+            foreach ($Classes as $Classe) {
+              if(preg_match($Regex, $Classe->name)){
+                if($UserClassID!=$Classe->id){
+                  $AddClass = $Classe->id;
+                  break;
+                }
               }
             }
           }
@@ -75,6 +86,7 @@ class InvitationController extends Controller
           else{
             $users = User::whereNotIn('users.id', $usersDontNeed)
               ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
+              ->where('class_id', '=', $UserClassID)
               ->join('roles', 'users.role_id', '=', 'roles.id')
               ->orderBy('lastname', 'asc')
               ->get();
