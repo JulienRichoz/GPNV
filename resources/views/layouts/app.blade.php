@@ -198,7 +198,7 @@
                             data: { description: result },
                             success: function() {
                                 if (result != null) {
-                                    callEventz(projectId);
+                                    callEvents(projectId);
                                     displayConfirmation(true);
                                 }
                             },
@@ -363,7 +363,7 @@
             });
         }
 
-        function callEventz(project) {
+        function callEvents(project) {
             $.ajax({
                 url: "{{ route('project.events', '@') }}".replace('@', project),
                 type: 'get',
@@ -389,10 +389,21 @@
                                 openingRowTag = "<tr class=\"userMade hidden\" data-eventId=\"" + eventId + "\">";
                             }
                         }
-                        
+
+                        // Formatting the date to regional format
+
+                        var fetchedDate = this.created_at;
+                        var date = new Date(fetchedDate);
+
+                        var formattedDate = ('0' + date.getDate()).slice(-2) + '.'
+                            + ('0' + (date.getMonth()+1)).slice(-2) + '.'
+                            + date.getFullYear().toString().slice(-2) 
+                            + " " + ('0' + date.getHours()).slice(-2) 
+                            + ":" + ('0' + date.getMinutes()).slice(-2);
+
                         content += (openingRowTag);
                         content += ("<td>" + this.firstname + " " + this.lastname + "</td>");
-                        content += ("<td>" + this.created_at + "</td>");
+                        content += ("<td>" + formattedDate + "</td>");
                         content += ("<td>" + this.description + "</td>");
                         content += ("<td>");
 
@@ -586,7 +597,7 @@
                 success: function(data) {
                     console.log(data);
                     // updating the event list
-                    callEventz(projectId);
+                    callEvents(projectId);
                 },
                 error: function(data) {
                     console.log(data);
