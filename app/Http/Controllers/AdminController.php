@@ -51,9 +51,6 @@ class AdminController extends Controller
       return $xml;
     }
 
-    // Get all classes from info section
-    $MainXML = GetXML("http://intranet.cpnv.ch/info/classes.xml?alter[extra]=students",true);
-
     // Use to get all the users and their categories
     $NewClasses = [];
     $UpdateClasses = [];
@@ -61,8 +58,54 @@ class AdminController extends Controller
     $UpdateTeachers = [];
     $NewStudents = [];
     $UpdateStudents = [];
-
     $UsersID = [];
+
+    $TeacherXML = GetXML("http://intranet.cpnv.ch/info/teachers.xml");
+
+    foreach ($TeacherXML as $TeacherXML) {
+      //Get teacher and Save it
+      $IDTeacher = $TeacherXML->Id;
+
+      if(User::find($TeacherXML->Id)){
+        $Teacher = User::find($TeacherXML->Id);
+        $Update=True;
+      }
+      else{
+        $Teacher = new User();
+        $Update=False;
+      }
+
+      $Teacher->id=(string)$TeacherXML->Id;
+      $Teacher->firstname=(string)$TeacherXML->Firstname;
+      $Teacher->lastname=(string)$TeacherXML->Lastname;
+      $Teacher->mail=(string)$TeacherXML->CorporateEmail;
+      $Teacher->role_id=2;
+      $Teacher->class_id=1;
+      $Teacher->state_id=1;
+      $Teacher->friendlyid=(string)$TeacherXML->FriendlyId;
+
+      array_push($UsersID, $TeacherXML->Id);
+
+      try{
+        if(User::find($TeacherXML->Id)!=$Teacher){
+          $Teacher->save();
+          if($Update){
+            array_push($UpdateTeachers, $Teacher);
+          }
+          else{
+            array_push($NewTeachers, $Teacher);
+          }
+
+        }
+      }
+      catch (Exception $e) {
+        echo 'Exception reçue : ',  $e->getMessage(), "\n";
+      }
+
+    }
+
+    // Get all classes from info section
+    $MainXML = GetXML("http://intranet.cpnv.ch/info/classes.xml?alter[extra]=students",true);
 
     foreach ($MainXML as $C) {
       //Get Class and Save it
@@ -71,6 +114,16 @@ class AdminController extends Controller
         $C->FriendlyId,
         $C->Name);
 
+      try{
+        if(!StudentClass::find($Class->id)){
+          $Class->save();
+        }
+      }
+      catch (Exception $e) {
+        echo 'Exception reçue : ',  $e->getMessage(), "\n";
+      }
+
+      /*
       try{
         if(!StudentClass::find($Class->id)){
           $Class->save();
@@ -119,6 +172,7 @@ class AdminController extends Controller
       catch (Exception $e) {
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
       }
+      */
 
       // Get all the students from the classes
       foreach ($C->Students->Student as $S) {
@@ -172,11 +226,19 @@ class AdminController extends Controller
       }
     }
 
+    if(count($NewStudents)==0 && count($UpdateTeachers)==0 && count($UpdateStudents)==0 && count($DisabledUsers)==0){
+      $Update = false;
+    }
+    else{
+      $Update = true;
+    }
+
     return view('admin')->with(['NewTeachers' => $NewTeachers,
-      'NewStudents' => $NewStudents,
+      'NewStudents'    => $NewStudents,
       'UpdateTeachers' => $UpdateTeachers,
       'UpdateStudents' => $UpdateStudents,
-      'DisabledUsers' => $DisabledUsers
+      'DisabledUsers'  => $DisabledUsers,
+      'Update'         => $Update
     ]);
   }
 }

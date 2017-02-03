@@ -484,6 +484,15 @@
                 });
             });
         });
+
+        // Synchro Splash Screen
+        $('a.synchro').click(function () {
+            bootbox.dialog({
+                    title: "Synchro Intranet",
+                    closeButton: false,
+                    message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Traitement en cours...</div>'
+            });
+        });
         @yield('script')
 
     });
