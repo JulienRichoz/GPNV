@@ -7,19 +7,14 @@
     </a>
     <div class="progression" style="background: linear-gradient(90deg, #20DE13 {{(($task->getElapsedDuration()*100/60/60)/$task->duration)}}%, #efefef 0%);">
         <p style="text-align: left;">{{gmdate("H:i:s",$task->getElapsedDuration())}}</p>
-        <p> | {{round(($task->getElapsedDuration()*100/60/60)/$task->duration,1)}}%</p><!-- Display the task pourcent -->
+        <p> | {{round(($task->getElapsedDuration()*100/60/60)/$task->getDurationTask(),1)}}%</p><!-- Display the task pourcent -->
         <p style="text-align: right;margin-left: auto;">{{$task->getDurationTask()}}h</p>
     </div>
 
-    @if($task->children->isEmpty())
-
-    @else
+    @unless($task->children->isEmpty())
         <ul>
             @each('project.task', $task->children, 'task')<!-- Display task children -->
         </ul>
-    @endif
+    @endunless
 
 </li>
-
-
-
