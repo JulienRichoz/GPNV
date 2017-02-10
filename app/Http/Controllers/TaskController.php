@@ -45,12 +45,21 @@ class TaskController extends Controller
         $newTask->parent_id = $request->input('parent_id');
         $newTask->save();
 
+        //modified By: Fabio Marques
+        $parentTask = Task::find($request->input('parent_id'));
+        foreach ($parentTask->usersTasks as  $usertask) {
+          $usertask->delete();
+        }
         return redirect("project/" . $task->project_id);
     }
 
     // Delete a task
     function destroy(Task $task)
     {
+        //Modified By: Fabio Marques
+        foreach ($task->usersTasks as  $usertask) {
+          $usertask->delete();
+        }
         $task->delete();
 
         (new EventController())->store($request->input('project_id'), "Supprimer une tâche"); // Create an event
