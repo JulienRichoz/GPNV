@@ -42,34 +42,44 @@ class Task extends Model
         return $this->children()->with('allChildren');
     }
 
+    //modified By :Fabio Marques
     public function getElapsedDuration()
     {
         $total = 0;
-        foreach ($this->usersTasks as $usertask) {
-            foreach ($usertask->durationsTasks as $durationTask) {
-                if ($durationTask->ended_at) {
-                    $total += strtotime($durationTask->ended_at) - strtotime($durationTask->created_at);
-                }
-            }
+
+        if(!$this->children->isEmpty())
+        {
+          foreach ($this->children as $child) {
+              $total += $child->getElapsedDuration();
+          }
+        }
+        else {
+          foreach ($this->usersTasks as $usertask) {
+              foreach ($usertask->durationsTasks as $durationTask) {
+                  if ($durationTask->ended_at) {
+                      $total += strtotime($durationTask->ended_at) - strtotime($durationTask->created_at);
+                  }
+              }
+          }
         }
 
-        foreach ($this->children as $child) {
-            $total += $child->getElapsedDuration();
-        }
 
         return $total;
     }
 
-
+    // Modified By: Fabio Marques
     public function getDurationTask(){
 
         $total = 0;
 
-        $total += $this->duration;
-
-        foreach ($this->children as $child){
-            $total += $child->getDurationTask();
+        if(!$this->children->isEmpty())
+        {
+          foreach ($this->children as $child){
+              $total += $child->getDurationTask();
+          }
         }
+        else
+          $total += $this->duration;
 
         return $total;
     }
