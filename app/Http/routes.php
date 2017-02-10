@@ -103,5 +103,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('admin/sync', 'AdminController@synchro');
 
         Route::get('test','Welcome@test');
+        Route::get('user/{search}',array('as' => 'name', 'uses' => 'UserController@search'));
     });
 });

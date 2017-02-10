@@ -9,6 +9,7 @@ use Auth;
 use Illuminate\Support\Facades\Input;
 use Storage;
 use Validator;
+use DB;
 
 use App\Http\Requests;
 
@@ -46,5 +47,16 @@ class UserController extends Controller
         };
 
         return redirect("user/" . Auth::user()->id);
+    }
+
+    public function search($name)
+    {
+      if(isset($name)) {
+      $users = array('users_listing' => User::search($name));
+      return $users;
+      }
+      else {
+        return "no results";
+      }
     }
 }

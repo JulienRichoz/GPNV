@@ -16,6 +16,6 @@ class Welcome extends Controller
 
     public function test(){
         $value = Request::header('X-Forwarded-User');
-        return $value;
+        return view('test');;
     }
 }
