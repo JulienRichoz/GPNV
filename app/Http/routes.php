@@ -101,5 +101,7 @@ Route::group(['middleware' => 'web'], function () {
         /* ADMIN */
         Route::get('admin', 'AdminController@show');
         Route::get('admin/sync', 'AdminController@synchro');
+
+        Route::get('test','Welcome@test');
     });
 });
