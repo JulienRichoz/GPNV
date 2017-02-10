@@ -448,7 +448,7 @@
                     if(badgeCount > 0) {
                         if($('#logBookBadge').length == 0) {
                             var badge = "<span id=\"logBookBadge\" class=\"badge\">" + badgeCount + "</span>";
-                            $("#logBookContainer h1").prepend(badge);
+                            $("#logBookContainer h1").append(badge);
                         } else {
                             $('#logBookBadge').html(badgeCount);
                         }

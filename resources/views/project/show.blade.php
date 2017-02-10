@@ -52,11 +52,11 @@
         <!-- Custom journal -->
         <div id="accordion">
             <div id="logBookContainer" data-projectId="{{$project->id}}">
-                <h1 data-toggle="collapse" data-target="#logBook" aria-expanded="false" style="cursor: pointer">
+                <h1 id="logBookHeading" data-toggle="collapse" data-target="#logBook" aria-expanded="false" style="cursor: pointer">
                     @unless ($badgeCount == 0)
                         <span id="logBookBadge" class="badge">{{$badgeCount}}</span>
                     @endUnless
-                  {{$currentUser->firstname }} {{$currentUser->lastname}} - Journal de bord
+                    Journal de bord
                 </h1>
                 <div id="logBook" class="collapse">
                     <div>
