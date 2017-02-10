@@ -390,7 +390,7 @@
                             }
                         }
 
-                        // Formatting the date to regional format
+                        // Formatting the date to regional format (dd.mm.yy)
 
                         var fetchedDate = this.created_at;
                         var date = new Date(fetchedDate);
@@ -409,25 +409,28 @@
 
                         // Validation status management
                         $.each(members, function() {
-                            content += ("<span title=\"" + this.firstname + " " + this.lastname 
+                            if (this.id != currentUserId) {
+                                content += ("<span title=\"" + this.firstname + " " + this.lastname 
                                 + "\" data-toggle=\"tooltip\" data-placement=\"bottom\">");
 
-                            var statusClass; // indicates whether the event has been validated or not
+                                var statusClass; // indicates whether the event has been validated or not
 
-                            // Checking whether the member has validated the event
-                            if ($.inArray(this.id, validations[eventId]) > -1) {
-                                statusClass = "validEvent";
-                            } else {
-                                if (this.id == currentUserId) {
-                                    statusClass = "invalidEvent clickable";
+                                // Checking whether the member has validated the event
+                                if ($.inArray(this.id, validations[eventId]) > -1) {
+                                    statusClass = "validEvent";
                                 } else {
                                     statusClass = "invalidEvent";
                                 }
-                            }
 
-                            content += ("<span class=\"glyphicon glyphicon-stop " + statusClass + "\" aria-hidden=\"true\" data-userId=\"" + this.id + "\"></span>");
-                            content += ("</span>");
+                                content += ("<span class=\"glyphicon glyphicon-stop " + statusClass + "\" aria-hidden=\"true\" data-userId=\"" + this.id + "\"></span>");
+                                content += ("</span>");
+                            }
                         });
+
+                        // Displaying the validation button if the user hasn't validated an entry
+                        if (!($.inArray(currentUserId, validations[eventId]) > -1)) {
+                            content += ("<button type=\"button\" id=\"validationButton\" class=\"btn btn-primary clickable\" style=\"margin-left: 20px;\" data-userId=\"" + currentUserId + "\">Valider</button>");
+                        }
 
                         content += ("</td>");
                         content += ("</tr>");
@@ -440,7 +443,7 @@
                     $('[data-toggle="tooltip"]').tooltip();
 
                     
-                    $('span.clickable').click(function() {
+                    $('button.clickable').click(function() {
                         updateValidationStatus(this);
                     });
 
@@ -593,12 +596,15 @@
             var projectId = $('#logBookContainer').attr('data-projectId');
             var userId = $(elem).attr('data-userId');
             var eventId = $(elem).closest('tr').attr('data-eventId');
-            console.log(eventId);
+            // console.log(projectId);
+            // console.log(userId);
+            // console.log(eventId);
 
-            // updating the status box appearance
+            // updating the validation button appearance
             $(elem).removeClass('clickable');
-            $(elem).removeClass('invalidEvent');
-            $(elem).addClass('validEvent');
+            $(elem).removeClass('btn-primary');
+            $(elem).addClass('btn-success');
+            $(elem).html("Validé!");
 
             $.ajax({
                 url: "{{ route('project.storeEventsValidation', '@') }}".replace('@', projectId),
@@ -616,7 +622,7 @@
             });
         }
 
-        $('span.clickable').click(function() {
+        $('button.clickable').click(function() {
             updateValidationStatus(this);
         });
 

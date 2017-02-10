@@ -55,7 +55,7 @@
                 <h1 id="logBookHeading" data-toggle="collapse" data-target="#logBook" aria-expanded="false" style="cursor: pointer">
                     @unless ($badgeCount == 0)
                         <span id="logBookBadge" class="badge">{{$badgeCount}}</span>
-                    @endUnless
+                    @endunless
                     Journal de bord
                 </h1>
                 <div id="logBook" class="collapse">
@@ -78,19 +78,21 @@
                                     <td>
                                         {{-- Member event validation handling --}}
                                         @foreach($members as $member)
-                                            <span title="{{ $member->firstname }} {{ $member->lastname }}" data-toggle="tooltip" data-placement="bottom">
-                                            {{-- Checking if the member has validated this event --}}
-                                            @if(in_array($member->id, $validations[$event->id]))
-                                                <span class="glyphicon glyphicon-stop validEvent" aria-hidden="true" data-userId="{{$member->id}}"></span>
-                                            @else
-                                                @if($member->id == $currentUser->id)
-                                                    <span class="glyphicon glyphicon-stop invalidEvent clickable" aria-hidden="true" data-userId="{{$member->id}}"></span>
-                                                @else
-                                                    <span class="glyphicon glyphicon-stop invalidEvent" aria-hidden="true" data-userId="{{$member->id}}"></span>
-                                                @endif
-                                            @endif
-                                            </span>
+                                            @unless($member->id == $currentUser->id)
+                                                 <span title="{{ $member->firstname }} {{ $member->lastname }}" data-toggle="tooltip" data-placement="bottom">
+                                                    {{-- Checking if the member has validated this event --}}
+                                                    @if(in_array($member->id, $validations[$event->id]))
+                                                        <span class="glyphicon glyphicon-stop validEvent" aria-hidden="true" data-userId="{{$member->id}}"></span>
+                                                    @else
+                                                        <span class="glyphicon glyphicon-stop invalidEvent" aria-hidden="true" data-userId="{{$member->id}}"></span>
+                                                    @endif
+                                                </span>
+                                            @endunless
                                         @endforeach
+
+                                        @unless(in_array($currentUser->id, $validations[$event->id]))
+                                            <button type="button" id="validationButton" class="btn btn-primary clickable" style="margin-left: 20px;" data-userId="{{$currentUser->id}}">Valider</button>
+                                        @endunless
                                     </td>
                                 </tr>
                             @endforeach
