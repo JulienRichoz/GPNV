@@ -36,3 +36,9 @@ use the command : `php artisan db:seed` during the installation.
  ----------------------|----------
  utilisateur@mail.com  |  secret
  tournesol@mail.com    |  secret
+
+## Utilisation
+Pour tester l'application, il est nécessaire d'utiliser une extension de navigateur
+permettant de modifier le HTTP Header (tel que Modify Headers)
+Pour Mozilla Firefox : https://addons.mozilla.org/fr/firefox/addon/modify-headers/?src=search
+Pour Google Chrome : https://chrome.google.com/webstore/detail/modify-headers-for-google/innpjfdalfhpcoinfnehdnbkglpmogdi
