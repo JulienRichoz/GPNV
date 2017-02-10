@@ -53,7 +53,9 @@
         <div id="accordion">
             <div id="logBookContainer" data-projectId="{{$project->id}}">
                 <h1 data-toggle="collapse" data-target="#logBook" aria-expanded="false" style="cursor: pointer">
-                    <span id="logBookBadge" class="badge">{{$badgeCount}}</span>
+                    @unless ($badgeCount == 0)
+                        <span id="logBookBadge" class="badge">{{$badgeCount}}</span>
+                    @endUnless
                   {{$currentUser->firstname }} {{$currentUser->lastname}} - Journal de bord
                 </h1>
                 <div id="logBook" class="collapse">

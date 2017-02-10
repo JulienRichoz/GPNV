@@ -444,8 +444,18 @@
                         updateValidationStatus(this);
                     });
 
-                    // updating the badge count
-                    $('#logBookBadge').html(badgeCount);
+                    // updating the badge count and visibility
+                    if(badgeCount > 0) {
+                        if($('#logBookBadge').length == 0) {
+                            var badge = "<span id=\"logBookBadge\" class=\"badge\">" + badgeCount + "</span>";
+                            $("#logBookContainer h1").prepend(badge);
+                        } else {
+                            $('#logBookBadge').html(badgeCount);
+                        }
+                    } else {
+                        $('#logBookBadge').remove();
+                    }
+                    
                 },
                 error: function (data) {
                     console.log(data);
