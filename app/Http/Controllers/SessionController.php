@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+#use Illuminate\Http\Request;
+use Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Requests;
 use Validator;
@@ -32,6 +33,14 @@ class SessionController extends Controller
      */
     public function create()
     {
+        $Header = Request::header('X-Forwarded-User');
+        if($Header!=''){
+          $user = User::where('id', '=', $Header)->first();
+          if($user){
+              Auth::login($user);
+              return redirect()->route('project.index');
+          }
+        }
         return view('auth/login');
     }
 
