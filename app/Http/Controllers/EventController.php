@@ -33,6 +33,8 @@ class EventController extends Controller
 
         $projectMembers = Project::find($request->id)->users->sortBy('id');
 
+        $badgeCount = 0;
+
         // Array containing lists of users that have validated events
         $validations = array();
 
@@ -49,25 +51,14 @@ class EventController extends Controller
                     $users[] = $member->id;
                 }
             }
+            
             $validations[$event->eventId] = $users;
+
+            // Incrementing badgeCount unless the current user validated the event
+            if (!in_array($currentUserId, $users)) {
+                $badgeCount++;
+            }
         }
-
-        $unValidated = DB::table('events_users')
-            ->select('event_id')
-            ->distinct()
-            ->get();
-
-        // Events validated by the current user
-        $validated = DB::table('events_users')
-            ->select('event_id')
-            ->distinct()
-            ->where('user_id', '=', $currentUserId)
-            ->get();
-
-        $unValidatedCount = count($unValidated);
-        $validatedCount = count($validated);
-
-        $badgeCount = $unValidatedCount - $validatedCount;
 
         return json_encode(array(
             'eventInfos'=>$eventInfos, 
