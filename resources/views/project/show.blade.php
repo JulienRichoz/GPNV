@@ -59,9 +59,15 @@
                     Journal de bord
                 </h1>
                 <div id="logBook" class="collapse">
-                    <div>
-                        <label><input type="checkbox" value="first_checkbox" id="toggleUserEntries">Avec mes entrées</label>
-                    </div>
+                    <form role="form">
+                        <div class="awesomeCheckbox awesomeCheckbox-primary logBookCheckbox">
+                            <input type="checkbox" id="toggleUserEntries" class="styled">
+                            <label for="toggleUserEntries">
+                                Avec mes entrées
+                            </label>
+                        </div>
+                    </form>
+                    
                     <div class="panel panel-default" id="logbookPanel">
                         <table class='table'>
                             <thead><tr><th>Qui</th><th>Quand</th><th>Quoi</th><th>Vu</th></tr></thead>
@@ -91,7 +97,7 @@
                                         @endforeach
 
                                         @unless(in_array($currentUser->id, $validations[$event->id]))
-                                            <button type="button" id="validationButton" class="btn btn-primary clickable" style="margin-left: 20px;" data-userId="{{$currentUser->id}}">Valider</button>
+                                            <button type="button" id="validationButton" class="btn btn-primary" style="margin-left: 20px;" data-userId="{{$currentUser->id}}">Valider</button>
                                         @endunless
                                     </td>
                                 </tr>

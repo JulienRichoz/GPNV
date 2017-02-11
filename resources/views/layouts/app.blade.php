@@ -15,6 +15,7 @@
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('css/template.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/awesome-bootstrap-checkbox.css') }}"/>
 
     <style>
         body {
@@ -429,7 +430,7 @@
 
                         // Displaying the validation button if the user hasn't validated an entry
                         if (!($.inArray(currentUserId, validations[eventId]) > -1)) {
-                            content += ("<button type=\"button\" id=\"validationButton\" class=\"btn btn-primary clickable\" style=\"margin-left: 20px;\" data-userId=\"" + currentUserId + "\">Valider</button>");
+                            content += ("<button type=\"button\" id=\"validationButton\" class=\"btn btn-primary\" style=\"margin-left: 20px;\" data-userId=\"" + currentUserId + "\">Valider</button>");
                         }
 
                         content += ("</td>");
@@ -443,7 +444,7 @@
                     $('[data-toggle="tooltip"]').tooltip();
 
                     
-                    $('button.clickable').click(function() {
+                    $('#validationButton').click(function() {
                         updateValidationStatus(this);
                     });
 
@@ -601,7 +602,6 @@
             // console.log(eventId);
 
             // updating the validation button appearance
-            $(elem).removeClass('clickable');
             $(elem).removeClass('btn-primary');
             $(elem).addClass('btn-success');
             $(elem).html("Validé!");
@@ -622,7 +622,7 @@
             });
         }
 
-        $('button.clickable').click(function() {
+        $('#validationButton').click(function() {
             updateValidationStatus(this);
         });
 

@@ -169,3 +169,8 @@
 .clickable {
     cursor: pointer;
 }
+
+.logBookCheckBox {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
