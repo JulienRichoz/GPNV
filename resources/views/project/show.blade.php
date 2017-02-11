@@ -97,7 +97,7 @@
                                         @endforeach
 
                                         @unless(in_array($currentUser->id, $validations[$event->id]))
-                                            <button type="button" id="validationButton" class="btn btn-primary" style="margin-left: 20px;" data-userId="{{$currentUser->id}}">Valider</button>
+                                            <button type="button" class="btn btn-primary validationButton" style="margin-left: 20px;" data-userId="{{$currentUser->id}}">Valider</button>
                                         @endunless
                                     </td>
                                 </tr>

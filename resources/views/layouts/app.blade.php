@@ -430,7 +430,7 @@
 
                         // Displaying the validation button if the user hasn't validated an entry
                         if (!($.inArray(currentUserId, validations[eventId]) > -1)) {
-                            content += ("<button type=\"button\" id=\"validationButton\" class=\"btn btn-primary\" style=\"margin-left: 20px;\" data-userId=\"" + currentUserId + "\">Valider</button>");
+                            content += ("<button type=\"button\" class=\"btn btn-primary validationButton\" style=\"margin-left: 20px;\" data-userId=\"" + currentUserId + "\">Valider</button>");
                         }
 
                         content += ("</td>");
@@ -444,7 +444,7 @@
                     $('[data-toggle="tooltip"]').tooltip();
 
                     
-                    $('#validationButton').click(function() {
+                    $('.validationButton').click(function() {
                         updateValidationStatus(this);
                     });
 
@@ -597,9 +597,9 @@
             var projectId = $('#logBookContainer').attr('data-projectId');
             var userId = $(elem).attr('data-userId');
             var eventId = $(elem).closest('tr').attr('data-eventId');
-            // console.log(projectId);
-            // console.log(userId);
-            // console.log(eventId);
+            /*console.log(projectId);
+            console.log(userId);
+            console.log(eventId);*/
 
             // updating the validation button appearance
             $(elem).removeClass('btn-primary');
@@ -622,7 +622,7 @@
             });
         }
 
-        $('#validationButton').click(function() {
+        $('.validationButton').click(function() {
             updateValidationStatus(this);
         });
 
