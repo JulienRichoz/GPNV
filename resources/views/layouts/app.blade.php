@@ -190,7 +190,8 @@
             bootbox.prompt({
                 size: "large",
                 backdrop: true,
-                title: "Insérez un évènement", 
+                title: "Insérez un évènement",
+                inputType: 'textarea',
                 callback: function(result){
                     if (result != "") {
                         $.ajax({
