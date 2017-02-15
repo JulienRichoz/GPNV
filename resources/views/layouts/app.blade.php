@@ -15,6 +15,8 @@
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('css/template.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/logBook.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/awesome-bootstrap-checkbox.css') }}"/>
 
     <style>
         body {
@@ -192,17 +194,31 @@
 
         // Return the view to add a user for a task
         $('#app-layout').on('click', 'a.events', function () {
-            var project = this.getAttribute('data-id');
-            //alert(project);
-            $.ajax({
-                url: "{{ route('project.formEvents', '@') }}".replace('@', project),
-                type: 'get',
-                success: function (data) {
-                    bootbox.dialog({
-                        title: "Créer un événement",
-                        message: data
-                    });
-
+            var projectId = this.getAttribute('data-id');
+            bootbox.prompt({
+                size: "large",
+                backdrop: true,
+                title: "Insérez un évènement",
+                inputType: 'textarea',
+                callback: function(result){
+                    if (result != "") {
+                        $.ajax({
+                            url: "{{ route('project.storeEvents', '@') }}".replace('@', projectId),
+                            type: 'post',
+                            data: { description: result },
+                            success: function() {
+                                if (result != null) {
+                                    callEvents(projectId);
+                                    displayConfirmation(true);
+                                }
+                            },
+                            error: function() {
+                                displayConfirmation(false);
+                            }
+                        });
+                    } else {
+                        bootbox.alert("La description d'un évènement ne peut pas être vide");
+                    }
                 }
             });
         });
@@ -357,26 +373,102 @@
             });
         }
 
-        // Create a event
         function callEvents(project) {
             $.ajax({
                 url: "{{ route('project.events', '@') }}".replace('@', project),
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
+                    console.log(data);
+                    var currentUserId = data.currentUser.id;
+                    var members = data.members;
+                    var validations = data.validations;
+                    var badgeCount = data.badgeCount;
+                    var content = ("<table class='table'><thead><tr><th>Qui</th><th>Quand</th><th>Quoi</th><th>Vu</th></tr></thead>");
 
-                    var content = ("<table class='table'><thead><tr><th>Qui</th><th>Description</th><th>Created_at</th></tr></thead>");
-                    $.each(data, function (key, data) {
-                        content += ("<tr>");
-                        content += ("<td>" + this.user_id + "</td>");
+                    $.each(data.eventInfos, function () {
+                        var eventId = this.eventId;
+
+                        // Basic opening row tag
+                        var openingRowTag = "<tr data-eventId=\"" + eventId + "\">";
+
+                        // Displaying / hiding the row according to the checkbox status and the currently logged user
+                        if (currentUserId == this.userId) {
+                            openingRowTag = "<tr class=\"userMade\" data-eventId=\"" + eventId + "\">";
+                            if (!$('#toggleUserEntries').prop( "checked" )) {
+                                openingRowTag = "<tr class=\"userMade hidden\" data-eventId=\"" + eventId + "\">";
+                            }
+                        }
+
+                        // Formatting the date to regional format (dd.mm.yy)
+
+                        var fetchedDate = this.created_at;
+                        var date = new Date(fetchedDate);
+
+                        var formattedDate = ('0' + date.getDate()).slice(-2) + '.'
+                            + ('0' + (date.getMonth()+1)).slice(-2) + '.'
+                            + date.getFullYear().toString().slice(-2) 
+                            + " " + ('0' + date.getHours()).slice(-2) 
+                            + ":" + ('0' + date.getMinutes()).slice(-2);
+
+                        content += (openingRowTag);
+                        content += ("<td>" + this.firstname + " " + this.lastname + "</td>");
+                        content += ("<td>" + formattedDate + "</td>");
                         content += ("<td>" + this.description + "</td>");
-                        content += ("<td>" + this.created_at + "</td>");
+                        content += ("<td>");
+
+                        // Validation status management
+                        $.each(members, function() {
+                            if (this.id != currentUserId) {
+                                content += ("<span title=\"" + this.firstname + " " + this.lastname 
+                                + "\" data-toggle=\"tooltip\" data-placement=\"bottom\">");
+
+                                var statusClass; // indicates whether the event has been validated or not
+
+                                // Checking whether the member has validated the event
+                                if ($.inArray(this.id, validations[eventId]) > -1) {
+                                    statusClass = "validEvent";
+                                } else {
+                                    statusClass = "invalidEvent";
+                                }
+
+                                content += ("<span class=\"glyphicon glyphicon-stop " + statusClass + "\" aria-hidden=\"true\" data-userId=\"" + this.id + "\"></span>");
+                                content += ("</span>");
+                            }
+                        });
+
+                        // Displaying the validation button if the user hasn't validated an entry
+                        if (!($.inArray(currentUserId, validations[eventId]) > -1)) {
+                            content += ("<button type=\"button\" class=\"btn btn-primary validationButton\" style=\"margin-left: 20px;\" data-userId=\"" + currentUserId + "\">Valider</button>");
+                        }
+
+                        content += ("</td>");
                         content += ("</tr>");
                     });
 
                     content += ("</table>");
-                    $('#events').append(content);
+                    $('#logbookPanel').html(content);
 
+                    // enabling bootstrap tooltips
+                    $('[data-toggle="tooltip"]').tooltip();
+
+                    
+                    $('.validationButton').click(function() {
+                        updateValidationStatus(this);
+                    });
+
+                    // updating the badge count and visibility
+                    if(badgeCount > 0) {
+                        if($('#logBookBadge').length == 0) {
+                            var badge = "<span id=\"logBookBadge\" class=\"badge\">" + badgeCount + "</span>";
+                            $("#logBookContainer h1").append(badge);
+                        } else {
+                            $('#logBookBadge').html(badgeCount);
+                        }
+                    } else {
+                        $('#logBookBadge').remove();
+                    }
+                    
                 },
                 error: function (data) {
                     console.log(data);
@@ -493,6 +585,68 @@
                     message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Traitement en cours...</div>'
             });
         });
+
+
+        // Tooltip handling (enabling bootstrap tooltips)
+        $('[data-toggle="tooltip"]').tooltip();
+
+        function updateCheckBoxStatus() {
+            if ($('#toggleUserEntries').prop( "checked" )) {
+                $('.userMade').removeClass("hidden");
+            } else {
+                $('.userMade').addClass("hidden");
+            }
+        }
+
+        $('#toggleUserEntries').change(function() {
+            updateCheckBoxStatus()
+        });
+
+        function displayConfirmation(success) {
+            if (success) {
+                bootbox.alert("L'évènement a été ajouté avec succès.");
+            } else {
+                bootbox.alert("Erreur. L'évènement n'a pas pu être ajouté.");
+            }
+        }
+
+        function updateValidationStatus(elem) {
+            var projectId = $('#logBookContainer').attr('data-projectId');
+            var userId = $(elem).attr('data-userId');
+            var eventId = $(elem).closest('tr').attr('data-eventId');
+            /*console.log(projectId);
+            console.log(userId);
+            console.log(eventId);*/
+
+            // updating the validation button appearance
+            $(elem).removeClass('btn-primary');
+            $(elem).addClass('btn-success');
+            $(elem).html("Validé!");
+
+            $.ajax({
+                url: "{{ route('project.storeEventsValidation', '@') }}".replace('@', projectId),
+                type: 'post',
+                data: { userId: userId, eventId: eventId },
+                success: function(data) {
+                    console.log(data);
+                    // updating the event list
+                    callEvents(projectId);
+                },
+                error: function(data) {
+                    console.log(data);
+                    console.log("couldn't save the event validation");
+                }
+            });
+        }
+
+        $('.validationButton').click(function() {
+            updateValidationStatus(this);
+        });
+
+        // Init
+        // Coping with the fact some browsers preserves the checkbox status after reloading pages
+        updateCheckBoxStatus();
+
         @yield('script')
 
     });

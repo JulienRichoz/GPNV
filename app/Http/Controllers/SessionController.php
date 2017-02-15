@@ -56,14 +56,12 @@ class SessionController extends Controller
 
         $username = $request->input('email');
         $password = $request->input('password');
-
         $user = User::where('mail', '=', $username)->first();
 
         // Verify the password and the login are correct
         if($user){
             if(Hash::check($password,$user->password)) {
                 Auth::login($user);
-
                 return redirect()->route('project.index');
             }else{ // return a error message
                 echo "Erreur de login";
