@@ -70,11 +70,11 @@ class EventController extends Controller
     }
 
     // Create an event
-    public function store($project, Request $request)
+    public function store($projectId, Request $request)
     {
         $event = new Event;
         $event->user_id = Auth::user()->id;
-        $event->project_id = $project;
+        $event->project_id = $projectId;
         $event->description = $request->description;
         $event->save();
 

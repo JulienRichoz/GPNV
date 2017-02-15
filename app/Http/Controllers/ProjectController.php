@@ -71,10 +71,11 @@ class ProjectController extends Controller
           Description: create a new CheckListObject
         */
         $livrables = new CheckList('Project', $id, 'Livrables');
-        
-        return view('project/show', ['project' => $project, 'request' => $request,
-                    'livrables'=>$livrables, 'duration' => $duration,
-                    'taskactive' => $task]);
+
+
+        /* Created By Raphaël B.
+          Description: log book event handling
+        */
         $events = Event::where('project_id', '=', $id)
             ->orderBy('created_at', 'desc')->get();
 
@@ -109,6 +110,7 @@ class ProjectController extends Controller
 
         return view('project/show', [
             'project' => $project,
+            'livrables'=>$livrables,
             'duration' => $duration,
             'taskactive' => $task,
             'currentUser' => $currentUser,
@@ -175,15 +177,22 @@ class ProjectController extends Controller
     // Edit a task
     public function storeTask(Request $request)
     {
+
+        $project_id = $request->input('project_id');
+
         $newTask = new Task;
         $newTask->name = $request->input('name');
         $newTask->duration = $request->input('duration');
         $newTask->date_jalon = $request->input('date_jalon');
-        $newTask->project_id = $request->input('project_id');
+        $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
         $newTask->save();
 
-        (new EventController())->store($request->input('project_id'), "Créer une tâche parent"); // Create an event
+        // Adding the event description into the request object
+        $eventDescription = "Création d'une tâche parent";
+        $request->merge([ 'description' => $eventDescription ]);
+
+        (new EventController())->store($project_id, $request); // Create an event
 
         return redirect("project/" . $request->input('project_id'));
     }
