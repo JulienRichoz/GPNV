@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'lastname' => "Tournesol",
             'mail' => "tournesol@mail.com",
             'role_id' => "2",
+            'friendlyid' => "1",
             'class_id' => "1",
             'state_id' => "1",
             'password' => bcrypt('secret'),
