@@ -41,7 +41,7 @@ class SessionController extends Controller
               return redirect()->route('project.index');
           }
         }
-        return view('auth/login');
+        return view('auth/nologin');
     }
 
     /**
