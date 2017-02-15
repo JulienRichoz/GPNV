@@ -49,11 +49,9 @@ class ProjectController extends Controller
     }
 
     // Display all informations like the user's tasks connected, all project tasks, and so on
-    public function show(Request $request)
+    public function show($id)
     {
-        $projectId = $request->id;
-
-        $project = Project::find($projectId);
+        $project = Project::find($id);
         $currentUser = Auth::user();
         $userTasks = UsersTask::where("user_id", "=", $currentUser->id)->get();
         $duration = null;
@@ -67,7 +65,7 @@ class ProjectController extends Controller
             }
         }
 
-        $events = Event::where('project_id', '=', $projectId)
+        $events = Event::where('project_id', '=', $id)
             ->orderBy('created_at', 'desc')->get();
 
         $projectMembers = $project->users->sortBy('id');
@@ -100,10 +98,9 @@ class ProjectController extends Controller
         }
 
         return view('project/show', [
-            'project' => $project, 
-            'request' => $request, 
-            'duration' => $duration, 
-            'taskactive' => $task, 
+            'project' => $project,
+            'duration' => $duration,
+            'taskactive' => $task,
             'currentUser' => $currentUser,
             'members' => $projectMembers,
             'events' => $events,

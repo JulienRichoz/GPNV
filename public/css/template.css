@@ -140,37 +140,3 @@
     margin: 5px;
 
 }
-/*****************************************************/
-
-#logBookContainer {
-    background-color: #f5f5f5;
-}
-
-#logBookHeading {
-    position: relative;
-}
-
-/* Event icons */
-.validEvent {
-    color: #0F9C07;
-}
-
-.invalidEvent {
-    color :#D9D9D9;
-}
-
-#logBookBadge {
-    background-color: #337ab7;
-    position: absolute;
-    right: 30px;
-    top: 25%;
-}
-
-.clickable {
-    cursor: pointer;
-}
-
-.logBookCheckbox {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
