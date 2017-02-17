@@ -45,8 +45,8 @@
                   Description: Show the checkList "Livrables"
                 -->
                 <h1>{{$livrables->getName()}}</h1>
-                <div class="livrables">
-                  <div class="progressionLivrable">
+                <div class="checkList">
+                  <div class="progressionCheckList">
                     <div class="barre" style="background: linear-gradient(90deg, #20DE13 {{$livrables->getCompletedPercent()}}%, #efefef 0%);"></div>
                     <p>{{$livrables->getNbItemsDone()}}/{{$livrables->getNbItems()}}</p>
                   </div>
@@ -78,7 +78,7 @@
 
         <h1>Informations du projet</h1>
         <!-- Display all project informations like the members, a description and so on -->
-        @include('project.info', ['student' => $project])
+        @include('project.info', ['student' => $project, 'objectifs'=>$objectifs])
 
         <!-- Custom journal -->
         <div id="accordion">
@@ -98,7 +98,7 @@
                             </label>
                         </div>
                     </form>
-                    
+
                     <div class="panel panel-default" id="logbookPanel">
                         <table class='table'>
                             <thead><tr><th>Qui</th><th>Quand</th><th>Quoi</th><th>Vu</th></tr></thead>

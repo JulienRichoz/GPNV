@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/template.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/logBook.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/awesome-bootstrap-checkbox.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/checkList.css') }}"/>
 
     <style>
         body {
@@ -407,8 +408,8 @@
 
                         var formattedDate = ('0' + date.getDate()).slice(-2) + '.'
                             + ('0' + (date.getMonth()+1)).slice(-2) + '.'
-                            + date.getFullYear().toString().slice(-2) 
-                            + " " + ('0' + date.getHours()).slice(-2) 
+                            + date.getFullYear().toString().slice(-2)
+                            + " " + ('0' + date.getHours()).slice(-2)
                             + ":" + ('0' + date.getMinutes()).slice(-2);
 
                         content += (openingRowTag);
@@ -420,7 +421,7 @@
                         // Validation status management
                         $.each(members, function() {
                             if (this.id != currentUserId) {
-                                content += ("<span title=\"" + this.firstname + " " + this.lastname 
+                                content += ("<span title=\"" + this.firstname + " " + this.lastname
                                 + "\" data-toggle=\"tooltip\" data-placement=\"bottom\">");
 
                                 var statusClass; // indicates whether the event has been validated or not
@@ -452,7 +453,7 @@
                     // enabling bootstrap tooltips
                     $('[data-toggle="tooltip"]').tooltip();
 
-                    
+
                     $('.validationButton').click(function() {
                         updateValidationStatus(this);
                     });
@@ -468,7 +469,7 @@
                     } else {
                         $('#logBookBadge').remove();
                     }
-                    
+
                 },
                 error: function (data) {
                     console.log(data);

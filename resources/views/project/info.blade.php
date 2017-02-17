@@ -25,10 +25,32 @@
 
     </div>
 
-    <div class="panel-heading">Objectifs du projet</div>
+    <div class="panel-heading">{{$objectifs->getName()}}</div>
 
     <div class="panel-body">
-        <!-- Display all project objectives -->
+      <div class="checkList">
+        <div class="progressionCheckList">
+          <div class="barre" style="background: linear-gradient(90deg, #20DE13 {{$objectifs->getCompletedPercent()}}%, #efefef 0%);"></div>
+          <p>{{$objectifs->getNbItemsDone()}}/{{$objectifs->getNbItems()}}</p>
+        </div>
+          <ul>
+              <!-- Display all yourCheckList -->
+              @if($objectifs->showToDo())
+                @each('checkList.show', $objectifs->showToDo(), 'checkListItem')
+              @endif
+          </ul>
+          <ul class="completed hidden">
+            @if($objectifs->showCompleted())
+              @each('checkList.show', $objectifs->showCompleted(), 'checkListItem')
+            @endif
+          </ul>
+          <a class="btn btn-warning addCheckList" data-id="{{$objectifs->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
+          @if($objectifs->getNbItemsDone())
+            <a class="btn btn-warning changeView">Voir les éléments effectués</a>
+            <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>
+          @endif
+      </div>
+        <!-- Display all project objectives
         <ol class="targets">
         @foreach($project->targets as $target)
             <li class="@if($target->status == 'Finished'){{'finished'}}@endif">{{$target->description}}
@@ -41,7 +63,7 @@
         @endforeach
         </ol>
         <br>
-        <a class="btn btn-warning target" data-projectid="{{$project->id}}">Ajouter un objectif</a>
+        <a class="btn btn-warning target" data-projectid="{{$project->id}}">Ajouter un objectif</a>-->
     </div>
 
 

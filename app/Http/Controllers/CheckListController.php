@@ -28,7 +28,7 @@ class CheckListController extends Controller
     return redirect()->back();
   }
 
-  //create new checkList item 
+  //create new checkList item
   function store(Request $requete, $checkListId)
   {
     CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
