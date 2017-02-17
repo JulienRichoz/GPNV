@@ -12,14 +12,14 @@ class CreateEventsUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('events_users', function (Blueprint $table) {
+        Schema::create('acknowledgedEvents', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->integer('user_id')->unsigned();
             $table->integer('event_id')->unsigned();
             $table->timestamps();
         });
 
-        Schema::table('events_users', function($table) {
+        Schema::table('acknowledgedEvents', function($table) {
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('event_id')->references('id')->on('events');
         });
@@ -32,6 +32,6 @@ class CreateEventsUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('events_users');
+        Schema::drop('acknowledgedEvents');
     }
 }

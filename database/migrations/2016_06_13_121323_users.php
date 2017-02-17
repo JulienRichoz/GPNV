@@ -24,7 +24,7 @@ class Users extends Migration
             $table->string('lastname', 20);
             $table->string('mail', 45);
             $table->integer('role_id')->unsigned();
-            $table->integer('class_id')->unsigned();
+            $table->integer('class_id')->unsigned()->nullable(true);
             $table->integer('state_id')->unsigned();
             $table->string('password', 100);
             $table->longText('remember_token');

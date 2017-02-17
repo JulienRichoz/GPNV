@@ -16,7 +16,6 @@ class Tasks extends Migration
             $table->increments('id')->index();
             $table->string('name', 45);
             $table->integer('duration');
-            $table->date('date_jalon');
             $table->string('status', 15);
             $table->integer('priority');
             $table->integer('project_id')->unsigned();

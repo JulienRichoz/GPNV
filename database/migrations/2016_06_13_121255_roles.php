@@ -20,7 +20,6 @@ class Roles extends Migration
       Schema::create('roles', function (Blueprint $table) {
         $table->increments('id')->index();
         $table->string('name', 15);
-        $table->timestamps(); // Creation the column "created_at" and "updated_at"
       });
     }
 

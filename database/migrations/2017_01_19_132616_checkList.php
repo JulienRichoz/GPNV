@@ -13,38 +13,38 @@ class CheckList extends Migration
      */
     public function up()
     {
-      Schema::create('CheckListTables', function (Blueprint $table) {
+      Schema::create('checkListTables', function (Blueprint $table) {
         $table->increments('id')->index();
         $table->string('name', 45);
       });
 
-      Schema::create('CheckListTypes', function(Blueprint $table){
+      Schema::create('checkListTypes', function(Blueprint $table){
         $table->increments('id')->index();
         $table->string('name',45);
       });
 
-      Schema::create('CheckListLinkedTo', function(Blueprint $table){
+      Schema::create('checkLists', function(Blueprint $table){
         $table->increments('id')->index();
         $table->integer('recordId');
-        $table->integer('fkTable')->unsigned();
-        $table->integer('fkType')->unsigned();
+        $table->integer('checkListTable_id')->unsigned();
+        $table->integer('checkListType_id')->unsigned();
       });
 
-      Schema::create('CheckListItems', function(Blueprint $table){
+      Schema::create('checkListItems', function(Blueprint $table){
         $table->increments('id')->index();
         $table->string('title', 45);
         $table->longText('description')->nullable();
         $table->boolean('done');
-        $table->integer('fkLinkedTo')->unsigned();
+        $table->integer('checkList_id')->unsigned();
       });
 
-      Schema::table('CheckListLinkedTo', function($table){
-        $table->foreign('fkTable')->references('id')->on('CheckListTables');
-        $table->foreign('fkType')->references('id')->on('CheckListTypes');
+      Schema::table('checkLists', function($table){
+        $table->foreign('checkListTable_id')->references('id')->on('checkListTables');
+        $table->foreign('checkListType_id')->references('id')->on('checkListTypes');
       });
 
-      Schema::table('CheckListItems', function($table){
-        $table->foreign('fkLinkedTo')->references('id')->on('CheckListLinkedTo');
+      Schema::table('checkListItems', function($table){
+        $table->foreign('checkList_id')->references('id')->on('checkLists');
       });
     }
 
@@ -55,9 +55,9 @@ class CheckList extends Migration
      */
     public function down()
     {
-        Schema::drop('CheckListItems');
-        Schema::drop('CheckListLinkedTo');
-        Schema::drop('CheckListTypes');
-        Schema::drop('CheckListTables');
+        Schema::drop('checkListItems');
+        Schema::drop('checkLists');
+        Schema::drop('checkListTypes');
+        Schema::drop('checkListTables');
     }
 }
