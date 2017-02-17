@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Form;
 use Datetime;
 use App\Models\Target;
-use App\Models\checkList;
+use App\Models\CheckList;
 use App\Models\AcknowledgedEvent;
 use DB;
 
@@ -70,7 +70,7 @@ class ProjectController extends Controller
         /* Created By Fabio Marques
           Description: create a new checkListObject
         */
-        $livrables = new checkList('Project', $id, 'Livrables');
+        $livrables = new CheckList('Project', $id, 'Livrables');
 
 
         /* Created By Raphaël B.
@@ -163,7 +163,7 @@ class ProjectController extends Controller
           Created By: Fabio Marques
           Decription: create a new checkList for the new project
         */
-        checkList::newcheckList('Project',$newProject->id,'Livrables');
+        CheckList::newCheckList('Project',$newProject->id,'Livrables');
 
         return redirect()->route('project.index');
     }
@@ -228,7 +228,7 @@ class ProjectController extends Controller
         return view('target.store', ['project' => $id]);
     }
 
-    public function createcheckListItem( $checkListId)
+    public function createCheckListItem( $checkListId)
     {
       return view('checkList.create', ['checkListId'=>$checkListId]);//view('checkList.create', ['checkListId' => $id]);
     }

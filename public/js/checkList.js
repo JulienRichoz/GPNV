@@ -7,7 +7,7 @@ $(document).ready(function () {
   $('.addcheckList').click(function () {
       var id = this.getAttribute('data-id');
       var baseUrl = this.getAttribute('data-URL');
-      $.get(baseUrl+"/checkList/"+id+"/create", {}, function (form) {
+      $.get(baseUrl+"/checklist/"+id+"/create", {}, function (form) {
           bootbox.dialog({
               title: "Insérer un nouvel élément",
               message: form

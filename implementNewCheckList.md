@@ -1,14 +1,14 @@
 # How to implement a new checkList
 ## Required
 1. make sure you have the following files:
-  * app/Http/Controllers/checkListController.php
+  * app/Http/Controllers/CheckListController.php
   * app/Models/checkList.php
   * ressources/views/checkList/create.blade.php
   * ressources/views/checkList/show.blade.php
-2. Create the routes to the checkListController
-  * Route::put('yourPath/id/{id}','checkListController@update');
+2. Create the routes to the CheckListController
+  * Route::put('yourPath/id/{id}','CheckListController@update');
   * Route::get('yourPath/checkList/{id}/create','ProjectController@createcheckListItem');
-  * Route::post('yourPath/checkList/{id}/create','checkListController@store');
+  * Route::post('yourPath/checkList/{id}/create','CheckListController@store');
 3. Create a new checkList where and when you want
   * checkList::newcheckList(tableName, elementId, checkListName);
 4. To acces the checkList put it where you need

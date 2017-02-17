@@ -53,9 +53,9 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('project/{id}/target', ['as' => 'project.gettarget', 'uses' => 'ProjectController@getTarget'])->where('id', '[0-9]+');
 
         /*-----------------------------Routes PRW2 --------------------------*/
-        Route::put('project/id/{id}','checkListController@update');
-        Route::get('project/checkList/{id}/create','ProjectController@createcheckListItem');
-        Route::post('project/checkList/{id}/create','checkListController@store');
+        Route::put('project/id/{id}','CheckListController@update');
+        Route::get('project/checklist/{id}/create','ProjectController@createCheckListItem');
+        Route::post('project/checlList/{id}/create','CheckListController@store');
         /*--------------------------------------------------------------------*/
 
 

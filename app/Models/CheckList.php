@@ -7,7 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class checkList extends Model
+class CheckList extends Model
 {
   private $items=[];
   private $nbItems=0;
@@ -18,7 +18,6 @@ class checkList extends Model
   //initialize a checkList
   function __construct($elementName, $elementId, $checkListType)
   {
-
     $tableId = DB::table('checkList_Tables')->where('name', $elementName)->first();
     $typeId = DB::table('checkList_Types')->where('name', $checkListType)->first();
     if(isset($tableId) && isset($typeId))
