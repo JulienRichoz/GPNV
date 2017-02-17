@@ -8,30 +8,30 @@ use Illuminate\Http\Request;
 use App\Livrable;
 use DB;
 use Redirect;
-use App\Models\CheckList;
+use App\Models\checkList;
 
-class CheckListController extends Controller
+class checkListController extends Controller
 {
-  //show checklist items
-  function show($element, $checkListType)
+  //show checkList items
+  function show($element, $checkListTypes)
   {
-      $checkList = new CheckList($element, $checkListType);
+      $checkList = new checkList($element, $checkListTypes);
       $checkListItems = $checkList->showAll();
 
       return view('welcome', compact('checkListItems'));
   }
 
-  //update checklistItem
+  //update checkListItem
   function update(Request $requete,  $id)
   {
-    CheckList::validate($id, $requete->get('done'));
+    checkList::validate($id, $requete->get('done'));
     return redirect()->back();
   }
 
-  //create new checkList item 
+  //create new checkList item
   function store(Request $requete, $checkListId)
   {
-    CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
+    checkList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
     return redirect()->back();
   }
 }

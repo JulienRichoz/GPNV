@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProjectsUser;
+use App\Models\Memberships;
 use Illuminate\Http\Request;
 use App\Models\UsersTask;
 use App\Models\Project;
@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Form;
 use Datetime;
 use App\Models\Target;
-use App\Models\CheckList;
-use App\Models\EventsUser;
+use App\Models\checkList;
+use App\Models\AcknowledgedEvent;
 use DB;
 
 class ProjectController extends Controller
@@ -68,9 +68,9 @@ class ProjectController extends Controller
         }
 
         /* Created By Fabio Marques
-          Description: create a new CheckListObject
+          Description: create a new checkListObject
         */
-        $livrables = new CheckList('Project', $id, 'Livrables');
+        $livrables = new checkList('Project', $id, 'Livrables');
 
 
         /* Created By Raphaël B.
@@ -90,7 +90,7 @@ class ProjectController extends Controller
             // Holds ids of users that have validated the event
             $users = array();
             foreach ($projectMembers as $member) {
-                $exists = EventsUser::where([
+                $exists = AcknowledgedEvent::where([
                     ['user_id', '=', $member->id],
                     ['event_id', '=', $event->id],
                 ])->exists();
@@ -149,7 +149,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $newProject = new Project;
-        $relation = new ProjectsUser;
+        $relation = new Memberships;
         $newProject->name = $request->input('name');
         $newProject->description = $request->input('description');
         $newProject->startDate = $request->input('date');
@@ -163,7 +163,7 @@ class ProjectController extends Controller
           Created By: Fabio Marques
           Decription: create a new checkList for the new project
         */
-        CheckList::newCheckList('Project',$newProject->id,'Livrables');
+        checkList::newcheckList('Project',$newProject->id,'Livrables');
 
         return redirect()->route('project.index');
     }
@@ -183,7 +183,6 @@ class ProjectController extends Controller
         $newTask = new Task;
         $newTask->name = $request->input('name');
         $newTask->duration = $request->input('duration');
-        $newTask->date_jalon = $request->input('date_jalon');
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
         $newTask->save();
@@ -199,7 +198,7 @@ class ProjectController extends Controller
 
     // Delete one or more users for a project
     public function destroyUser(Request $request){
-        $destroyUser = ProjectsUser::where("project_id", "=", $request->id)->where("user_id", "=", $request->user)->get();
+        $destroyUser = Memberships::where("project_id", "=", $request->id)->where("user_id", "=", $request->user)->get();
         $destroyUser->delete();
     }
 
@@ -229,7 +228,7 @@ class ProjectController extends Controller
         return view('target.store', ['project' => $id]);
     }
 
-    public function createCheckListItem( $checkListId)
+    public function createcheckListItem( $checkListId)
     {
       return view('checkList.create', ['checkListId'=>$checkListId]);//view('checkList.create', ['checkListId' => $id]);
     }

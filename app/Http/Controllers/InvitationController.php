@@ -113,7 +113,7 @@ class InvitationController extends Controller
        return redirect('project/' . $project->id);
 
     }
-
+    /*
     // Return the view about the waiting invitations
     public function wait($id)
     {
@@ -154,5 +154,5 @@ class InvitationController extends Controller
         ]);
 
         (new EventController())->store($invitation->project_id, " refuser l'invitation"); // Create an event
-    }
+    }*/
 }

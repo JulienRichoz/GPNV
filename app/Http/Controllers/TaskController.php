@@ -40,7 +40,6 @@ class TaskController extends Controller
         $newTask = new Task;
         $newTask->name = $request->input('name');
         $newTask->duration = $request->input('duration');
-        $newTask->date_jalon = $request->input('date_jalon');
         $newTask->project_id = $request->input('project_id');
         $newTask->parent_id = $request->input('parent_id');
         $newTask->save();
@@ -79,7 +78,6 @@ class TaskController extends Controller
         $task->update([
             'name' => $request->input('name'),
             'duration' => $request->input('duration'),
-            'date_jalon' => $request->input('date_jalon'),
             'parent_id' => $request->input('parent_id') == '' ? null : $request->input('parent_id'),
             'status' => $request->input('status'),
         ]);

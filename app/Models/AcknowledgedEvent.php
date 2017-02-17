@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventsUser extends Model
+class AcknowledgedEvent extends Model
 {
-    protected $table = 'events_users';
+    protected $table = 'acknowledged_Events';
     protected $fillable = ['event_id', 'user_id'];
 
     public function event() {

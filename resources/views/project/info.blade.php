@@ -28,18 +28,6 @@
     <div class="panel-heading">Objectifs du projet</div>
 
     <div class="panel-body">
-        <!-- Display all project objectives -->
-        <ol class="targets">
-        @foreach($project->targets as $target)
-            <li class="@if($target->status == 'Finished'){{'finished'}}@endif">{{$target->description}}
-                @if($target->status == 'Wait')
-                <button class="right btn validetarget" data-targetid="{{$target->id}}">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                </button>
-                @endif
-            </li>
-        @endforeach
-        </ol>
         <br>
         <a class="btn btn-warning target" data-projectid="{{$project->id}}">Ajouter un objectif</a>
     </div>

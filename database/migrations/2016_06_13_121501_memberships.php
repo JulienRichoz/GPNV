@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEventsUsersTable extends Migration
+class Memberships extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,16 @@ class CreateEventsUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('acknowledgedEvents', function (Blueprint $table) {
+        Schema::create('memberships', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->integer('user_id')->unsigned();
-            $table->integer('event_id')->unsigned();
-            $table->timestamps();
+            $table->integer('project_id')->unsigned();
+            $table->timestamps(); // Creation the column "created_at" and "updated_at"
         });
 
-        Schema::table('acknowledgedEvents', function($table) {
+        Schema::table('memberships', function($table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('event_id')->references('id')->on('events');
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateEventsUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('acknowledgedEvents');
+        Schema::drop('memberships');
     }
 }

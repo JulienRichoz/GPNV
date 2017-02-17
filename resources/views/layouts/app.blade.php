@@ -59,23 +59,6 @@
                       <li><a href="{{ url('/admin') }}">Admin</a></li>
                     @endif
 
-                    <li><a>|</a></li>
-                    <li>
-                        <a href="#" class="invitations">Invitations
-                            <?php $total = null; ?>
-                            @for($i = 0; $i < count($invitations); $i++)
-
-                                @if($invitations[$i]->guest_id == Auth::user()->id)
-                                    <?php $total = $total + 1; ?>
-                                @endif
-
-                            @endfor
-                            @if($total != null)
-                                <span class="badge">{{$total}}</span>
-                            @endif
-                        </a>
-                    </li>
-
                 </ul>
 
 
@@ -281,17 +264,6 @@
 
         });
 
-        // Invit a user
-        $('a.invitation').click(function () {
-            var projectid = this.getAttribute('data-projectid');
-            $.get("{{ url('project') }}/" + projectid + "/invitations", function (projectid) {
-                bootbox.dialog({
-                    title: "Inviter une personne",
-                    message: projectid
-                });
-            });
-        });
-
         // Add a target
         $('#app-layout').on('click', 'a.target', function () {
             var projectid = this.getAttribute('data-projectid');
@@ -304,17 +276,6 @@
                         message: data
                     });
                 }
-            });
-        });
-
-        // See ongoing inviations
-        $('a.invitationwait').click(function () {
-            var projectid = this.getAttribute('data-projectid');
-            $.get("{{ url('project') }}/" + projectid + "/invitations/wait", function (projectid) {
-                bootbox.dialog({
-                    title: "Voir les invitations",
-                    message: projectid
-                });
             });
         });
 
@@ -360,19 +321,6 @@
             });
         });
 
-        // Call invitations with a status "Wait"
-        $('a.invitations').click(function () {
-            callinvitation();
-        });
-        function callinvitation() {
-            $.get("{{ url('invitations') }}", {}, function (invitations) {
-                bootbox.dialog({
-                    title: "Vos invitations en attentes",
-                    message: invitations
-                });
-            });
-        }
-
         function callEvents(project) {
             $.ajax({
                 url: "{{ route('project.events', '@') }}".replace('@', project),
@@ -407,8 +355,8 @@
 
                         var formattedDate = ('0' + date.getDate()).slice(-2) + '.'
                             + ('0' + (date.getMonth()+1)).slice(-2) + '.'
-                            + date.getFullYear().toString().slice(-2) 
-                            + " " + ('0' + date.getHours()).slice(-2) 
+                            + date.getFullYear().toString().slice(-2)
+                            + " " + ('0' + date.getHours()).slice(-2)
                             + ":" + ('0' + date.getMinutes()).slice(-2);
 
                         content += (openingRowTag);
@@ -420,7 +368,7 @@
                         // Validation status management
                         $.each(members, function() {
                             if (this.id != currentUserId) {
-                                content += ("<span title=\"" + this.firstname + " " + this.lastname 
+                                content += ("<span title=\"" + this.firstname + " " + this.lastname
                                 + "\" data-toggle=\"tooltip\" data-placement=\"bottom\">");
 
                                 var statusClass; // indicates whether the event has been validated or not
@@ -452,7 +400,7 @@
                     // enabling bootstrap tooltips
                     $('[data-toggle="tooltip"]').tooltip();
 
-                    
+
                     $('.validationButton').click(function() {
                         updateValidationStatus(this);
                     });
@@ -468,39 +416,13 @@
                     } else {
                         $('#logBookBadge').remove();
                     }
-                    
+
                 },
                 error: function (data) {
                     console.log(data);
                 }
             });
         }
-
-        // Accept a invitation
-        $('#app-layout').on('click', 'button.invitationaccept', function () {
-            var invitation = this.getAttribute('data-invitation');
-            $.ajax({
-                url: "{{ route('invitations.accept', '@') }}".replace('@', invitation),
-                type: 'post',
-                success: function (data) {
-                    bootbox.hideAll();
-                    callinvitation();
-                }
-            });
-        });
-
-        // Refuse a inviation
-        $('#app-layout').on('click', 'button.invitationrefuse', function () {
-            var invitation = this.getAttribute('data-invitation');
-            $.ajax({
-                url: "{{ route('invitations.refuse', '@') }}".replace('@', invitation),
-                type: 'post',
-                success: function (data) {
-                    bootbox.hideAll();
-                    callinvitation();
-                }
-            });
-        });
 
         // Delete a user for a task
         $('#app-layout').on('click', 'button.usertaskdestroy', function () {

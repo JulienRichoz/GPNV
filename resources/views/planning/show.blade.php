@@ -23,7 +23,7 @@
 
 
                 ['{{$task->id}}', '{{$task->name}}',
-                        new Date({{$task->created_at->year}},{{$task->created_at->month}},{{$task->created_at->day}},{{$task->created_at->hour}},{{$task->created_at->minute}}), new Date({{date("Y",strtotime($task->date_jalon))}}, {{date("m",strtotime($task->date_jalon))}}, {{date("d",strtotime($task->date_jalon))}},10), {{$task->duration/24}}, {{round(($task->getElapsedDuration()*100/60/60)/$task->duration,1)}}, null],
+                        #new Date({{$task->created_at->year}},{{$task->created_at->month}},{{$task->created_at->day}},{{$task->created_at->hour}},{{$task->created_at->minute}}), new Date({{date("Y",strtotime($task->date_jalon))}}, {{date("m",strtotime($task->date_jalon))}}, {{date("d",strtotime($task->date_jalon))}},10), {{$task->duration/24}}, {{round(($task->getElapsedDuration()*100/60/60)/$task->duration,1)}}, null],
 
                 @endforeach
         ]);

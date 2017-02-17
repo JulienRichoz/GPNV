@@ -19,14 +19,6 @@
         </div>
 
         <div class="form-group">
-            <label class="col-md-4 control-label">Date du jalon</label>
-
-            <div class="col-md-6">
-                <input type="date" class="form-control" name="date_jalon" value="{{ old('date_jalon') }}" required>
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-6">
                 <input type="hidden" class="form-control" name="project_id" value="{{$project}}" required>
             </div>

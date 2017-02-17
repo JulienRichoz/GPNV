@@ -25,19 +25,19 @@ class User extends Authenticatable {
     }
 
     public function projects() {
-        return $this->belongsToMany(\App\Models\Project::class, 'projects_users', 'user_id', 'project_id');
+        return $this->belongsToMany(\App\Models\Project::class, 'memberships', 'user_id', 'project_id');
     }
 
-    public function guest() {
+    /*public function guest() {
         return $this->hasMany(\App\Models\Invitation::class, 'guest_id', 'id');
     }
 
     public function host() {
         return $this->hasMany(\App\Models\Invitation::class, 'host_id', 'id');
-    }
+    }*/
 
-    public function projectsUsers() {
-        return $this->hasMany(\App\Models\ProjectsUser::class, 'user_id', 'id');
+    public function memberships() {
+        return $this->hasMany(\App\Models\Memberships::class, 'user_id', 'id');
     }
 
     public function usersTasks() {

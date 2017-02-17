@@ -2,13 +2,13 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectsUser extends Model {
+class Memberships extends Model {
 
     /**
      * Generated
      */
 
-    protected $table = 'projects_users';
+    protected $table = 'memberships';
     protected $fillable = ['project_id', 'user_id'];
 
 

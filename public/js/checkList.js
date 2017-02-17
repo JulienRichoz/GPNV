@@ -4,7 +4,7 @@
 */
 $(document).ready(function () {
   // Add a new item on checkList
-  $('.addCheckList').click(function () {
+  $('.addcheckList').click(function () {
       var id = this.getAttribute('data-id');
       var baseUrl = this.getAttribute('data-URL');
       $.get(baseUrl+"/checkList/"+id+"/create", {}, function (form) {

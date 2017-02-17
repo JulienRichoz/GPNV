@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CheckList extends Migration
+class checkLists extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CheckList extends Migration
      */
     public function up()
     {
-      Schema::create('checkListTables', function (Blueprint $table) {
+      Schema::create('checkList_Tables', function (Blueprint $table) {
         $table->increments('id')->index();
         $table->string('name', 45);
       });
 
-      Schema::create('checkListTypes', function(Blueprint $table){
+      Schema::create('checkList_Types', function(Blueprint $table){
         $table->increments('id')->index();
         $table->string('name',45);
       });
@@ -30,7 +30,7 @@ class CheckList extends Migration
         $table->integer('checkListType_id')->unsigned();
       });
 
-      Schema::create('checkListItems', function(Blueprint $table){
+      Schema::create('checkList_Items', function(Blueprint $table){
         $table->increments('id')->index();
         $table->string('title', 45);
         $table->longText('description')->nullable();
@@ -39,11 +39,11 @@ class CheckList extends Migration
       });
 
       Schema::table('checkLists', function($table){
-        $table->foreign('checkListTable_id')->references('id')->on('checkListTables');
-        $table->foreign('checkListType_id')->references('id')->on('checkListTypes');
+        $table->foreign('checkListTable_id')->references('id')->on('checkList_Tables');
+        $table->foreign('checkListType_id')->references('id')->on('checkList_Types');
       });
 
-      Schema::table('checkListItems', function($table){
+      Schema::table('checkList_Items', function($table){
         $table->foreign('checkList_id')->references('id')->on('checkLists');
       });
     }
@@ -55,9 +55,9 @@ class CheckList extends Migration
      */
     public function down()
     {
-        Schema::drop('checkListItems');
+        Schema::drop('checkList_Items');
         Schema::drop('checkLists');
-        Schema::drop('checkListTypes');
-        Schema::drop('checkListTables');
+        Schema::drop('checkList_Types');
+        Schema::drop('checkList_Tables');
     }
 }
