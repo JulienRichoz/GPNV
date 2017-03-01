@@ -330,6 +330,12 @@ class ProjectController extends Controller
               $Member->user_id = $key;
               $Member->project_id = $ProjectID;
               $Member->save();
+
+              $Event = new Event;
+              $Event->user_id = $key;
+              $Event->project_id = $ProjectID;
+              $Event->description = "User had to project by: " . Auth::user()->lastname . " "  . Auth::user()->firstname;
+              $Event->save();
           }
       }
 
