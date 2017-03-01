@@ -18,11 +18,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        ;
+        /*;
         View::composer('layouts/app', function($view){
             $invitations = Invitation::where("status","=","wait")->get();
             $view->with('invitations', $invitations);
-        });
+        });*/
     }
 
     /**

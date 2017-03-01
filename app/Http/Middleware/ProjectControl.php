@@ -18,14 +18,9 @@ class ProjectControl extends Validator
      */
     public function handle($request, Closure $next)
     {
-         if(Auth::user()->role->name == "Eleve") {
-             if (Auth::user()->projects()->find($request->id)) {
-                 return $next($request);
-             } else {
-                 echo "Pas de permission";
-             }
-         }else{
-             return $next($request);
-         }
+      if (Auth::user()->projects()->find($request->id))
+        return $next($request);
+      else
+        return redirect('/');
     }
 }

@@ -15,21 +15,20 @@ class CheckList extends Model
   private $checkListId="";
   private $name="";
 
-  //initialize a checklist
+  //initialize a checkList
   function __construct($elementName, $elementId, $checkListType)
   {
-
-    $tableId = DB::table('CheckListTables')->where('name', $elementName)->first();
-    $typeId = DB::table('CheckListTypes')->where('name', $checkListType)->first();
+    $tableId = DB::table('checkList_Tables')->where('name', $elementName)->first();
+    $typeId = DB::table('checkList_Types')->where('name', $checkListType)->first();
     if(isset($tableId) && isset($typeId))
     {
       $this->name = $typeId->name;
-      $listeId = DB::table('CheckListLinkedTo')->where([['fkTable', '=', $tableId->id],
-      ['fkType', '=', $typeId->id], ['recordId','=', $elementId]])->first();
+      $listeId = DB::table('checkLists')->where([['checkListTable_id', '=', $tableId->id],
+      ['checkListType_id', '=', $typeId->id], ['recordId','=', $elementId]])->first();
       if(isset($listeId))
       {
         $this->checkListId = $listeId->id;
-        $checkList = DB::table('CheckListItems')->where('fkLinkedTo',$listeId->id)->get();
+        $checkList = DB::table('checkList_Items')->where('checkList_id',$listeId->id)->get();
         foreach ($checkList as $checkListItem)
         {
           $this->nbItems++;
@@ -41,7 +40,7 @@ class CheckList extends Model
     }
   }
 
-  //return the checklist name
+  //return the checkList name
   public function getName()
   {
     return $this->name;
@@ -110,27 +109,27 @@ class CheckList extends Model
     else
       $done = 0;
 
-    DB::table('CheckListItems')->where('id',$id)->update(array('done'=>$done));
+    DB::table('checkList_Items')->where('id',$id)->update(array('done'=>$done));
   }
 
   //add new item to the checkList
   public static function newItem($checkListId, $title, $description)
   {
-    DB::table('CheckListItems')->insert(array('title' => $title, 'description' => $description, 'done' => 0, 'fkLinkedTo' => $checkListId));
+    DB::table('checkList_Items')->insert(array('title' => $title, 'description' => $description, 'done' => 0, 'checkList_id' => $checkListId));
   }
 
   //create a new checkList
-  public static function newCheckList($tableName, $recordId, $typeName)
+  public static function newcheckList($tableName, $recordId, $typeName)
   {
-    $tableId = DB::table('CheckListTables')->where('name', $tableName)->value('id');
-    $typeId = DB::table('CheckListTypes')->where('name', $typeName)->value('id');
+    $tableId = DB::table('checkList_Tables')->where('name', $tableName)->value('id');
+    $typeId = DB::table('checkList_Types')->where('name', $typeName)->value('id');
 
     if(!isset($tableId))
-      $tableId = DB::table('CheckListTables')->insertGetId(array('name' => $tableName));
+      $tableId = DB::table('checkList_Tables')->insertGetId(array('name' => $tableName));
 
     if(!isset($typeId))
-      $typeId = DB::table('CheckListTypes')->insertGetId(array('name' => $typeName));
+      $typeId = DB::table('checkList_Types')->insertGetId(array('name' => $typeName));
 
-    DB::table('CheckListLinkedTo')->insert(array('recordId' => $recordId, 'fkTable' => $tableId, 'fkType' => $typeId));
+    DB::table('checkLists')->insert(array('recordId' => $recordId, 'checkListTable_id' => $tableId, 'checkListType_id' => $typeId));
   }
 }

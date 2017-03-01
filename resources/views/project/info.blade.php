@@ -15,31 +15,21 @@
             <p>
                 <!-- Display all project members -->
                 @include('user.avatar', ['user' => $user])
-                <button class="right btn userprojectdestroy" data-id="{{$user->id}}" data-projectid="{{$project->id}}">
+                <!-- <button class="right btn userprojectdestroy" data-id="{{$user->id}}" data-projectid="{{$project->id}}">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </button>
+                </button> -->
             </p>
         @endforeach
-        <a class="btn btn-warning invitation" data-projectid="{{$project->id}}">Ajouter une personne</a>
-        <a class="btn btn-warning invitationwait" data-projectid="{{$project->id}}">Voir les invitations en attente</a>
+
+        <a class="btn btn-warning addStudents" data-projectid="{{$project->id}}">Ajouter un élève</a>
+        <a class="btn btn-warning addTeachers" data-projectid="{{$project->id}}">Ajouter un enseignant</a>
+        <a class="btn btn-warning quitProject" data-projectid="{{$project->id}}" style="float: right;">Quitter le projet</a>
 
     </div>
 
     <div class="panel-heading">Objectifs du projet</div>
 
     <div class="panel-body">
-        <!-- Display all project objectives -->
-        <ol class="targets">
-        @foreach($project->targets as $target)
-            <li class="@if($target->status == 'Finished'){{'finished'}}@endif">{{$target->description}}
-                @if($target->status == 'Wait')
-                <button class="right btn validetarget" data-targetid="{{$target->id}}">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                </button>
-                @endif
-            </li>
-        @endforeach
-        </ol>
         <br>
         <a class="btn btn-warning target" data-projectid="{{$project->id}}">Ajouter un objectif</a>
     </div>

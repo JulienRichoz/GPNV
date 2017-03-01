@@ -18,14 +18,6 @@
     </div>
 
     <div class="form-group">
-        <label class="col-md-4 control-label">Date de début</label>
-
-        <div class="col-md-6">
-            <input type="date" class="form-control" name="date_jalon" value="{{ $task->date_jalon }}" required>
-        </div>
-    </div>
-
-    <div class="form-group">
         <label class="col-md-4 control-label">Statut</label>
 
         <div class="col-md-6">

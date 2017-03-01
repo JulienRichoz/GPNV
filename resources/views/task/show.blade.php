@@ -4,7 +4,6 @@
 
         <div class="panel-body">
             <p>Durée initial : {{$task->duration}}</p>
-            <p>Date du jalon : {{$task->date_jalon}}</p>
         </div>
 
         <div class="panel-heading">Avancement</div>

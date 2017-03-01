@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Models\ProjectsUser;
-use App\Models\EventsUser;
+use App\Models\Memberships;
+use App\Models\AcknowledgedEvent;
 use App\Models\UsersTask;
 use App\Models\Project;
 use App\Models\User;
@@ -42,7 +42,7 @@ class EventController extends Controller
             // Holds ids of users that have validated the event
             $users = array();
             foreach ($projectMembers as $member) {
-                $exists = EventsUser::where([
+                $exists = AcknowledgedEvent::where([
                     ['user_id', '=', $member->id],
                     ['event_id', '=', $event->eventId],
                 ])->exists();
@@ -51,7 +51,7 @@ class EventController extends Controller
                     $users[] = $member->id;
                 }
             }
-            
+
             $validations[$event->eventId] = $users;
 
             // Incrementing badgeCount unless the current user validated the event
@@ -61,8 +61,8 @@ class EventController extends Controller
         }
 
         return json_encode(array(
-            'eventInfos'=>$eventInfos, 
-            'currentUser'=>['id'=>$currentUserId], 
+            'eventInfos'=>$eventInfos,
+            'currentUser'=>['id'=>$currentUserId],
             'validations' => $validations,
             'members' => $projectMembers,
             'badgeCount' => $badgeCount
@@ -79,14 +79,14 @@ class EventController extends Controller
         $event->save();
 
         // relationship management
-        $relation = new EventsUser;
+        $relation = new AcknowledgedEvent;
         $relation->event_id = $event->id;
         $relation->user_id = Auth::user()->id;
         $relation->save();
     }
 
     public function storeValidation($project, Request $request) {
-        $relation = new EventsUser;
+        $relation = new AcknowledgedEvent;
         $relation->event_id = $request->eventId;
         $relation->user_id = $request->userId;
         $relation->save();

@@ -61,7 +61,7 @@
                         @each('checkList.show', $livrables->showCompleted(), 'checkListItem')
                       @endif
                     </ul>
-                    <a class="btn btn-warning addCheckList" data-id="{{$livrables->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
+                    <a class="btn btn-warning addcheckList" data-id="{{$livrables->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
                     @if($livrables->getNbItemsDone())
                       <a class="btn btn-warning changeView">Voir les éléments effectués</a>
                       <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>

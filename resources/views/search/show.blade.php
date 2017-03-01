@@ -46,7 +46,6 @@
                                 <td>{{$task->name}}</td>
                                 <td>{{$task->created_at}}</td>
                                 <td>{{$task->updated_at}}</td>
-                                <td>{{$task->date_jalon}}</td>
                                 <td>{{$task->duration}}</td>
                                 <td>
                                     @foreach($task->usersTasks()->get() as $usertask)
@@ -66,6 +65,3 @@
         </div>
     </div>
 @endsection
-
-
-

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\ProjectsUser;
+use App\Models\Memberships;
 use Auth;
 use Illuminate\Support\Facades\Input;
 use Storage;

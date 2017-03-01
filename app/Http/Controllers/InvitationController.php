@@ -92,7 +92,6 @@ class InvitationController extends Controller
               ->get();
           }
         }
-        #$users = User::whereNotIn('users.id', $usersDontNeed)->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')->join('roles', 'users.role_id', '=', 'roles.id')->where('roles.name', '!=', 'Prof')->get();
         return view('invitation.show', ['project' => $project, 'users' => $users]);
     }
 
@@ -113,7 +112,7 @@ class InvitationController extends Controller
        return redirect('project/' . $project->id);
 
     }
-
+    /*
     // Return the view about the waiting invitations
     public function wait($id)
     {
@@ -154,5 +153,5 @@ class InvitationController extends Controller
         ]);
 
         (new EventController())->store($invitation->project_id, " refuser l'invitation"); // Create an event
-    }
+    }*/
 }

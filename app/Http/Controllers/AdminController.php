@@ -123,57 +123,6 @@ class AdminController extends Controller
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
       }
 
-      /*
-      try{
-        if(!StudentClass::find($Class->id)){
-          $Class->save();
-        }
-      }
-      catch (Exception $e) {
-        echo 'Exception reçue : ',  $e->getMessage(), "\n";
-      }
-
-      //Get teacher and Save it
-      $IDTeacher = $C->Master->Link->Id;
-      $TeacherSML = GetXML("http://intranet.cpnv.ch/teachers/".$IDTeacher.".xml");
-
-      if(User::find($TeacherSML->Id)){
-        $Teacher = User::find($TeacherSML->Id);
-        $Update=True;
-      }
-      else{
-        $Teacher = new User();
-        $Update=False;
-      }
-
-      $Teacher->id=(string)$TeacherSML->Id;
-      $Teacher->firstname=(string)$TeacherSML->Firstname;
-      $Teacher->lastname=(string)$TeacherSML->Lastname;
-      $Teacher->mail=(string)$TeacherSML->CorporateEmail;
-      $Teacher->role_id=2;
-      $Teacher->class_id=$Class->id;
-      $Teacher->state_id=1;
-      $Teacher->friendlyid=(string)$TeacherSML->FriendlyId;
-
-      array_push($UsersID, $TeacherSML->Id);
-
-      try{
-        if(User::find($TeacherSML->Id)!=$Teacher){
-          $Teacher->save();
-          if($Update){
-            array_push($UpdateTeachers, $Teacher);
-          }
-          else{
-            array_push($NewTeachers, $Teacher);
-          }
-
-        }
-      }
-      catch (Exception $e) {
-        echo 'Exception reçue : ',  $e->getMessage(), "\n";
-      }
-      */
-
       // Get all the students from the classes
       foreach ($C->Students->Student as $S) {
         $StudentXML = GetXML("http://intranet.cpnv.ch/students/".$S->Link->Id.".xml");
