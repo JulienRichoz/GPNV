@@ -92,7 +92,6 @@ class InvitationController extends Controller
               ->get();
           }
         }
-        #$users = User::whereNotIn('users.id', $usersDontNeed)->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')->join('roles', 'users.role_id', '=', 'roles.id')->where('roles.name', '!=', 'Prof')->get();
         return view('invitation.show', ['project' => $project, 'users' => $users]);
     }
 

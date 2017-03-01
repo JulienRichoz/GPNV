@@ -69,6 +69,11 @@ Route::group(['middleware' => 'web'], function () {
         /* APP */
         Route::get('logout', 'SessionController@destroy');
 
+        /* Add User */
+        Route::get('project/{id}/getStudents/', 'ProjectController@getStudents')->where('id', '[0-9]+');
+        Route::get('project/{id}/getTeachers/', 'ProjectController@getTeachers')->where('id', '[0-9]+');
+        Route::post('project/{id}/addUsers/', ['as' => 'project.addUsers', 'uses' => 'ProjectController@addUsers'])->where('id', '[0-9]+');
+
         /* INVITATION PROJECTS */
         #Route::get('project/{project}/invitations/', 'InvitationController@show')->where('project', '[0-9]+');
         #Route::get('project/{projectid}/invitations/wait', 'InvitationController@wait')->where('projectid', '[0-9]+');

@@ -20,9 +20,9 @@ class ProjectControl extends Validator
     {
          if(Auth::user()->role->name == "Eleve") {
              if (Auth::user()->projects()->find($request->id)) {
-                 return $next($request);
+                return $next($request);
              } else {
-                 echo "Pas de permission";
+                echo "Pas de permission";
              }
          }else{
              return $next($request);

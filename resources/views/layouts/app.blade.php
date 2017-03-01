@@ -141,6 +141,28 @@
             });
         });
 
+        // Add student user to project
+        $('a.addStudents').click(function () {
+            var projectid = this.getAttribute('data-projectid');
+            $.get("{{ url('project') }}/" + projectid + "/getStudents", function (projectid) {
+                bootbox.dialog({
+                    title: "Ajouter un élève de la classe",
+                    message: projectid
+                });
+            });
+        });
+
+        // Add teacher user to project
+        $('a.addTeachers').click(function () {
+            var projectid = this.getAttribute('data-projectid');
+            $.get("{{ url('project') }}/" + projectid + "/getTeachers", function (projectid) {
+                bootbox.dialog({
+                    title: "Ajouter un enseignant",
+                    message: projectid
+                });
+            });
+        });
+
         // Edit a task
         $('button.taskedit').click(function () {
             var task = this.getAttribute('data-id');
@@ -524,6 +546,8 @@
             updateCheckBoxStatus()
         });
 
+
+
         function displayConfirmation(success) {
             if (success) {
                 bootbox.alert("L'évènement a été ajouté avec succès.");
@@ -564,6 +588,8 @@
         $('.validationButton').click(function() {
             updateValidationStatus(this);
         });
+
+
 
         // Init
         // Coping with the fact some browsers preserves the checkbox status after reloading pages
