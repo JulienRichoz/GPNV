@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Memberships;
-use Illuminate\Http\Request;
 use App\Models\UsersTask;
 use App\Models\Project;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Task;
 use App\Models\Event;
-use App\Http\Requests;
-use App\Http\Middleware\ProjectControl;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Form;
-use Datetime;
 use App\Models\Target;
 use App\Models\CheckList;
 use App\Models\AcknowledgedEvent;
+use App\Models\StudentClass;
+
+use App\Http\Requests;
+use App\Http\Middleware\ProjectControl;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Form;
+use Datetime;
 use DB;
 
 class ProjectController extends Controller
@@ -231,6 +234,117 @@ class ProjectController extends Controller
     public function createCheckListItem( $checkListId)
     {
       return view('checkList.create', ['checkListId'=>$checkListId]);//view('checkList.create', ['checkListId' => $id]);
+    }
+
+    public function getStudents($id){
+
+      // Recover users in the current porject
+      $Project = Project::find($id);
+      $usersInProject = $Project->users()->select('users.id')->get()->toArray();
+
+      $usersDontNeed = [];
+      foreach ($usersInProject as $user){
+           array_push($usersDontNeed,$user['id']);
+      }
+
+      $UserClassID = Auth::user()->class_id;
+      $UserClass = StudentClass::find($UserClassID);
+      $ClassYearSection = substr($UserClass->name, -2);
+
+      $Test = str_replace('SI-','',$UserClass->name);
+      $Test = str_replace($ClassYearSection,'',$Test);
+
+      if($Test!='T'){
+        $Regex = "SI-(MI)".$ClassYearSection."|SI-[C]".$ClassYearSection;
+        $Regex = '/'.$Regex.'/';
+
+        $Classes = StudentClass::all();
+        foreach ($Classes as $Classe) {
+          if(preg_match($Regex, $Classe->name)){
+            if($UserClassID!=$Classe->id){
+              $AddClass = $Classe->id;
+              break;
+            }
+          }
+        }
+      }
+
+      // Add user from same classes if needed
+      if(isset($AddClass)){
+        $users = User::whereNotIn('users.id', $usersDontNeed)
+          ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
+          ->where('class_id', '=', $UserClassID)
+          ->orWhere('class_id', '=', $AddClass)
+          ->join('roles', 'users.role_id', '=', 'roles.id')
+          ->orderBy('lastname', 'asc')
+          ->get();
+      }
+      // Get Only teacher user when the authentificated user is a teacher
+      else{
+        if(Auth::user()->role_id==2){
+          $users = User::whereNotIn('users.id', $usersDontNeed)
+            ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
+            ->join('roles', 'users.role_id', '=', 'roles.id')
+            ->where('role_id', '=', 1)
+            ->orderBy('lastname', 'asc')
+            ->get();
+        }
+        else{
+          $users = User::whereNotIn('users.id', $usersDontNeed)
+            ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
+            ->where('class_id', '=', $UserClassID)
+            ->where('role_id', '=', 1)
+            ->join('roles', 'users.role_id', '=', 'roles.id')
+            ->orderBy('lastname', 'asc')
+            ->get();
+        }
+      }
+
+      return view('project.addUsers', ['project' => $Project, 'users' => $users]);
+    }
+
+    public function getTeachers($id){
+      // Recover users in the current porject
+      $Project = Project::find($id);
+      $usersInProject = $Project->users()->select('users.id')->get()->toArray();
+
+      $usersDontNeed = [];
+      foreach ($usersInProject as $user){
+           array_push($usersDontNeed,$user['id']);
+      }
+
+      $users = User::whereNotIn('users.id', $usersDontNeed)
+        ->select('users.id', 'avatar', 'mail', 'firstname', 'lastname', 'class_id')
+        ->where('role_id', '=', 2)
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->orderBy('lastname', 'asc')
+        ->get();
+
+      return view('project.addUsers', ['project' => $Project, 'users' => $users]);
+    }
+
+    public function addUsers(Request $request, $ProjectID){
+      if($request->input('user')) {
+          foreach ($request->input('user') as $key => $value) {
+              $Member = new Memberships;
+              $Member->user_id = $key;
+              $Member->project_id = $ProjectID;
+              $Member->save();
+
+              $Event = new Event;
+              $Event->user_id = $key;
+              $Event->project_id = $ProjectID;
+              $Event->description = "User had to project by: " . Auth::user()->lastname . " "  . Auth::user()->firstname;
+              $Event->save();
+          }
+      }
+
+      return redirect('project/' . $ProjectID);
+    }
+
+    public function quitProject($id){
+
+      return redirect('project/' . $id);
     }
 
     /*public function getTask(Request $request){

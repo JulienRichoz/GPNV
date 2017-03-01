@@ -52,6 +52,8 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('target/{target}/valide', ['as' => 'project.validetarget', 'uses' => 'ProjectController@valideTarget'])->where('target', '[0-9]+');
         Route::get('project/{id}/target', ['as' => 'project.gettarget', 'uses' => 'ProjectController@getTarget'])->where('id', '[0-9]+');
 
+        Route::post('project/{id}/quitProject/', ['as' => 'project.quitProject', 'uses' => 'ProjectController@quitProject'])->where('id', '[0-9]+');
+
         /*-----------------------------Routes PRW2 --------------------------*/
         Route::put('project/id/{id}','CheckListController@update');
         Route::get('project/checklist/{id}/create','ProjectController@createCheckListItem');
@@ -69,14 +71,10 @@ Route::group(['middleware' => 'web'], function () {
         /* APP */
         Route::get('logout', 'SessionController@destroy');
 
-        /* INVITATION PROJECTS */
-        #Route::get('project/{project}/invitations/', 'InvitationController@show')->where('project', '[0-9]+');
-        #Route::get('project/{projectid}/invitations/wait', 'InvitationController@wait')->where('projectid', '[0-9]+');
-        #Route::post('project/{project}/invitations/', ['as' => 'invitation.store', 'uses' => 'InvitationController@store'])->where('project', '[0-9]+');
-        #Route::get('project/{projectid}/target', ['as' => 'project.events',  'uses' => 'InvitationController@target'])->where('projectid', '[0-9]+');
-        #Route::get('invitations','InvitationController@edit');
-        #Route::post('invitations/{invitation}/accept',['as'=> 'invitations.accept','uses'=>'InvitationController@accept'])->where('invitation', '[0-9]+');;
-        #Route::post('invitations/{invitation}/refuse',['as'=> 'invitations.refuse','uses'=>'InvitationController@refuse'])->where('invitation', '[0-9]+');;
+        /* Add User */
+        Route::get('project/{id}/getStudents/', 'ProjectController@getStudents')->where('id', '[0-9]+');
+        Route::get('project/{id}/getTeachers/', 'ProjectController@getTeachers')->where('id', '[0-9]+');
+        Route::post('project/{id}/addUsers/', ['as' => 'project.addUsers', 'uses' => 'ProjectController@addUsers'])->where('id', '[0-9]+');
 
         /* USER */
         Route::get('user/{user}', ['as'=> 'user.show','uses'=>'UserController@show'])->where('user', '[0-9]+');
