@@ -342,6 +342,11 @@ class ProjectController extends Controller
       return redirect('project/' . $ProjectID);
     }
 
+    public function quitProject($id){
+
+      return redirect('project/' . $id);
+    }
+
     /*public function getTask(Request $request){
 
         if($request->ajax())

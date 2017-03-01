@@ -15,14 +15,15 @@
             <p>
                 <!-- Display all project members -->
                 @include('user.avatar', ['user' => $user])
-                <button class="right btn userprojectdestroy" data-id="{{$user->id}}" data-projectid="{{$project->id}}">
+                <!-- <button class="right btn userprojectdestroy" data-id="{{$user->id}}" data-projectid="{{$project->id}}">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </button>
+                </button> -->
             </p>
         @endforeach
 
         <a class="btn btn-warning addStudents" data-projectid="{{$project->id}}">Ajouter un élève</a>
         <a class="btn btn-warning addTeachers" data-projectid="{{$project->id}}">Ajouter un enseignant</a>
+        <a class="btn btn-warning quitProject" data-projectid="{{$project->id}}" style="float: right;">Quitter le projet</a>
 
     </div>
 

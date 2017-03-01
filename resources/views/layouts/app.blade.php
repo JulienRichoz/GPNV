@@ -163,6 +163,39 @@
             });
         });
 
+        $('a.quitProject').click(function () {
+            var projectid = this.getAttribute('data-projectid');
+
+              bootbox.confirm({
+                title: "Voulez-vous quitter le projet ?",
+                message: "Cette action vous retirera du projet, cette action ne peut être annulée.<br/> Vos tâches attribuées resteront mais ne vous seront plus attribuées. (Les autres membres seront informés des changements)",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Retour',
+                        className: 'btn-success'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Quitter le projet',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result){
+                    if (result) {
+                        $.ajax({
+                            url: "{{ route('project.quitProject', '@') }}".replace('@', projectid),
+                            type: "POST",
+                            success: function() {
+                                bootbox.alert("Projet quitté avec succés.");
+                            },
+                            error: function() {
+                                console.log(result);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
         // Edit a task
         $('button.taskedit').click(function () {
             var task = this.getAttribute('data-id');
