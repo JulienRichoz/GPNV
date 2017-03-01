@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/template.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/logBook.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/awesome-bootstrap-checkbox.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/tasks.css') }}"/>
 
     <style>
         body {
