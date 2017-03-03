@@ -37,14 +37,14 @@
               <!-- Display all yourCheckList -->
               @if($objectifs->showToDo())
                 @foreach($objectifs->showToDo() as $checkListItem)
-                  @include('checkList.show', array('checkListItem'=>$checkListItem, 'descriptionUrl' => $objectifs->getDescriptionURL()))
+                  @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true))
                 @endforeach
               @endif
           </ul>
           <ul class="completed hidden">
             @if($objectifs->showCompleted())
               @foreach($objectifs->showCompleted() as $checkListItem)
-                @include('checkList.show', array('checkListItem'=>$checkListItem, 'descriptionUrl' => $objectifs->getDescriptionURL()))
+                @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true))
               @endforeach
             @endif
           </ul>
