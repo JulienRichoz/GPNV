@@ -43,7 +43,7 @@
 
             <div class="dropdown dropTaskFilter">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Dropdown
+                t&acirc;ches de...
                 <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -51,7 +51,9 @@
                     <li><a href="#">Moi</a></li>
                     <li><a href="#">Personne</a></li>
                     <li role="separator" class="divider"></li>
-                    {{--active project members--}}
+                    @foreach($members as $member)
+                        <li><a href="#">{{$member->firstname}} {{$member->lastname}}</a></li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -60,7 +62,7 @@
                 <h1>Vos tâches</h1>
                 <div class="tree-menu" id="tree-menu">
                     <ul>
-                        <!-- Display the tasks connected user -->
+                        <!-- Display the connected user tasks -->
                         @foreach($project->tasksParent as $task)
                             @include('project.mytask', ['taskactive' => $taskactive, 'duration' => $duration])
                         @endforeach
