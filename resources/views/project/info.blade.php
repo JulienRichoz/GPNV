@@ -36,18 +36,22 @@
           <ul>
               <!-- Display all yourCheckList -->
               @if($objectifs->showToDo())
-                @each('checkList.show', $objectifs->showToDo(), 'checkListItem')
+                @foreach($objectifs->showToDo() as $checkListItem)
+                  @include('checkList.show', array('checkListItem'=>$checkListItem, 'descriptionUrl' => $objectifs->getDescriptionURL()))
+                @endforeach
               @endif
           </ul>
           <ul class="completed hidden">
             @if($objectifs->showCompleted())
-              @each('checkList.show', $objectifs->showCompleted(), 'checkListItem')
+              @foreach($objectifs->showCompleted() as $checkListItem)
+                @include('checkList.show', array('checkListItem'=>$checkListItem, 'descriptionUrl' => $objectifs->getDescriptionURL()))
+              @endforeach
             @endif
           </ul>
           <a class="btn btn-warning addCheckList" data-id="{{$objectifs->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
           @if($objectifs->getNbItemsDone())
-            <a class="btn btn-warning changeView">Voir les éléments effectués</a>
-            <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>
+            <a class="btn btn-warning changeView">Voir les objectifs validés</a>
+            <a class="btn btn-warning changeView hidden">Cacher les objectifs validés</a>
           @endif
       </div>
         <!-- Display all project objectives

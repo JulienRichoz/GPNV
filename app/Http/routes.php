@@ -58,6 +58,11 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('project/checkList/{checkListId}/create','CheckListController@store');
         /*--------------------------------------------------------------------*/
 
+        /*-----------------------------Routes Scenario-------------------------*/
+        Route::get('project/scenario/{scenarioId}','ScenarioController@show');
+        Route::get('project/scenario', 'ScenarioController@show');
+        /*---------------------------------------------------------------------*/
+
 
         /* FILES */
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store']);

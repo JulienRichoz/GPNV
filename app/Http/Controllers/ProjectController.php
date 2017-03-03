@@ -75,7 +75,7 @@ class ProjectController extends Controller
         /* Created By Fabio Marques
           Description: create a new objectifs checkList
         */
-        $objectifs = new CheckList('Project', $id, 'Objectifs');
+        $objectifs = new CheckList('Project', $id, 'Objectifs', 'project/scenario');
 
         /* Created By Raphaël B.
           Description: log book event handling
@@ -174,7 +174,7 @@ class ProjectController extends Controller
           Created By: Fabio Marques
           Description: Create a new checkList of objectifs to the project
         */
-        CheckList::newCheckList('Project', $newProject->id, 'Objectifs');
+        CheckList::newCheckList('Project', $newProject->id, 'Objectifs', 'project/scenario');
 
         return redirect()->route('project.index');
     }

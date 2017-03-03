@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/logBook.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/awesome-bootstrap-checkbox.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/checkList.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/scenario.css') }}"/>
 
     <style>
         body {
@@ -125,6 +126,7 @@
 <script src="{{ URL::asset('js/bootbox.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{{ URL::asset('js/checkList.js') }}"></script>
+<script src="{{ URL::asset('js/scenario.js') }}"></script>
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
 
