@@ -342,9 +342,12 @@ class ProjectController extends Controller
       return redirect('project/' . $ProjectID);
     }
 
-    public function quitProject($id){
-      $currentUser = Auth::user();
-      $Project = Project::find($id);
+    public function removeUserFromProject($ProjectId, $UserID=null){
+      if($UserID!=null)
+        $currentUser = User::find($UserID);
+      else
+        $currentUser = Auth::user();
+      $Project = Project::find($ProjectId);
       $Memberships = Memberships::where('user_id', '=', $currentUser->id)->where('project_id', '=', $Project->id)->get()[0];
 
       $Tasks = $Project->tasks()->get();
@@ -356,7 +359,7 @@ class ProjectController extends Controller
 
             $Event = new Event;
             $Event->user_id = $currentUser->id;
-            $Event->project_id = $id;
+            $Event->project_id = $ProjectId;
             $Event->description = "Suppression de l'attribution de la tâche : \"" . $Task->name . "\" par : " . $currentUser->lastname . " "  . $currentUser->firstname;
             $Event->save();
         }
@@ -376,13 +379,16 @@ class ProjectController extends Controller
 
       $Event = new Event;
       $Event->user_id = $currentUser->id;
-      $Event->project_id = $id;
-      $Event->description = "L'Utilisateur a quitté le projet";
+      $Event->project_id = $ProjectId;
+      if($UserID!=null)
+        $Event->description = "L'Utilisateur a été retiré du projet par: ". Auth::user()->lastname . " "  . Auth::user()->firstname;
+      else
+        $Event->description = "L'Utilisateur a quitté le projet";
       $Event->save();
 
       $Memberships->delete();
 
-      return redirect('project/' . $id);
+      return redirect('project/' . $ProjectId);
     }
 
     /*public function getTask(Request $request){

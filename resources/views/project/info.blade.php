@@ -18,9 +18,13 @@
             </p>
         @endforeach
 
-        <a class="btn btn-warning addStudents" data-projectid="{{$project->id}}">Ajouter un élève</a>
-        <a class="btn btn-warning addTeachers" data-projectid="{{$project->id}}">Ajouter un enseignant</a>
-        <a class="btn btn-warning quitProject" data-projectid="{{$project->id}}" style="float: right;">Quitter le projet</a>
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-warning addStudents" data-projectid="{{$project->id}}">Ajouter un élève</a>
+            <a class="btn btn-warning addTeachers" data-projectid="{{$project->id}}">Ajouter un enseignant</a>
+            <a class="btn btn-warning quitProject" data-projectid="{{$project->id}}" data-id="{{Auth::user()->id}}" style="float: right;">Quitter le projet</a>
+          </div>
+        </div>
 
     </div>
 
