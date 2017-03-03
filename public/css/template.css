@@ -50,10 +50,6 @@
     margin-bottom: 0;
     font-weight: 400;
     cursor: pointer;
-    border: 1px solid #DDD;
-    border-radius: 3px;
-    padding: 5px 5px 5px 25px;
-    margin: 3px;
 }
 
 .tree-menu a:hover > button{
@@ -140,6 +136,25 @@
     margin: 5px;
 
 }
+
+.userlist{
+  display: flex;
+  float: right;
+  width: 50%;
+  max-width: 280px;
+}
+
+.removeUser{
+  float: right;
+  display: flex;
+  position: relative;
+  top: -45px;
+}
+
+.removeUser button{
+  padding: 3px 10px;
+}
+
 /*****************************************************/
 
 /* Livrables */
