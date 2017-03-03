@@ -334,7 +334,7 @@ class ProjectController extends Controller
               $Event = new Event;
               $Event->user_id = $key;
               $Event->project_id = $ProjectID;
-              $Event->description = "User had to project by: " . Auth::user()->lastname . " "  . Auth::user()->firstname;
+              $Event->description = "Utilisateur ajouté par : " . Auth::user()->lastname . " "  . Auth::user()->firstname;
               $Event->save();
           }
       }
@@ -343,6 +343,44 @@ class ProjectController extends Controller
     }
 
     public function quitProject($id){
+      $currentUser = Auth::user();
+      $Project = Project::find($id);
+      $Memberships = Memberships::where('user_id', '=', $currentUser->id)->where('project_id', '=', $Project->id)->get()[0];
+
+      $Tasks = $Project->tasks()->get();
+
+      foreach ($Tasks as $Task) {
+        $UserTask = UsersTask::where('user_id', '=', $currentUser->id)->where('task_id', '=', $Task->id)->get();
+        if(isset($UserTask[0])){
+            $UserTask[0]->delete();
+
+            $Event = new Event;
+            $Event->user_id = $currentUser->id;
+            $Event->project_id = $id;
+            $Event->description = "Suppression de l'attribution de la tâche : \"" . $Task->name . "\" par : " . $currentUser->lastname . " "  . $currentUser->firstname;
+            $Event->save();
+        }
+      }
+
+      $Events = $Project->events()->get();
+      $EventsID = [];
+      foreach ($Events as $event){
+           array_push($EventsID,$event['id']);
+      }
+
+      $AcknowledgedEventsU = AcknowledgedEvent::where('user_id', '=', $currentUser->id)->whereIn('event_id', $EventsID)->get();
+
+      foreach ($AcknowledgedEventsU as $AcknowledgedEventU) {
+        $AcknowledgedEventU->delete();
+      }
+
+      $Event = new Event;
+      $Event->user_id = $currentUser->id;
+      $Event->project_id = $id;
+      $Event->description = "L'Utilisateur a quitté le projet";
+      $Event->save();
+
+      $Memberships->delete();
 
       return redirect('project/' . $id);
     }
