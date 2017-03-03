@@ -20,9 +20,11 @@
 
         <div class="row">
           <div class="col-md-12">
-            <a class="btn btn-warning addStudents" data-projectid="{{$project->id}}">Ajouter un élève</a>
-            <a class="btn btn-warning addTeachers" data-projectid="{{$project->id}}">Ajouter un enseignant</a>
-            <a class="btn btn-warning quitProject" data-projectid="{{$project->id}}" data-id="{{Auth::user()->id}}" style="float: right;">Quitter le projet</a>
+            @if(Auth::user()->projects()->find($project->id))
+              <a class="btn btn-warning addStudents" data-projectid="{{$project->id}}">Ajouter un élève</a>
+              <a class="btn btn-warning addTeachers" data-projectid="{{$project->id}}">Ajouter un enseignant</a>
+              <a class="btn btn-warning quitProject" data-projectid="{{$project->id}}" data-id="{{Auth::user()->id}}" style="float: right;">Quitter le projet</a>
+            @endif
           </div>
         </div>
 
@@ -32,7 +34,9 @@
 
     <div class="panel-body">
         <br>
-        <a class="btn btn-warning target" data-projectid="{{$project->id}}">Ajouter un objectif</a>
+        @if(Auth::user()->projects()->find($project->id))
+          <a class="btn btn-warning target" data-projectid="{{$project->id}}">Ajouter un objectif</a>
+        @endif
     </div>
 
 
