@@ -26,19 +26,19 @@
             <div id="filters" class="hidden">
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                        <input data-status="wip" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
                         En cours
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <input data-status="todo" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
                         A faire
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <input data-status="done" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
                         Termin&eacute;e
                     </label>
                 </div>
@@ -62,17 +62,7 @@
 
         </div>
         <div class="row collapse projectTasks">
-            <div class="col-md-6">
-                <h1>Vos tâches</h1>
-                <div class="tree-menu" id="tree-menu">
-                    <ul>
-                        <!-- Display the connected user tasks -->
-                        @foreach($project->tasksParent as $task)
-                            @include('project.mytask', ['taskactive' => $taskactive, 'duration' => $duration])
-                        @endforeach
-                    </ul>
-                </div>
-                <h1>Les tâches du projet</h1>
+            <div id="taskList" class="col-md-6">
                 <div class="tree-menu" id="tree-menu">
                     <ul>
                         <!-- Display all project tasks -->

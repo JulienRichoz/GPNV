@@ -655,6 +655,12 @@
             $("#filters").toggleClass("hidden");
         });
 
+        $(".form-check-input").change(function() {
+            if (this.checked) {
+                console.log("Displaying \"" + this.dataset.status + "\" tasks");
+            }
+        });
+
     });
 </script>
 
