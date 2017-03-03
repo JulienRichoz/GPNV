@@ -21,41 +21,45 @@
         </div>
 
         <div id="taskBanner">
-            <h1 data-toggle="collapse" data-target=".projectTasks" aria-expanded="false">Les t&acirc;ches du projet</h1>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    En cours
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                    A faire
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                    Termin&eacute;e
-                </label>
+            <h1 id ="taskHeading" data-toggle="collapse" data-target=".projectTasks" aria-expanded="false">Les t&acirc;ches du projet</h1>
+
+            <div id="filters" class="hidden">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                        En cours
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        A faire
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        Termin&eacute;e
+                    </label>
+                </div>
+
+                <div class="dropdown dropTaskFilter">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    t&acirc;ches de...
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Tous</a></li>
+                        <li><a href="#">Moi</a></li>
+                        <li><a href="#">Personne</a></li>
+                        <li role="separator" class="divider"></li>
+                        @foreach($members as $member)
+                            <li><a href="#">{{$member->firstname}} {{$member->lastname}}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
 
-            <div class="dropdown dropTaskFilter">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                t&acirc;ches de...
-                <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Tous</a></li>
-                    <li><a href="#">Moi</a></li>
-                    <li><a href="#">Personne</a></li>
-                    <li role="separator" class="divider"></li>
-                    @foreach($members as $member)
-                        <li><a href="#">{{$member->firstname}} {{$member->lastname}}</a></li>
-                    @endforeach
-                </ul>
-            </div>
         </div>
         <div class="row collapse projectTasks">
             <div class="col-md-6">

@@ -1,6 +1,7 @@
 #taskBanner {
     background-color: #eee;
     margin-top: 20px;
+    position: relative;
 }
 
 #taskBanner h1 {
@@ -10,13 +11,19 @@
     margin-bottom: 20px;
 }
 
+#filters {
+    display: inline;
+}
+
 #taskBanner div.form-check {
-    display: inline-block;
+    display: inline;
     margin-left: 20px;
 }
 
 .dropTaskFilter {
-    display: inline-block;
-    float: right;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    right: 0px;
     margin-right: 20px;
 }

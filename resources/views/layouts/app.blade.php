@@ -650,6 +650,11 @@
 
         @yield('script')
 
+        // Displays / hides the filter controls depending on whether the task container is collapsed or not
+        $("#taskHeading").click(function() {
+            $("#filters").toggleClass("hidden");
+        });
+
     });
 </script>
 
