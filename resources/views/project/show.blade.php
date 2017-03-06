@@ -38,7 +38,9 @@
                         @each('project.task', $project->tasksParent, 'task')
                     </ul>
                 </div>
-                <a class="btn btn-warning taskroot" data-id="{{$project->id}}">Créer une tâche racine</a>
+                @if(Auth::user()->projects()->find($project->id))
+                  <a class="btn btn-warning taskroot" data-id="{{$project->id}}">Créer une tâche racine</a>
+                @endif
 
                 <!--*********************** partie PRW2***********************
                   Created By: Fabio Marques
@@ -61,7 +63,9 @@
                         @each('checkList.show', $livrables->showCompleted(), 'checkListItem')
                       @endif
                     </ul>
-                    <a class="btn btn-warning addcheckList" data-id="{{$livrables->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
+                    @if(Auth::user()->projects()->find($project->id))
+                      <a class="btn btn-warning addcheckList" data-id="{{$livrables->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
+                    @endif
                     @if($livrables->getNbItemsDone())
                       <a class="btn btn-warning changeView">Voir les éléments effectués</a>
                       <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>
@@ -98,7 +102,7 @@
                             </label>
                         </div>
                     </form>
-                    
+
                     <div class="panel panel-default" id="logbookPanel">
                         <table class='table'>
                             <thead><tr><th>Qui</th><th>Quand</th><th>Quoi</th><th>Vu</th></tr></thead>
@@ -143,6 +147,7 @@
 
         <h1>Fichiers</h1>
         <div class="panel panel-default" id="files">
+            @if(Auth::user()->projects()->find($project->id))
             <div class="panel-heading">Ajoutez des fichiers</div>
             <div class="panel-body">
                 <div class="container">
@@ -168,6 +173,7 @@
                     </form>
                 </div>
             </div>
+            @endif
 
             <div class="panel-heading">Fichiers du projet</div>
             <div class="panel-body">

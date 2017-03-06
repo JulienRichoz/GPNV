@@ -334,7 +334,7 @@ class ProjectController extends Controller
               $Event = new Event;
               $Event->user_id = $key;
               $Event->project_id = $ProjectID;
-              $Event->description = "User had to project by: " . Auth::user()->lastname . " "  . Auth::user()->firstname;
+              $Event->description = "Utilisateur ajouté par : " . Auth::user()->lastname . " "  . Auth::user()->firstname;
               $Event->save();
           }
       }
@@ -342,9 +342,53 @@ class ProjectController extends Controller
       return redirect('project/' . $ProjectID);
     }
 
-    public function quitProject($id){
+    public function removeUserFromProject($ProjectId, $UserID=null){
+      if($UserID!=null)
+        $currentUser = User::find($UserID);
+      else
+        $currentUser = Auth::user();
+      $Project = Project::find($ProjectId);
+      $Memberships = Memberships::where('user_id', '=', $currentUser->id)->where('project_id', '=', $Project->id)->get()[0];
 
-      return redirect('project/' . $id);
+      $Tasks = $Project->tasks()->get();
+
+      foreach ($Tasks as $Task) {
+        $UserTask = UsersTask::where('user_id', '=', $currentUser->id)->where('task_id', '=', $Task->id)->get();
+        if(isset($UserTask[0])){
+            $UserTask[0]->delete();
+
+            $Event = new Event;
+            $Event->user_id = $currentUser->id;
+            $Event->project_id = $ProjectId;
+            $Event->description = "Suppression de l'attribution de la tâche : \"" . $Task->name . "\" par : " . $currentUser->lastname . " "  . $currentUser->firstname;
+            $Event->save();
+        }
+      }
+
+      $Events = $Project->events()->get();
+      $EventsID = [];
+      foreach ($Events as $event){
+           array_push($EventsID,$event['id']);
+      }
+
+      $AcknowledgedEventsU = AcknowledgedEvent::where('user_id', '=', $currentUser->id)->whereIn('event_id', $EventsID)->get();
+
+      foreach ($AcknowledgedEventsU as $AcknowledgedEventU) {
+        $AcknowledgedEventU->delete();
+      }
+
+      $Event = new Event;
+      $Event->user_id = $currentUser->id;
+      $Event->project_id = $ProjectId;
+      if($UserID!=null)
+        $Event->description = "L'Utilisateur a été retiré du projet par: ". Auth::user()->lastname . " "  . Auth::user()->firstname;
+      else
+        $Event->description = "L'Utilisateur a quitté le projet";
+      $Event->save();
+
+      $Memberships->delete();
+
+      return redirect('project/' . $ProjectId);
     }
 
     /*public function getTask(Request $request){

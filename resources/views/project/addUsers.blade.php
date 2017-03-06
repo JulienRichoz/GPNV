@@ -2,7 +2,7 @@
    {!! csrf_field() !!}
      <div class="checkbox">
         @foreach($users as $user)
-          <label>
+          <label class="userlist">
               <input type="checkbox" name="user[{{$user->id}}]">
               @include('user.avatar', ['user' => $user])
           </label>

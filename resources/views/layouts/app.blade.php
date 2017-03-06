@@ -165,6 +165,7 @@
 
         $('a.quitProject').click(function () {
             var projectid = this.getAttribute('data-projectid');
+            var userid = this.getAttribute('data-id');
 
               bootbox.confirm({
                 title: "Voulez-vous quitter le projet ?",
@@ -182,7 +183,7 @@
                 callback: function(result){
                     if (result) {
                         $.ajax({
-                            url: "{{ route('project.quitProject', '@') }}".replace('@', projectid),
+                            url: "{{ url('project') }}/" + projectid + "/removeFromProject/" + userid,
                             type: "POST",
                             success: function() {
                                 bootbox.alert("Projet quitté avec succés.");
@@ -194,6 +195,40 @@
                     }
                 }
             });
+        });
+
+        $('button.removeUser').click(function () {
+            var projectid = this.getAttribute('data-projectid');
+            var userid = this.getAttribute('data-id');
+
+            bootbox.confirm({
+              title: "Voulez-vous vraiment supprimer cet utilisateur ?",
+              message: "Cette action le retirera du projet, cette action ne peut être annulée.<br/> Les tâches attribuées $ l'utilisateur resteront mais ne vous seront plus attribuées. (Les autres membres seront informés des changements)",
+              buttons: {
+                  cancel: {
+                      label: '<i class="fa fa-times"></i> Retour',
+                      className: 'btn-success'
+                  },
+                  confirm: {
+                      label: '<i class="fa fa-check"></i> Supprimer du projet',
+                      className: 'btn-danger'
+                  }
+              },
+              callback: function(result){
+                  if (result) {
+                      $.ajax({
+                          url: "{{ url('project') }}/" + projectid + "/removeFromProject/" + userid,
+                          type: "POST",
+                          success: function() {
+                              bootbox.alert("Utilisateur supprimé avec succés.");
+                          },
+                          error: function() {
+                              console.log(result);
+                          }
+                      });
+                  }
+              }
+          });
         });
 
         // Edit a task
