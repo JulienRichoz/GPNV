@@ -37,8 +37,13 @@ use the command : `php artisan db:seed` during the installation.
  utilisateur@mail.com  |  secret
  tournesol@mail.com    |  secret
 
-## Utilisation
-Pour tester l'application, il est nécessaire d'utiliser une extension de navigateur
-permettant de modifier le HTTP Header (tel que Modify Headers)
-Pour Mozilla Firefox : https://addons.mozilla.org/fr/firefox/addon/modify-headers/?src=search
-Pour Google Chrome : https://chrome.google.com/webstore/detail/modify-headers-for-google/innpjfdalfhpcoinfnehdnbkglpmogdi
+## Use app in "Test Mode"
+In order to use the site, an addon able to modify HTTP Header is needed.
+Here is some addons for the most used browsers :
+ - Mozilla Firefox : https://addons.mozilla.org/fr/firefox/addon/modify-headers/?src=search
+ - Google Chrome : https://chrome.google.com/webstore/detail/modify-headers-for-google/innpjfdalfhpcoinfnehdnbkglpmogdi
+
+In order to connect, for the first time, you must use one of the two accounts (add from the database seed).
+The header to add is "X-Forwarded-User" and the value is :
+ - For Teacher : 2
+ - For Student : 1
