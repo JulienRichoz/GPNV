@@ -20,6 +20,12 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'auth'], function(){
 
+        Route::group(['middleware' => 'admin'], function(){
+        /* ADMIN */
+          Route::get('admin', 'AdminController@show');
+          Route::get('admin/sync', 'AdminController@synchro');
+        });
+
         /* TASK */
         Route::resource('tasks', 'TaskController',
             ['parameters' =>
@@ -97,10 +103,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('project/{id}/formEvents', ['as' => 'project.formEvents', 'uses' => 'EventController@formEvent'])->where('id', '[0-9]+');
         Route::post('project/{id}/events', ['as' => 'project.storeEvents', 'uses' => 'EventController@store'])->where('id', '[0-9]+');
         Route::post('project/{id}/events/validation', ['as' => 'project.storeEventsValidation', 'uses' => 'EventController@storeValidation'])->where('id', '[0-9]+');
-
-        /* ADMIN */
-        Route::get('admin', 'AdminController@show');
-        Route::get('admin/sync', 'AdminController@synchro');
 
         Route::get('test','Welcome@test');
         Route::get('user/{search}',array('as' => 'name', 'uses' => 'UserController@search'));

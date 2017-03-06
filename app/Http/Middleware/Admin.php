@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class ProjectAccess extends Validator
+class Admin extends Validator
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,8 @@ class ProjectAccess extends Validator
      */
     public function handle($request, Closure $next)
     {
-      if (Auth::user()->projects()->find($request->id))
+      # The user can't access to any /admin pages and requests if it's not a teacher
+      if (Auth::user()->role_id==2)
         return $next($request);
       else
         return redirect('/');
