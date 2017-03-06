@@ -139,6 +139,32 @@ class ProjectController extends Controller
         return view('project/task');
     }
 
+    // Returns the html representation of all views mathing a set of filter 
+    // specified in the request parameter
+    public function getTasks(Request $request) {
+        /*echo $request;*/
+        $projectId = $request->id;
+        $status = $request->status;
+
+        // Stores the task views that will be displayed to the user
+        $viewStack = "";
+
+        $tasks = Task::where("project_id", "=", $projectId)->where("status", "=", $status)->get();
+
+        //echo $tasks;
+
+        // Making sure there are tasks to display / display an information message otherwise
+        if (count($tasks) > 0) {
+            foreach ($tasks as $task) {
+                $taskView = view('project/task', ['task' => $task]);
+                $viewStack .= $taskView;
+            }
+            return $viewStack;
+        } else {
+            return "No task available";
+        }
+    }
+
     // Return the view to creating projects
     public function create()
     {

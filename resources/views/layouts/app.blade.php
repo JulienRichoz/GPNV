@@ -149,8 +149,9 @@
         // Display details for a task
         $('.taskshow').click(function () {
             var task = this.getAttribute('data-id');
+            console.log("{{ url('tasks') }}/" + task);
             $.get("{{ url('tasks') }}/" + task, {}, function (task) {
-                console.log(task);
+                // console.log(task);
                 $('#taskdetail').html(task);
             });
 
@@ -657,7 +658,23 @@
 
         $(".form-check-input").change(function() {
             if (this.checked) {
-                console.log("Displaying \"" + this.dataset.status + "\" tasks");
+                var projectId = $('#taskBanner').attr('data-projectId');
+                var status = this.dataset.status;
+                console.log(projectId);
+                console.log("Displaying \"" + status + "\" tasks");
+
+                $.ajax({
+                    url: "{{ route('project.getTasks', '@') }}".replace('@', projectId),
+                    type: 'get',
+                    data: {status: status},
+                    success: function (tasks) {
+                        console.log(tasks);
+                        $("#taskList").html(tasks);
+                    },
+                    error: function() {
+                        console.log("failed to load project tasks");
+                    }
+                });
             }
         });
 

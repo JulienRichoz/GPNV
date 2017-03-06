@@ -20,7 +20,7 @@
             </form>
         </div>
 
-        <div id="taskBanner">
+        <div id="taskBanner" data-projectid="{{$project->id}}">
             <h1 id ="taskHeading" data-toggle="collapse" data-target=".projectTasks" aria-expanded="false">Les t&acirc;ches du projet</h1>
 
             <div id="filters" class="hidden">
@@ -70,9 +70,6 @@
                     </ul>
                 </div>
                 <a class="btn btn-warning taskroot" data-id="{{$project->id}}">Créer une tâche racine</a>
-
-
-
             </div>
             <div class="col-md-6"><h1>Détails de la tâche</h1>
                 <div id="taskdetail"></div>
