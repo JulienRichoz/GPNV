@@ -146,10 +146,10 @@
 
     $(document).ready(function () {
 
-        // Display details for a task
-        $('.taskshow').click(function () {
+        // Displays details of a given task
+        $('#app-layout').on('click', '.taskshow', function () {
+            console.log(this);
             var task = this.getAttribute('data-id');
-            console.log("{{ url('tasks') }}/" + task);
             $.get("{{ url('tasks') }}/" + task, {}, function (task) {
                 // console.log(task);
                 $('#taskdetail').html(task);
@@ -161,7 +161,7 @@
         });
 
         // Edit a task
-        $('button.taskedit').click(function () {
+        $('#app-layout').on('click', 'button.taskedit', function () {
             var task = this.getAttribute('data-id');
             $.get("{{ route('tasks.edit', '@') }}".replace('@', task), {}, function (task) {
                 bootbox.dialog({
@@ -172,7 +172,7 @@
         });
 
         // Add a parent task
-        $('button.taskplus').click(function () {
+        $('#app-layout').on('click', 'button.taskplus', function () {
             var task = this.getAttribute('data-id');
             $.get("{{ url('tasks') }}/" + task + "/children/create", {}, function (task) {
                 bootbox.dialog({
@@ -183,7 +183,7 @@
         });
 
         // Add a root task
-        $('.taskroot').click(function () {
+        $('#app-layout').on('click', '.taskroot', function () {
             var task = this.getAttribute('data-id');
             $.get("{{ url('project') }}/" + task + "/tasks/create", {}, function (task) {
                 bootbox.dialog({
@@ -242,7 +242,7 @@
         });
 
         // Delete a task
-        $('button.taskdestroy').click(function () {
+        $('#app-layout').on('click', 'button.taskdestroy', function () {
             var task = this.getAttribute('data-id');
             bootbox.confirm("Vous allez supprimer cette tâches ? ", function (result) {
                 if (result) {
@@ -660,8 +660,7 @@
             if (this.checked) {
                 var projectId = $('#taskBanner').attr('data-projectId');
                 var status = this.dataset.status;
-                console.log(projectId);
-                console.log("Displaying \"" + status + "\" tasks");
+                //console.log("Displaying \"" + status + "\" tasks");
 
                 $.ajax({
                     url: "{{ route('project.getTasks', '@') }}".replace('@', projectId),
@@ -669,7 +668,7 @@
                     data: {status: status},
                     success: function (tasks) {
                         console.log(tasks);
-                        $("#taskList").html(tasks);
+                        $("#tree-menu ul").html(tasks);
                     },
                     error: function() {
                         console.log("failed to load project tasks");

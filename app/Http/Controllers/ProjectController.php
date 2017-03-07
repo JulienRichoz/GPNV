@@ -146,12 +146,10 @@ class ProjectController extends Controller
         $projectId = $request->id;
         $status = $request->status;
 
-        // Stores the task views that will be displayed to the user
+        // Stores the task views representations that will be displayed to the user
         $viewStack = "";
 
-        $tasks = Task::where("project_id", "=", $projectId)->where("status", "=", $status)->get();
-
-        //echo $tasks;
+        $tasks = Task::where("project_id", "=", $projectId)->where("status", "=", $status)->whereNull('parent_id')->get();
 
         // Making sure there are tasks to display / display an information message otherwise
         if (count($tasks) > 0) {
