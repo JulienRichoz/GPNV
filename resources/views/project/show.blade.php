@@ -26,19 +26,19 @@
             <div id="filters" class="hidden">
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input data-status="wip" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                        <input data-status="wip" class="form-check-input activeStatus" type="radio" name="exampleRadios" value="option1" checked>
                         En cours
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input data-status="todo" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <input data-status="todo" class="form-check-input" type="radio" name="exampleRadios" value="option2">
                         A faire
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input data-status="done" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <input data-status="done" class="form-check-input" type="radio" name="exampleRadios" value="option2">
                         Termin&eacute;e
                     </label>
                 </div>
@@ -49,12 +49,16 @@
                     <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Tous</a></li>
-                        <li><a href="#">Moi</a></li>
-                        <li><a href="#">Personne</a></li>
+                        <li><a href="#" data-taskOwner="all" class="activeOwner">Tous</a></li>
+                        <li><a href="#" data-taskOwner="{{$currentUser->id}}">Moi</a></li>
+                        <li><a href="#" data-taskOwner="nobody">Personne</a></li>
                         <li role="separator" class="divider"></li>
+                        {{-- Displaying project members --}}
                         @foreach($members as $member)
-                            <li><a href="#">{{$member->firstname}} {{$member->lastname}}</a></li>
+                            {{-- Making sure not to display the current user --}}
+                            @unless($member->id == $currentUser->id)
+                                <li><a href="#" data-taskOwner="{{$member->id}}">{{$member->firstname}} {{$member->lastname}}</a></li>
+                            @endunless
                         @endforeach
                     </ul>
                 </div>

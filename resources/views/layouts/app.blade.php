@@ -651,30 +651,56 @@
 
         @yield('script')
 
+        // ------------------------------------ Task filters handling ------------------------------------
+
         // Displays / hides the filter controls depending on whether the task container is collapsed or not
         $("#taskHeading").click(function() {
             $("#filters").toggleClass("hidden");
         });
 
-        $(".form-check-input").change(function() {
-            if (this.checked) {
-                var projectId = $('#taskBanner').attr('data-projectId');
-                var status = this.dataset.status;
-                //console.log("Displaying \"" + status + "\" tasks");
+        // Displays tasks according to the active filters
+        function refreshDisplayedTasks() {
+            var projectId = $('#taskBanner').attr('data-projectId');
+            var status = $(".form-check-input.activeStatus").attr("data-status");
+            var taskOwner = $(".dropTaskFilter .dropdown-menu li a.activeOwner").attr("data-taskOwner");
 
-                $.ajax({
-                    url: "{{ route('project.getTasks', '@') }}".replace('@', projectId),
-                    type: 'get',
-                    data: {status: status},
-                    success: function (tasks) {
-                        console.log(tasks);
-                        $("#tree-menu ul").html(tasks);
-                    },
-                    error: function() {
-                        console.log("failed to load project tasks");
-                    }
-                });
-            }
+            $.ajax({
+                url: "{{ route('project.getTasks', '@') }}".replace('@', projectId),
+                type: 'get',
+                data: {status: status, taskOwner: taskOwner},
+                success: function (tasks) {
+                    console.log(tasks);
+                    $("#tree-menu ul").html(tasks);
+                },
+                error: function() {
+                    console.log("failed to load project tasks");
+                }
+            });
+        }
+
+        // Marking active filters with classes so that they can be used in refreshDisplayedTasks()
+
+        $(".form-check-input").change(function() {
+            // Removing the "activeStatus" class from the previously active status checkbox
+            $(".form-check-input").removeClass("activeStatus");
+
+            // Adding the class to the newly clicked checkbox
+            $(this).addClass("activeStatus");
+
+            refreshDisplayedTasks();
+        });
+
+
+        $(".dropTaskFilter .dropdown-menu li a").click(function(event) {
+            event.preventDefault();
+
+            // Removing the "activeOwner" class from the previously active status checkbox
+            $(".dropTaskFilter .dropdown-menu li a").removeClass("activeOwner");
+
+            // Adding the class to the newly clicked link
+            $(this).addClass("activeOwner");
+
+            refreshDisplayedTasks();
         });
 
     });

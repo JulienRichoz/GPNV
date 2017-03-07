@@ -145,9 +145,24 @@ class ProjectController extends Controller
         /*echo $request;*/
         $projectId = $request->id;
         $status = $request->status;
+        $taskOwner = $request->taskOwner;
 
         // Stores the task views representations that will be displayed to the user
         $viewStack = "";
+
+        switch ($taskOwner) {
+            case 'all':
+                # code...
+                break;
+
+            case 'nobody':
+                # code...
+                break;
+            
+            default:
+                # code...
+                break;
+        }
 
         $tasks = Task::where("project_id", "=", $projectId)->where("status", "=", $status)->whereNull('parent_id')->get();
 
