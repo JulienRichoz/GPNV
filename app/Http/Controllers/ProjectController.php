@@ -162,8 +162,7 @@ class ProjectController extends Controller
                 break;
 
             case 'nobody':
-                $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
-                    ->whereNull('users_tasks.user_id')
+                $tasks = Task::doesntHave('usersTasks')
                     ->where("tasks.project_id", "=", $projectId)
                     ->where("tasks.status", "=", $status)
                     ->whereNull('tasks.parent_id')
