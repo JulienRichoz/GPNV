@@ -658,7 +658,7 @@
             $("#filters").toggleClass("hidden");
         });
 
-        // Displays tasks according to the active filters
+        // Displays / hides tasks according to the active filters
         function refreshDisplayedTasks() {
             var projectId = $('#taskBanner').attr('data-projectId');
             var status = $(".form-check-input.activeStatus").attr("data-status");
@@ -680,6 +680,7 @@
 
         // Marking active filters with classes so that they can be used in refreshDisplayedTasks()
 
+        // Radio buttons marking
         $(".form-check-input").change(function() {
             // Removing the "activeStatus" class from the previously active status checkbox
             $(".form-check-input").removeClass("activeStatus");
@@ -690,7 +691,7 @@
             refreshDisplayedTasks();
         });
 
-
+        // Dropdown links marking
         $(".dropTaskFilter .dropdown-menu li a").click(function(event) {
             event.preventDefault();
 
