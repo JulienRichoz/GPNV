@@ -75,10 +75,6 @@ class ProjectController extends Controller
         */
         $livrables = new CheckList('Project', $id, 'Livrables');
 
-        /* Created By Fabio Marques
-          Description: create a new objectifs checkList
-        */
-        $objectifs = new CheckList('Project', $id, 'Objectifs', 'project/scenario');
 
         /* Created By Raphaël B.
           Description: log book event handling
@@ -118,7 +114,6 @@ class ProjectController extends Controller
         return view('project/show', [
             'project' => $project,
             'livrables'=>$livrables,
-            'objectifs'=>$objectifs,
             'duration' => $duration,
             'taskactive' => $task,
             'currentUser' => $currentUser,
@@ -226,12 +221,6 @@ class ProjectController extends Controller
         */
         CheckList::newCheckList('Project',$newProject->id,'Livrables');
 
-        /*
-          Created By: Fabio Marques
-          Description: Create a new checkList of objectifs to the project
-        */
-        CheckList::newCheckList('Project', $newProject->id, 'Objectifs', 'project/scenario');
-
         return redirect()->route('project.index');
     }
 
@@ -295,9 +284,9 @@ class ProjectController extends Controller
         return view('target.store', ['project' => $id]);
     }
 
-    public function createCheckListItem($id)
+    public function createCheckListItem( $checkListId)
     {
-      return view('checkList.create', ['checkListId'=>$id]);
+      return view('checkList.create', ['checkListId'=>$checkListId]);//view('checkList.create', ['checkListId' => $id]);
     }
 
     public function getStudents($id){

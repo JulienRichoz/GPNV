@@ -116,7 +116,7 @@
 
         <h1>Informations du projet</h1>
         <!-- Display all project informations like the members, a description and so on -->
-        @include('project.info', ['student' => $project, 'objectifs'=>$objectifs])
+        @include('project.info', ['student' => $project])
 
         <!-- Custom journal -->
         <div id="accordion">

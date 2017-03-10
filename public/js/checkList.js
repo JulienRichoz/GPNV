@@ -12,6 +12,7 @@ $(document).ready(function () {
               title: "Insérer un nouvel élément",
               message: form
           });
+          //$('#taskdetail').html(task);
       });
   });
 
