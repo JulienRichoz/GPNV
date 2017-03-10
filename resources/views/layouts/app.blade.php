@@ -711,6 +711,8 @@
         $(".dropTaskFilter .dropdown-menu li a").click(function(event) {
             event.preventDefault();
 
+            $('#dropdownTitle').html($(this).html());
+
             // Removing the "activeOwner" class from the previously active status checkbox
             $(".dropTaskFilter .dropdown-menu li a").removeClass("activeOwner");
 
