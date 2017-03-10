@@ -42,7 +42,7 @@ class TaskController extends Controller
         $newTask->duration = $request->input('duration');
         $newTask->project_id = $request->input('project_id');
         $newTask->parent_id = $request->input('parent_id');
-        $newTask->status = "wip" // hardcoded until the UI allows user friendly status changes
+        $newTask->status = "wip"; // hardcoded until the UI allows user friendly status changes
         $newTask->save();
 
         //modified By: Fabio Marques

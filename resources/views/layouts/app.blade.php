@@ -685,7 +685,7 @@
                 type: 'get',
                 data: {status: status, taskOwner: taskOwner},
                 success: function (tasks) {
-                    console.log(tasks);
+                    //console.log(tasks);
                     $("#tree-menu ul").html(tasks);
                 },
                 error: function() {

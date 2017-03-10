@@ -45,7 +45,7 @@
 
                 <div class="dropdown dropTaskFilter">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <span id="dropdownTitle">t&acirc;ches de...</span>
+                    <span id="dropdownTitle">tous</span>
                     <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
