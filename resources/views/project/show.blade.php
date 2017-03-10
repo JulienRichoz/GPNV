@@ -20,18 +20,53 @@
             </form>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <h1>Vos tâches</h1>
-                <div class="tree-menu" id="tree-menu">
-                    <ul>
-                        <!-- Display the tasks connected user -->
-                        @foreach($project->tasksParent as $task)
-                            @include('project.mytask', ['taskactive' => $taskactive, 'duration' => $duration])
+        <div id="taskBanner" data-projectid="{{$project->id}}">
+            <h1 id ="taskHeading" data-toggle="collapse" data-target=".projectTasks" aria-expanded="false">Les t&acirc;ches du projet</h1>
+
+            <div id="filters" class="hidden">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input data-status="wip" class="form-check-input activeStatus" type="radio" name="exampleRadios" value="option1" checked>
+                        En cours
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input data-status="todo" class="form-check-input" type="radio" name="exampleRadios" value="option2">
+                        A faire
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input data-status="done" class="form-check-input" type="radio" name="exampleRadios" value="option2">
+                        Termin&eacute;e
+                    </label>
+                </div>
+
+                <div class="dropdown dropTaskFilter">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    t&acirc;ches de...
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#" data-taskOwner="all" class="activeOwner">Tous</a></li>
+                        <li><a href="#" data-taskOwner="{{$currentUser->id}}">Moi</a></li>
+                        <li><a href="#" data-taskOwner="nobody">Personne</a></li>
+                        <li role="separator" class="divider"></li>
+                        {{-- Displaying project members --}}
+                        @foreach($members as $member)
+                            {{-- Making sure not to display the current user --}}
+                            @unless($member->id == $currentUser->id)
+                                <li><a href="#" data-taskOwner="{{$member->id}}">{{$member->firstname}} {{$member->lastname}}</a></li>
+                            @endunless
                         @endforeach
                     </ul>
                 </div>
-                <h1>Les tâches du projet</h1>
+            </div>
+
+        </div>
+        <div class="row collapse projectTasks">
+            <div id="taskList" class="col-md-6">
                 <div class="tree-menu" id="tree-menu">
                     <ul>
                         <!-- Display all project tasks -->
@@ -41,44 +76,43 @@
                 @if(Auth::user()->projects()->find($project->id))
                   <a class="btn btn-warning taskroot" data-id="{{$project->id}}">Créer une tâche racine</a>
                 @endif
-
-                <!--*********************** partie PRW2***********************
-                  Created By: Fabio Marques
-                  Description: Show the checkList "Livrables"
-                -->
-                <h1>{{$livrables->getName()}}</h1>
-                <div class="livrables">
-                  <div class="progressionLivrable">
-                    <div class="barre" style="background: linear-gradient(90deg, #20DE13 {{$livrables->getCompletedPercent()}}%, #efefef 0%);"></div>
-                    <p>{{$livrables->getNbItemsDone()}}/{{$livrables->getNbItems()}}</p>
-                  </div>
-                    <ul>
-                        <!-- Display all livrables -->
-                        @if($livrables->showToDo())
-                          @each('checkList.show', $livrables->showToDo(), 'checkListItem')
-                        @endif
-                    </ul>
-                    <ul class="completed hidden">
-                      @if($livrables->showCompleted())
-                        @each('checkList.show', $livrables->showCompleted(), 'checkListItem')
-                      @endif
-                    </ul>
-                    @if(Auth::user()->projects()->find($project->id))
-                      <a class="btn btn-warning addcheckList" data-id="{{$livrables->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
-                    @endif
-                    @if($livrables->getNbItemsDone())
-                      <a class="btn btn-warning changeView">Voir les éléments effectués</a>
-                      <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>
-                    @endif
-                </div>
-
-                <!--******************************************************** -->
-
             </div>
             <div class="col-md-6"><h1>Détails de la tâche</h1>
                 <div id="taskdetail"></div>
             </div>
         </div>
+
+        <!--*********************** partie PRW2***********************
+          Created By: Fabio Marques
+          Description: Show the checkList "Livrables"
+        -->
+        <h1>{{$livrables->getName()}}</h1>
+        <div class="livrables">
+          <div class="progressionLivrable">
+            <div class="barre" style="background: linear-gradient(90deg, #20DE13 {{$livrables->getCompletedPercent()}}%, #efefef 0%);"></div>
+            <p>{{$livrables->getNbItemsDone()}}/{{$livrables->getNbItems()}}</p>
+          </div>
+            <ul>
+                <!-- Display all livrables -->
+                @if($livrables->showToDo())
+                  @each('checkList.show', $livrables->showToDo(), 'checkListItem')
+                @endif
+            </ul>
+            <ul class="completed hidden">
+              @if($livrables->showCompleted())
+                @each('checkList.show', $livrables->showCompleted(), 'checkListItem')
+              @endif
+            </ul>
+            @if(Auth::user()->projects()->find($project->id))
+              <a class="btn btn-warning addcheckList" data-id="{{$livrables->getId()}}" data-URL="{{ URL('project') }}">Ajouter</a>
+            @endif
+            @if($livrables->getNbItemsDone())
+              <a class="btn btn-warning changeView">Voir les éléments effectués</a>
+              <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>
+            @endif
+        </div>
+
+        <!--******************************************************** -->
 
         <h1>Informations du projet</h1>
         <!-- Display all project informations like the members, a description and so on -->

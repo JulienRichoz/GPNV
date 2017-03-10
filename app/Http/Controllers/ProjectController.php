@@ -142,6 +142,59 @@ class ProjectController extends Controller
         return view('project/task');
     }
 
+    // Returns the html representation of all views mathing a set of filter 
+    // specified in the request parameter
+    public function getTasks(Request $request) {
+        $projectId = $request->id;
+        $status = $request->status;
+        $taskOwner = $request->taskOwner;
+
+        // Stores the task views representations that will be displayed to the user
+        $viewStack = "";
+
+        // Holds tasks matching the search criterias/filters
+        $tasks = collect(new Task);
+
+        switch ($taskOwner) {
+            case 'all':
+                $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
+                    ->where("tasks.project_id", "=", $projectId)
+                    ->where("tasks.status", "=", $status)
+                    ->whereNull('tasks.parent_id')
+                    ->get();
+                break;
+
+            case 'nobody':
+                $tasks = Task::doesntHave('usersTasks')
+                    ->where("tasks.project_id", "=", $projectId)
+                    ->where("tasks.status", "=", $status)
+                    ->whereNull('tasks.parent_id')
+                    ->get();
+                break;
+            
+            default:
+                $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
+                    ->where('users_tasks.user_id', "=", $taskOwner)
+                    ->where("tasks.project_id", "=", $projectId)
+                    ->where("tasks.status", "=", $status)
+                    ->whereNull('tasks.parent_id')
+                    ->get();
+
+                break;
+        }
+
+        // Making sure there are tasks to display / display an information message otherwise
+        if (count($tasks) > 0) {
+            foreach ($tasks as $task) {
+                $taskView = view('project/task', ['task' => $task]);
+                $viewStack .= $taskView;
+            }
+            return $viewStack;
+        } else {
+            return "<p id=\"resultLess\">Aucune tâche ne correspond aux filtres de recherche.</p>";
+        }
+    }
+
     // Return the view to creating projects
     public function create()
     {

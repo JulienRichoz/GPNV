@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/template.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/logBook.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/awesome-bootstrap-checkbox.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/tasks.css') }}"/>
 
     <style>
         body {
@@ -128,11 +129,12 @@
 
     $(document).ready(function () {
 
-        // Display details for a task
-        $('.taskshow').click(function () {
+        // Displays details of a given task
+        $('#app-layout').on('click', '.taskshow', function () {
+            console.log(this);
             var task = this.getAttribute('data-id');
             $.get("{{ url('tasks') }}/" + task, {}, function (task) {
-                console.log(task);
+                // console.log(task);
                 $('#taskdetail').html(task);
             });
 
@@ -232,7 +234,7 @@
         });
 
         // Edit a task
-        $('button.taskedit').click(function () {
+        $('#app-layout').on('click', 'button.taskedit', function () {
             var task = this.getAttribute('data-id');
             $.get("{{ route('tasks.edit', '@') }}".replace('@', task), {}, function (task) {
                 bootbox.dialog({
@@ -243,7 +245,7 @@
         });
 
         // Add a parent task
-        $('button.taskplus').click(function () {
+        $('#app-layout').on('click', 'button.taskplus', function () {
             var task = this.getAttribute('data-id');
             $.get("{{ url('tasks') }}/" + task + "/children/create", {}, function (task) {
                 bootbox.dialog({
@@ -254,7 +256,7 @@
         });
 
         // Add a root task
-        $('.taskroot').click(function () {
+        $('#app-layout').on('click', '.taskroot', function () {
             var task = this.getAttribute('data-id');
             $.get("{{ url('project') }}/" + task + "/tasks/create", {}, function (task) {
                 bootbox.dialog({
@@ -313,7 +315,7 @@
         });
 
         // Delete a task
-        $('button.taskdestroy').click(function () {
+        $('#app-layout').on('click', 'button.taskdestroy', function () {
             var task = this.getAttribute('data-id');
             bootbox.confirm("Vous allez supprimer cette tâches ? ", function (result) {
                 if (result) {
@@ -664,6 +666,59 @@
         updateCheckBoxStatus();
 
         @yield('script')
+
+        // ------------------------------------ Task filters handling ------------------------------------
+
+        // Displays / hides the filter controls depending on whether the task container is collapsed or not
+        $("#taskHeading").click(function() {
+            $("#filters").toggleClass("hidden");
+        });
+
+        // Displays / hides tasks according to the active filters
+        function refreshDisplayedTasks() {
+            var projectId = $('#taskBanner').attr('data-projectId');
+            var status = $(".form-check-input.activeStatus").attr("data-status");
+            var taskOwner = $(".dropTaskFilter .dropdown-menu li a.activeOwner").attr("data-taskOwner");
+
+            $.ajax({
+                url: "{{ route('project.getTasks', '@') }}".replace('@', projectId),
+                type: 'get',
+                data: {status: status, taskOwner: taskOwner},
+                success: function (tasks) {
+                    console.log(tasks);
+                    $("#tree-menu ul").html(tasks);
+                },
+                error: function() {
+                    console.log("failed to load project tasks");
+                }
+            });
+        }
+
+        // Marking active filters with classes so that they can be used in refreshDisplayedTasks()
+
+        // Radio buttons marking
+        $(".form-check-input").change(function() {
+            // Removing the "activeStatus" class from the previously active status checkbox
+            $(".form-check-input").removeClass("activeStatus");
+
+            // Adding the class to the newly clicked checkbox
+            $(this).addClass("activeStatus");
+
+            refreshDisplayedTasks();
+        });
+
+        // Dropdown links marking
+        $(".dropTaskFilter .dropdown-menu li a").click(function(event) {
+            event.preventDefault();
+
+            // Removing the "activeOwner" class from the previously active status checkbox
+            $(".dropTaskFilter .dropdown-menu li a").removeClass("activeOwner");
+
+            // Adding the class to the newly clicked link
+            $(this).addClass("activeOwner");
+
+            refreshDisplayedTasks();
+        });
 
     });
 </script>
