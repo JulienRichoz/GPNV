@@ -4,15 +4,15 @@
 */
 $(document).ready(function () {
   // Add a new item on checkList
-  $('.addcheckList').click(function () {
+  $('.addCheckList').click(function () {
       var id = this.getAttribute('data-id');
+      var productId = this.getAttribute('data-projectid');
       var baseUrl = this.getAttribute('data-URL');
-      $.get(baseUrl+"/checklist/"+id+"/create", {}, function (form) {
+      $.get(baseUrl+"/"+productId+"/checklist/"+id+"/create", {}, function (form) {
           bootbox.dialog({
               title: "Insérer un nouvel élément",
               message: form
           });
-          //$('#taskdetail').html(task);
       });
   });
 

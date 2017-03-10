@@ -22,14 +22,14 @@ class CheckListController extends Controller
   }
 
   //update checkListItem
-  function update(Request $requete,  $id)
+  function update(Request $requete, $projectId,  $id)
   {
     CheckList::validate($id, $requete->get('done'));
     return redirect()->back();
   }
 
   //create new checkList item
-  function store(Request $requete, $checkListId)
+  function store(Request $requete, $id, $checkListId)
   {
     CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
     return redirect()->back();

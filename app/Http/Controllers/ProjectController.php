@@ -74,7 +74,10 @@ class ProjectController extends Controller
           Description: create a new checkListObject
         */
         $livrables = new CheckList('Project', $id, 'Livrables');
-
+        /* Created By Fabio Marques
+          Description: create a new objectifs checkList
+        */
+        $objectifs = new CheckList('Project', $id, 'Objectifs', 'project/scenario');
 
         /* Created By Raphaël B.
           Description: log book event handling
@@ -114,6 +117,7 @@ class ProjectController extends Controller
         return view('project/show', [
             'project' => $project,
             'livrables'=>$livrables,
+            'objectifs'=>$objectifs,
             'duration' => $duration,
             'taskactive' => $task,
             'currentUser' => $currentUser,
@@ -142,7 +146,7 @@ class ProjectController extends Controller
         return view('project/task');
     }
 
-    // Returns the html representation of all views mathing a set of filter 
+    // Returns the html representation of all views mathing a set of filter
     // specified in the request parameter
     public function getTasks(Request $request) {
         $projectId = $request->id;
@@ -171,7 +175,7 @@ class ProjectController extends Controller
                     ->whereNull('tasks.parent_id')
                     ->get();
                 break;
-            
+
             default:
                 $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
                     ->where('users_tasks.user_id', "=", $taskOwner)
@@ -220,6 +224,11 @@ class ProjectController extends Controller
           Decription: create a new checkList for the new project
         */
         CheckList::newCheckList('Project',$newProject->id,'Livrables');
+        /*
+          Created By: Fabio Marques
+          Description: Create a new checkList of objectifs to the project
+        */
+        CheckList::newCheckList('Project', $newProject->id, 'Objectifs', 'project/scenario');
 
         return redirect()->route('project.index');
     }
@@ -284,9 +293,9 @@ class ProjectController extends Controller
         return view('target.store', ['project' => $id]);
     }
 
-    public function createCheckListItem( $checkListId)
+    public function createCheckListItem($id, $checkListId)
     {
-      return view('checkList.create', ['checkListId'=>$checkListId]);//view('checkList.create', ['checkListId' => $id]);
+      return view('checkList.create', ['checkListId'=>$checkListId, 'projectId' =>$id]);//view('checkList.create', ['checkListId' => $id]);
     }
 
     public function getStudents($id){

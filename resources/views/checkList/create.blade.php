@@ -2,7 +2,7 @@
 Created By: Fabio Marques
 Description: Form to add a new item to a checkList
 -->
-<form class="form-horizontal" role="form" method="POST" action="checkList/{{$checkListId}}/create">
+<form class="form-horizontal" role="form" method="POST" action="{{$projectId}}/checklist/{{$checkListId}}/create">
     {{ csrf_field() }}
 
     <div class="form-group">
@@ -14,10 +14,11 @@ Description: Form to add a new item to a checkList
     </div>
 
     <div class="form-group">
-        <label class="col-md-4 control-label">Description</label>
+        <!--<label class="col-md-4 control-label">Description</label>-->
 
         <div class="col-md-6">
-          <textarea class="form-control" name="description"></textarea>
+          <input type="hidden" name="description" value="">
+          <!--<textarea class="form-control" name="description"></textarea>-->
         </div>
     </div>
 
