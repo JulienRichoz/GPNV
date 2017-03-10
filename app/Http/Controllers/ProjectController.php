@@ -241,6 +241,7 @@ class ProjectController extends Controller
         $newTask->duration = $request->input('duration');
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
+        $newTask->status = "wip"; // hardcoded until the UI allows user friendly status changes
         $newTask->save();
 
         // Adding the event description into the request object
