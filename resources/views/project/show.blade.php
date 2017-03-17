@@ -24,28 +24,26 @@
             <h1 id ="taskHeading" data-toggle="collapse" data-target=".projectTasks" aria-expanded="false">Les t&acirc;ches du projet</h1>
 
             <div id="filters" class="hidden">
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input data-status="wip" class="form-check-input activeStatus" type="radio" name="exampleRadios" value="option1" checked>
+                <div class="awesomeCheckbox awesomeCheckbox-primary filterCheckboxes">
+                    <input data-status="wip" type="checkbox" checked="checked" id="checkWip" class="styled checkboxFilter">
+                    <label for="checkWip" class="checkboxFilterLabel">
                         En cours
                     </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input data-status="todo" class="form-check-input" type="radio" name="exampleRadios" value="option2">
+
+                    <input data-status="todo" type="checkbox" id="checkTodo" class="styled checkboxFilter">
+                    <label for="checkTodo" class="checkboxFilterLabel">
                         A faire
                     </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input data-status="done" class="form-check-input" type="radio" name="exampleRadios" value="option2">
-                        Termin&eacute;e
+
+                    <input data-status="done" type="checkbox" id="checkDone" class="styled checkboxFilter">
+                    <label for="checkDone" class="checkboxFilterLabel">
+                        Terminée
                     </label>
                 </div>
 
                 <div class="dropdown dropTaskFilter">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    t&acirc;ches de...
+                    <span id="dropdownTitle">tous</span>
                     <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -69,8 +67,7 @@
             <div id="taskList" class="col-md-6">
                 <div class="tree-menu" id="tree-menu">
                     <ul>
-                        <!-- Display all project tasks -->
-                        @each('project.task', $project->tasksParent, 'task')
+                        <!-- project tasks are displayed from refreshDisplayedTasks() in checkList.js -->
                     </ul>
                 </div>
                 @if(Auth::user()->projects()->find($project->id))

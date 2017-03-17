@@ -163,7 +163,9 @@ class ProjectController extends Controller
             case 'all':
                 $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
                     ->where("tasks.project_id", "=", $projectId)
-                    ->where("tasks.status", "=", $status)
+                    ->when(count($status) > 0, function ($query) use ($status) {
+                        return $query->whereIn("tasks.status", $status);
+                    })
                     ->whereNull('tasks.parent_id')
                     ->get();
                 break;
@@ -171,7 +173,9 @@ class ProjectController extends Controller
             case 'nobody':
                 $tasks = Task::doesntHave('usersTasks')
                     ->where("tasks.project_id", "=", $projectId)
-                    ->where("tasks.status", "=", $status)
+                    ->when(count($status) > 0, function ($query) use ($status) {
+                        return $query->whereIn("tasks.status", $status);
+                    })
                     ->whereNull('tasks.parent_id')
                     ->get();
                 break;
@@ -180,7 +184,9 @@ class ProjectController extends Controller
                 $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
                     ->where('users_tasks.user_id', "=", $taskOwner)
                     ->where("tasks.project_id", "=", $projectId)
-                    ->where("tasks.status", "=", $status)
+                    ->when(count($status) > 0, function ($query) use ($status) {
+                        return $query->whereIn("tasks.status", $status);
+                    })
                     ->whereNull('tasks.parent_id')
                     ->get();
 
@@ -250,6 +256,7 @@ class ProjectController extends Controller
         $newTask->duration = $request->input('duration');
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
+        $newTask->status = "wip"; // hardcoded until the UI allows user friendly status changes
         $newTask->save();
 
         // Adding the event description into the request object
