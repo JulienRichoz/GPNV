@@ -5,7 +5,15 @@
         <!-- Display the information about project -->
         <p>Nom : {{$project->name}}</p>
         <p>Date de début : {{$project->startDate}}</p>
-        <p>Description : {{$project->description}}</p>
+        <p>
+          Description :
+          <a class="btn editDescription">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+          </a>
+          <br/>
+          <div id="summernote">{{$project->description}}</div>
+        </p>
+        <a class="btn btn-warning saveDescription" data-projectid="{{$project->id}}" style="display:none;">Sauvegarder description</a>
     </div>
 
     <div class="panel-heading">Membres du projet</div>
