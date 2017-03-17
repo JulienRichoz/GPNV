@@ -134,9 +134,18 @@
         $('a.saveDescription').css('display','None');
       }
     });
-    
-    $('a.saveDescription').click(function () {
 
+    $('a.saveDescription').click(function () {
+      var description = $('#summernote').summernote('code');
+      var projectid = this.getAttribute('data-projectid');
+      $.ajax({
+          url: "{{ url('project') }}/" + projectid + "/editDescription/",
+          type: "POST",
+          data: { description: description },
+          success: function() {
+              bootbox.alert("Description modifiée avec succés.");
+          }
+      });
     });
 
   });

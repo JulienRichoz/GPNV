@@ -60,6 +60,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('project/{id}/target', ['as' => 'project.gettarget', 'uses' => 'ProjectController@getTarget'])->where('id', '[0-9]+');
         Route::get('project/{id}/getTasks', ['as' => 'project.getTasks', 'uses' => 'ProjectController@getTasks' ])->where('id', '[0-9]+');
 
+        Route::post('project/{id}/editDescription', 'ProjectController@editDescription')->where('id', '[0-9]+');
         #Route::post('project/{id}/quitProject/', ['as' => 'project.quitProject', 'uses' => 'ProjectController@quitProject'])->where('id', '[0-9]+');
         Route::post('project/{id}/removeFromProject/{user}', 'ProjectController@removeUserFromProject')->where('id', '[0-9]+');
 

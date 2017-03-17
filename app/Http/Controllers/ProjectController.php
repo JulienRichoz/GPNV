@@ -453,6 +453,13 @@ class ProjectController extends Controller
       return redirect('project/' . $ProjectId);
     }
 
+    public function editDescription(Request $request, $ProjectID){
+      $Project = Project::find($ProjectID);
+      $Project->description = $request->input('description');
+      $Project->save();
+      return redirect('project/' . $ProjectID);
+    }
+
     /*public function getTask(Request $request){
 
         if($request->ajax())
