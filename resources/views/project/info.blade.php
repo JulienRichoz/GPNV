@@ -6,13 +6,10 @@
         <p>Nom : {{$project->name}}</p>
         <p>Date de début : {{$project->startDate}}</p>
         <p>
-          Description :
-          <a class="btn editDescription">
-            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-          </a>
-          <br/>
-          <div id="summernote">{{$project->description}}</div>
+          Description :<br/>
+          <div id="summernote">{!! $project->description !!}</div>
         </p>
+        <a class="btn btn-warning editDescription">Editer la description</a>
         <a class="btn btn-warning saveDescription" data-projectid="{{$project->id}}" style="display:none;">Sauvegarder description</a>
     </div>
 

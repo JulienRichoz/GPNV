@@ -118,20 +118,19 @@
 
 <script>
   $(document).ready(function() {
-
-    //$('div.note-editor').css('display': 'none');
-
     $('a.editDescription').click(function () {
       if($('a.saveDescription').is(':hidden')){
         $('#summernote').summernote();
         $('#summernote').css('display','None');
         $('div.note-editor').css('display','block');
-        $('a.saveDescription').css('display','block');
+        $('a.saveDescription').css('display','initial');
+        $('a.editDescription').text("Quitter l'édition");
       }
       else{
         $('#summernote').css('display','block');
         $('div.note-editor').css('display','None');
         $('a.saveDescription').css('display','None');
+        $('a.editDescription').text("Editer la description");
       }
     });
 
@@ -144,6 +143,7 @@
           data: { description: description },
           success: function() {
               bootbox.alert("Description modifiée avec succés.");
+              location.reload();
           }
       });
     });
@@ -228,6 +228,7 @@
                             type: "POST",
                             success: function() {
                                 bootbox.alert("Projet quitté avec succés.");
+                                location.reload();
                             },
                             error: function() {
                                 console.log(result);

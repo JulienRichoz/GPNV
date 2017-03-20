@@ -457,6 +457,13 @@ class ProjectController extends Controller
       $Project = Project::find($ProjectID);
       $Project->description = $request->input('description');
       $Project->save();
+
+      $Event = new Event;
+      $Event->user_id = Auth::user()->id;
+      $Event->project_id = $ProjectID;
+      $Event->description = "L'utilisateur a changé la description";
+      $Event->save();
+
       return redirect('project/' . $ProjectID);
     }
 
