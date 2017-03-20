@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/tasks.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/checkList.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/scenario.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('js/summernote-0.8.2/summernote.css') }}">
 
     <style>
         body {
@@ -110,9 +111,45 @@
 <script src="{{ URL::asset('js/bootbox.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{{ URL::asset('js/checkList.js') }}"></script>
-<script src="{{ URL::asset('js/scenario.js') }}"></script> 
+<script src="{{ URL::asset('js/scenario.js') }}"></script>
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
+<script src="{{ URL::asset('js/summernote-0.8.2/summernote.js') }}"></script>
+
+<script>
+  $(document).ready(function() {
+    $('a.editDescription').click(function () {
+      if($('a.saveDescription').is(':hidden')){
+        $('#summernote').summernote();
+        $('#summernote').css('display','None');
+        $('div.note-editor').css('display','block');
+        $('a.saveDescription').css('display','initial');
+        $('a.editDescription').text("Quitter l'édition");
+      }
+      else{
+        $('#summernote').css('display','block');
+        $('div.note-editor').css('display','None');
+        $('a.saveDescription').css('display','None');
+        $('a.editDescription').text("Editer la description");
+      }
+    });
+
+    $('a.saveDescription').click(function () {
+      var description = $('#summernote').summernote('code');
+      var projectid = this.getAttribute('data-projectid');
+      $.ajax({
+          url: "{{ url('project') }}/" + projectid + "/editDescription/",
+          type: "POST",
+          data: { description: description },
+          success: function() {
+              bootbox.alert("Description modifiée avec succés.");
+              location.reload();
+          }
+      });
+    });
+
+  });
+</script>
 
 <script>
     $(document).ready(function () {
@@ -131,7 +168,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
         // Displays details of a given task
         $('#app-layout').on('click', '.taskshow', function () {
             console.log(this);
@@ -192,6 +228,7 @@
                             type: "POST",
                             success: function() {
                                 bootbox.alert("Projet quitté avec succés.");
+                                location.reload();
                             },
                             error: function() {
                                 console.log(result);

@@ -10,7 +10,7 @@ body {
 	border: 15px solid #ddd;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    border-radius: 5px;  
+    border-radius: 5px;
 }
 
 .gantt:after {
@@ -55,15 +55,15 @@ body {
 	border-bottom: 1px solid #DDD;
 	background-color: #f6f6f6;
 }
- 
+
 .fn-gantt .leftPanel .name {
 	width: 110px;
 }
- 
+
 .fn-gantt .leftPanel .desc {
 	width: 115px;
 }
- 
+
 .fn-gantt .spacer
 {
 	margin: -2px 0 1px 0;
@@ -87,7 +87,7 @@ body {
 	border-left: 1px solid #DDD;
 	border-bottom: 1px solid #DDD;
 	margin: -1px 0 0 -1px;
-} 
+}
 
 .fn-gantt .hollyday {
 	background-color: #f9e5e2;
@@ -121,7 +121,7 @@ body {
 	border-bottom: 1px solid #DDD;
 	height: 23px;
 	margin: 0 0 0 -1px;
-	background-color: #f6f6f6; 	
+	background-color: #f6f6f6;
 }
 
 .fn-gantt-hint {
@@ -129,7 +129,7 @@ body {
 	background-color: #fff5d4;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px; 
+    border-radius: 4px;
     padding: 10px;
 	position: absolute;
 	display: none;
@@ -140,7 +140,7 @@ body {
 	border: none;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    border-radius: 3px;   
+    border-radius: 3px;
     background-color: #89c5f8;
     height: 18px;
     margin: 4px 3px 3px 3px;

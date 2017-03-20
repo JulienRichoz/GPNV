@@ -5,7 +5,12 @@
         <!-- Display the information about project -->
         <p>Nom : {{$project->name}}</p>
         <p>Date de début : {{$project->startDate}}</p>
-        <p>Description : {{$project->description}}</p>
+        <p>
+          Description :<br/>
+          <div id="summernote">{!! $project->description !!}</div>
+        </p>
+        <a class="btn btn-warning editDescription">Editer la description</a>
+        <a class="btn btn-warning saveDescription" data-projectid="{{$project->id}}" style="display:none;">Sauvegarder description</a>
     </div>
 
     <div class="panel-heading">Membres du projet</div>
