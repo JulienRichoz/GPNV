@@ -15,6 +15,7 @@
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('css/template.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/project.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/logBook.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/awesome-bootstrap-checkbox.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/tasks.css') }}"/>
