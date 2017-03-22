@@ -65,12 +65,14 @@
 
                 </ul>
 
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url('/project/create') }}">Nouveau projet</a></li>
+                </ul>
 
                 {{-- Takes the Route name and show the apropriate menu --}}
                 @if(Route::current() ->getName() === 'project.show')
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/') }}">Tous les projets</a></li>
-                        <li><a href="{{ url('/project/create') }}">Nouveau projet</a></li>
                     </ul>
                     @endif
 
@@ -115,6 +117,8 @@
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
 <script src="{{ URL::asset('js/summernote-0.8.2/summernote.js') }}"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <script>
   $(document).ready(function() {
@@ -147,7 +151,24 @@
           }
       });
     });
+  });
+</script>
 
+<script>
+  $(document).ready(function() {
+    $('button.createProject').click(function () {
+        var description = $('#createDescription').summernote('code');
+        $('#createDescription').val(description);
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function() {
+    $( function() {
+      $( "#datepicker" ).datepicker();
+      $('#createDescription').summernote();
+    } );
   });
 </script>
 

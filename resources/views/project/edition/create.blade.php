@@ -10,36 +10,40 @@
                     <div class="panel-body">
 
                     </div>
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/project') }}">
+                    <form class="form-horizontal" id="createProject" role="form" method="POST" action="{{ url('/project') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Nom de votre projet</label>
+                            <label class="col-md-3 control-label">Nom de votre projet</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Description</label>
+                            <label class="col-md-3 control-label">Description</label>
 
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="description" value="{{ old('description') }}" required>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" name="description" id="createDescription" value="{{ old('description') }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Date de début</label>
+                            <label class="col-md-3 control-label">Date de début</label>
 
-                            <div class="col-md-6">
-                                <input type="date" class="form-control" name="date" value="{{ old('date') }}" required>
+                            <div class="col-md-3">
+                                <input type="date" class="form-control" name="date" id="datepicker" value="{{ date('d/m/Y') }}" required>
+                            </div>
+                            <label class="col-md-1 control-label">à :</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="hour" id="" value="{{ date('H:i:s') }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary createProject">
                                     <i class="fa fa-btn fa-sign-in"></i>Créer
                                 </button>
 
