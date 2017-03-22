@@ -21,6 +21,16 @@ class CheckListController extends Controller
       return view('welcome', compact('checkListItems'));
   }
 
+  // show a description of an item
+  function showItem($projectId, $itemId){
+    $item = CheckList::getItem($itemId);
+
+    //get scenarios linked to the item
+    $scenarios = DB::table('scenarios')->where('id', $item->id)->get();
+
+    return view('checkList.showItem',['item'=>$item,'scenarios'=>$scenarios]);
+  }
+
   //update checkListItem
   function update(Request $requete, $projectId,  $id)
   {

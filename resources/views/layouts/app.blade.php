@@ -112,7 +112,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{{ URL::asset('js/checkList.js') }}"></script>
 <script src="{{ URL::asset('js/scenario.js') }}"></script>
-{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+<script src="{{ URL::asset('js/objectifs.js') }}"></script>
 
 <script src="{{ URL::asset('js/summernote-0.8.2/summernote.js') }}"></script>
 

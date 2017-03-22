@@ -132,4 +132,9 @@ class CheckList extends Model
 
     DB::table('checkLists')->insert(array('recordId' => $recordId, 'checkListTable_id' => $tableId, 'checkListType_id' => $typeId));
   }
+
+  //get a specific item
+  public static function getItem($id){
+    return DB::table('checkList_Items')->where('id',$id)->first();
+  }
 }

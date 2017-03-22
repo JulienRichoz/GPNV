@@ -64,13 +64,17 @@ Route::group(['middleware' => 'web'], function () {
         #Route::post('project/{id}/quitProject/', ['as' => 'project.quitProject', 'uses' => 'ProjectController@quitProject'])->where('id', '[0-9]+');
         Route::post('project/{id}/removeFromProject/{user}', 'ProjectController@removeUserFromProject')->where('id', '[0-9]+');
 
-        /*-----------------------------Routes PRW2 --------------------------*/
+        /*-----------------------------Routes CheckList --------------------------*/
+        Route::get('project/{id}/checkListItem/{itemId}','CheckListController@showItem');
         Route::put('project/{id}/id/{CheckListId}','CheckListController@update');
         Route::get('project/{id}/checklist/{CheckListId}/create','ProjectController@createCheckListItem');
-        Route::get('project/{id}/scenario/{scenarionId}','ScenarioController@show');
         Route::post('project/{id}/checklist/{CheckListId}/create','CheckListController@store');
         /*--------------------------------------------------------------------*/
 
+        /*----------------------Routes scenario-------------------------------*/
+        Route::get('project/{id}/scenario/{scenarionId}','ScenarioController@show');
+
+        /*--------------------- Routes objectifs -----------------------------*/
 
         /* FILES */
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store']);
