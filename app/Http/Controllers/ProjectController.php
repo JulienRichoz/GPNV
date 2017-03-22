@@ -235,6 +235,9 @@ class ProjectController extends Controller
           Description: Create a new checkList of objectifs to the project
         */
         CheckList::newCheckList('Project', $newProject->id, 'Objectifs', 'project/scenario');
+        $objectifs = new CheckList('Project', $newProject->id, 'Objectifs', 'project/scenario');
+        CheckList::newItem($objectifs->getId(), "Intérêt Général");
+
 
         return redirect()->route('project.index');
     }

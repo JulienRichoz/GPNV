@@ -113,7 +113,7 @@ class CheckList extends Model
   }
 
   //add new item to the checkList
-  public static function newItem($checkListId, $title, $description)
+  public static function newItem($checkListId, $title, $description=null)
   {
     DB::table('checkList_Items')->insert(array('title' => $title, 'description' => $description, 'done' => 0, 'checkList_id' => $checkListId));
   }
