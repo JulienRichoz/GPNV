@@ -23,7 +23,7 @@ class Scenarios extends Migration
       $table->increments('id')->index();
       $table->string('description', 500)->nullable();
       $table->string('name', 200);
-      $table->integer('checkList_id')->unsigned();
+      $table->integer('checkList_item_id')->unsigned();
     });
 
     Schema::create('steps', function (Blueprint $table) {
@@ -52,7 +52,7 @@ class Scenarios extends Migration
     });
 
     Schema::table('scenarios', function($table){
-      $table->foreign('checkList_id')->references('id')->on('checkLists');
+      $table->foreign('checkList_item_id')->references('id')->on('checkListItems');
     });
     Schema::table('steps', function($table){
       $table->foreign('scenario_id')->references('id')->on('scenarios');
