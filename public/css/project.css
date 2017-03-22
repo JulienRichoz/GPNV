@@ -1,0 +1,16 @@
+.trigger {
+    position: relative;
+}
+
+.trigger .disclosureIndicator {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translate(0,-50%);
+    font-size: 25px;
+}
+
+.trigger:hover {
+    cursor: pointer;
+    background-color: #ddd;
+}
