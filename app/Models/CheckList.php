@@ -112,6 +112,11 @@ class CheckList extends Model
     DB::table('checkList_Items')->where('id',$id)->update(array('done'=>$done));
   }
 
+  public static function updateItem($id, $request)
+  {
+    DB::table('checkList_Items')->where('id',$id)->update(array('title'=>$request->get('title'),'description'=>$request->get('description')));
+  }
+
   //add new item to the checkList
   public static function newItem($checkListId, $title, $description=null)
   {
