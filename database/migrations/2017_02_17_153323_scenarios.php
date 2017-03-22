@@ -21,18 +21,18 @@ class Scenarios extends Migration
 
     Schema::create('scenarios', function (Blueprint $table) {
       $table->increments('id')->index();
-      $table->string('description', 45);
-      $table->string('name',45);
+      $table->string('description', 500)->nullable();
+      $table->string('name', 200);
       $table->integer('checkList_id')->unsigned();
     });
 
     Schema::create('steps', function (Blueprint $table) {
       $table->increments('id')->index();
-      $table->string('action', 255);
-      $table->string('result', 255);
+      $table->string('action', 1000);
+      $table->string('result', 1000);
       $table->integer('order');
       $table->integer('scenario_id')->unsigned();
-      $table->integer('mockup_id')->unsigned();
+      $table->integer('mockup_id')->unsigned()->nullable();
     });
 
     Schema::create('scenario_tests', function (Blueprint $table) {
@@ -47,7 +47,8 @@ class Scenarios extends Migration
       $table->increments('id')->index();
       $table->integer('step_id')->unsigned();
       $table->integer('test_id')->unsigned();
-      $table->string('result', 255);
+      $table->string('result', 1000);
+      $table->integer('succes')->default(-1);
     });
 
     Schema::table('scenarios', function($table){
