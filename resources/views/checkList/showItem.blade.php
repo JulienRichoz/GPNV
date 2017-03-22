@@ -1,12 +1,14 @@
 <div class="objectif">
-  <form>
+  <form method="post" action="{{$projectId}}/id/{{$item->id}}">
+    {{ csrf_field() }}
+    {{ method_field('PUT') }}
     <div class="form-group">
       <label for="name">Nom</label>
-      <input id="name" type="text" class="form-control" value="{{$item->title}}">
+      <input id="name" name="title" type="text" class="form-control" value="{{$item->title}}">
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea id="description" class="form-control">{{$item->description}}</textarea>
+      <textarea id="description" name="description" class="form-control">{{$item->description}}</textarea>
     </div>
     <button type="submit" class="btn btn-default">Sauvegarder</button>
   </form>

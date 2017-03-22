@@ -28,13 +28,20 @@ class CheckListController extends Controller
     //get scenarios linked to the item
     $scenarios = DB::table('scenarios')->where('id', $item->id)->get();
 
-    return view('checkList.showItem',['item'=>$item,'scenarios'=>$scenarios]);
+    return view('checkList.showItem', ['item'=>$item, 'scenarios'=>$scenarios, 'projectId'=>$projectId]);
   }
 
   //update checkListItem
   function update(Request $requete, $projectId,  $id)
   {
-    CheckList::validate($id, $requete->get('done'));
+    if(null !== $requete->get('done'))
+    {
+      CheckList::validate($id, $requete->get('done'));
+    }
+    else
+    {
+      CheckList::updateItem($id,$requete);
+    }
     return redirect()->back();
   }
 
