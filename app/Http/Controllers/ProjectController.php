@@ -38,17 +38,18 @@ class ProjectController extends Controller
         // If the user has a role like "Eleve", he can access student view and he only can see his projects
         if (Auth::user()->role->name == "Eleve") {
 
-            $projects = Auth::user()->projects()->get();
+            $projects = Auth::user()->projects()->orderBy('startDate', 'DESC')->get();
 
-            return view('student', ['projects' => $projects]);
+            return view('index', ['projects' => $projects]);
 
         }
         // If the user has a role like "Prof", he can access teacher view ans he can see all projects
         elseif(Auth::user()->role->name == "Prof"){
 
-            $projects = Project::all();
+            #$projects = Project::all();
+            $projects = Project::orderBy('startDate', 'DESC')->get();
 
-            return view('teacher', ['projects' => $projects]);
+            return view('index', ['projects' => $projects]);
         }
     }
 
@@ -214,11 +215,15 @@ class ProjectController extends Controller
     // Create a task
     public function store(Request $request)
     {
+        $Date = explode("/", $request->input('date'));
+        $Date = $Date[2]."/".$Date[1]."/".$Date[0];
+        $DateTime = $Date." ".$request->input('hour');
+
         $newProject = new Project;
         $relation = new Memberships;
         $newProject->name = $request->input('name');
         $newProject->description = $request->input('description');
-        $newProject->startDate = $request->input('date');
+        $newProject->startDate = $DateTime;
         $newProject->save();
 
         $relation->project_id = $newProject->id;
