@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <a href="#top"></a>
         <div id="taskBanner" data-projectid="{{$project->id}}">
             <h1 id ="taskHeading" data-toggle="collapse" data-target=".projectTasks" aria-expanded="false">Les t&acirc;ches du projet</h1>
 
@@ -28,7 +29,7 @@
                     <span id="dropdownTitle">tous</span>
                     <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
                         <li><a href="#" data-taskOwner="all" class="activeOwner">Tous</a></li>
                         <li><a href="#" data-taskOwner="{{$currentUser->id}}">Moi</a></li>
                         <li><a href="#" data-taskOwner="nobody">Personne</a></li>
@@ -211,6 +212,10 @@
                 </div>
             </div>
         </div>
+
+        <a class="button btn btn-default scrollTop" href="#top" style="float:right;">
+          <span class="glyphicon glyphicon-arrow-up" aria-hidden="true" style="font-size: 30px; left: -3.5px;"></span>
+        </a>
     </div>
 
 @endsection

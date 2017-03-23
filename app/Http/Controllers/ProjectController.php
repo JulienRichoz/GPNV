@@ -40,7 +40,7 @@ class ProjectController extends Controller
 
             $projects = Auth::user()->projects()->get();
 
-            return view('student', ['projects' => $projects]);
+            return view('index', ['projects' => $projects]);
 
         }
         // If the user has a role like "Prof", he can access teacher view ans he can see all projects
@@ -48,7 +48,7 @@ class ProjectController extends Controller
 
             $projects = Project::all();
 
-            return view('teacher', ['projects' => $projects]);
+            return view('index', ['projects' => $projects]);
         }
     }
 

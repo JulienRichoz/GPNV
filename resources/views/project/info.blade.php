@@ -13,9 +13,12 @@
         <a class="btn btn-warning saveDescription" data-projectid="{{$project->id}}" style="display:none;">Sauvegarder description</a>
     </div>
 
-    <div class="panel-heading">Membres du projet</div>
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" data-toggle="collapse" aria-expanded="false" data-target=".members"></span>
+      Membres du projet
+    </div>
 
-    <div class="panel-body">
+    <div class="panel-body members collapse">
         @foreach($project->users as $user)
             <p>
                 <!-- Display all project members -->
@@ -65,6 +68,4 @@
           @endif
       </div>
     </div>
-
-
 </div>
