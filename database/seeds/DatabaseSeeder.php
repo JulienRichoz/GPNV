@@ -16,39 +16,56 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('classes')->insert([
-          'name' => "TESTCLASS",
-          'friendlyId' => "1"
-        ]);
+        $this->addDefaultClasses();
+        $this->addDefaultStates();
+        $this->addDefaultRoles();
+        $this->addDefaultUsers();
 
-        DB::table('states')->insert(['name' => "Au CPNV",]);
-        DB::table('states')->insert(['name' => "Hors-CPNV",]);
+    }
 
-        DB::table('roles')->insert(['name' => "Eleve",]);
-        DB::table('roles')->insert(['name' => "Prof",]);
+    public function addDefaultClasses(){
+      DB::table('classes')->insert([
+        'name' => "DefaultClass",
+        'friendlyId' => "1"
+      ]);
+    }
 
-        DB::table('users')->insert([
-            'firstname' => "John",
-            'lastname' => "Doe",
-            'mail' => "utilisateur@mail.com",
-            'friendlyid' => "1",
-            'role_id' => "1",
-            'class_id' => "1",
-            'state_id' => "1",
-            'password' => bcrypt('secret'),
-            'avatar'=> 'default.png',
-        ]);
+    public function addDefaultStates()
+    {
+      DB::table('states')->insert(['name' => "Au CPNV",]);
+      DB::table('states')->insert(['name' => "Hors-CPNV",]);
+    }
 
-        DB::table('users')->insert([
-            'firstname' => "Professeur",
-            'lastname' => "Tournesol",
-            'mail' => "tournesol@mail.com",
-            'role_id' => "2",
-            'friendlyid' => "2",
-            'class_id' => "1",
-            'state_id' => "1",
-            'password' => bcrypt('secret'),
-            'avatar'=> 'default.png',
-        ]);
+    public function addDefaultRoles()
+    {
+      DB::table('roles')->insert(['name' => "Eleve",]);
+      DB::table('roles')->insert(['name' => "Prof",]);
+    }
+
+    public function addDefaultUsers()
+    {
+      DB::table('users')->insert([
+          'firstname' => "John",
+          'lastname' => "Doe",
+          'mail' => "utilisateur@mail.com",
+          'friendlyid' => "1",
+          'role_id' => "1",
+          'class_id' => "1",
+          'state_id' => "1",
+          'password' => bcrypt('secret'),
+          'avatar'=> 'default.png',
+      ]);
+
+      DB::table('users')->insert([
+          'firstname' => "Professeur",
+          'lastname' => "Tournesol",
+          'mail' => "tournesol@mail.com",
+          'role_id' => "2",
+          'friendlyid' => "2",
+          'class_id' => "1",
+          'state_id' => "1",
+          'password' => bcrypt('secret'),
+          'avatar'=> 'default.png',
+      ]);
     }
 }
