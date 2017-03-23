@@ -38,7 +38,7 @@ class ProjectController extends Controller
         // If the user has a role like "Eleve", he can access student view and he only can see his projects
         if (Auth::user()->role->name == "Eleve") {
 
-            $projects = Auth::user()->projects()->get();
+            $projects = Auth::user()->projects()->orderBy('startDate', 'DESC')->get();
 
             return view('index', ['projects' => $projects]);
 
@@ -46,7 +46,8 @@ class ProjectController extends Controller
         // If the user has a role like "Prof", he can access teacher view ans he can see all projects
         elseif(Auth::user()->role->name == "Prof"){
 
-            $projects = Project::all();
+            #$projects = Project::all();
+            $projects = Project::orderBy('startDate', 'DESC')->get();
 
             return view('index', ['projects' => $projects]);
         }

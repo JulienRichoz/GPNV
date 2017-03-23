@@ -13,7 +13,7 @@ class Project extends Model {
 
 
     public function users() {
-        return $this->belongsToMany(\App\Models\User::class, 'memberships', 'project_id', 'user_id');
+        return $this->belongsToMany(\App\Models\User::class, 'memberships', 'project_id', 'user_id')->orderBy('lastname', 'ASC');
     }
 
     public function files() {
