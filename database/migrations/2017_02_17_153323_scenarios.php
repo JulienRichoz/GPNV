@@ -52,7 +52,7 @@ class Scenarios extends Migration
     });
 
     Schema::table('scenarios', function($table){
-      $table->foreign('checkList_item_id')->references('id')->on('checkListItems');
+      $table->foreign('checkList_item_id')->references('id')->on('checkList_Items');
     });
     Schema::table('steps', function($table){
       $table->foreign('scenario_id')->references('id')->on('scenarios');

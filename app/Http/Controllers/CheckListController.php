@@ -26,7 +26,7 @@ class CheckListController extends Controller
     $item = CheckList::getItem($itemId);
 
     //get scenarios linked to the item
-    $scenarios = DB::table('scenarios')->where('id', $item->id)->get();
+    $scenarios = DB::table('scenarios')->where('checkList_item_id', $item->id)->get();
 
     return view('checkList.showItem', ['item'=>$item, 'scenarios'=>$scenarios, 'projectId'=>$projectId]);
   }

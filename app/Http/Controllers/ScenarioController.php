@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Livrable;
 use DB;
 use Redirect;
 use App\Models\Scenario;
@@ -28,9 +26,15 @@ class ScenarioController extends Controller
   }
 
   //create new scenario item
-  function store(Request $requete, $checkListId)
+  function store($projectId, $checkListId, Request $requete)
   {
-    /*CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
-    return redirect()->back();*/
+    Scenario::newItem($checkListId, $requete->get('name'));
+    return redirect()->back();
+  }
+
+  //addNewItem form
+  function addItem($projectId, $checkListId)
+  {
+    return view("scenario.addItem", ['projectId'=>$projectId, 'checkListId'=>$checkListId]);
   }
 }
