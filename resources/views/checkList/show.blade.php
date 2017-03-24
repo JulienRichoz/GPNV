@@ -8,5 +8,6 @@
     {{ method_field('PUT') }}
     <a @if(isset($modalBox) && $modalBox) class="showObjectif" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}" @endif><label>{{$checkListItem->title}}</label></a>
     <input name="done" onchange="this.form.submit()" type="checkbox" @if($checkListItem->done) checked @endif>
+    <input type="hidden" id="validate" name="validate" value="true"/>
   </form>
 </li>
