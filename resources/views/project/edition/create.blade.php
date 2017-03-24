@@ -33,7 +33,7 @@
                             <label class="col-md-3 control-label">Date de début</label>
 
                             <div class="col-md-3">
-                                <input type="date" class="form-control" name="date" id="datepicker" value="{{ date('d/m/Y') }}" required>
+                                <input type="text" class="form-control" name="date" id="datepicker" value="{{ date('d/m/Y') }}" required>
                             </div>
                             <label class="col-md-1 control-label">à :</label>
                             <div class="col-md-3">

@@ -195,6 +195,7 @@ class ProjectController extends Controller
         }
 
         // Making sure there are tasks to display / display an information message otherwise
+
         if (count($tasks) > 0) {
             foreach ($tasks as $task) {
                 $taskView = view('project/task', ['task' => $task]);
@@ -482,7 +483,7 @@ class ProjectController extends Controller
       return redirect('project/' . $ProjectID);
     }
 
-    /*public function getTask(Request $request){
+    public function getTask(Request $request){
 
         if($request->ajax())
         {
@@ -495,6 +496,6 @@ class ProjectController extends Controller
         if(Request::ajax()){
             return Response::json(Request::all());
         }
-    }*/
+    }
 
 }

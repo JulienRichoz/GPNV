@@ -1,19 +1,19 @@
 
 @section('planning')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Le planning initial</div>
-
-                    <div class="panel-body">
-                        Votre planning initial
-                        <div class="gantt">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Votre planning</div>
+        <div class="panel-body">
+            {{--@include('planning.show', ['taskparent' => $project->tasksParent])--}}
         </div>
+    </div> -->
+
+    <div>
+        <form id="search" method="POST" action="{{ route('search.store', $project->id) }}">
+            {!! csrf_field() !!}
+            <input name="search" type="text" placeholder="Mots-Clefs..."/>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-btn fa-sign-in"></i>Chercher
+            </button>
+        </form>
     </div>
 @endsection

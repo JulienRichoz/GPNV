@@ -19,7 +19,7 @@ $(document).ready(function() {
     var description = $('#summernote').summernote('code');
     var projectid = this.getAttribute('data-projectid');
     $.ajax({
-        url: "{{ url('project') }}/" + projectid + "/editDescription/",
+        url: projectid + "/editDescription/",
         type: "POST",
         data: { description: description },
         success: function() {
