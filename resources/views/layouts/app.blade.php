@@ -116,10 +116,44 @@
 <script src="{{ URL::asset('js/scenario.js') }}"></script>
 <script src="{{ URL::asset('js/objectifs.js') }}"></script>
 
-<script src="{{ URL::asset('js/summernote-0.8.2/summernote.js') }}"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{ URL::asset('js/scripts.js') }}"></script>
+<script src="{{ URL::asset('js/summernote-0.8.2/summernote.min.js') }}"></script>
+
+<script>
+$(document).ready(function () {
+  $('a.editDescription').click(function () {
+    if($('a.saveDescription').is(':hidden')){
+      $('#summernote').summernote();
+      $('#summernote').css('display','None');
+      $('div.note-editor').css('display','block');
+      $('a.saveDescription').css('display','initial');
+      $('a.editDescription').text("Quitter l'édition");
+    }
+    else{
+      $('#summernote').css('display','block');
+      $('div.note-editor').css('display','None');
+      $('a.saveDescription').css('display','None');
+      $('a.editDescription').text("Editer la description");
+    }
+  });
+
+  $('a.saveDescription').click(function () {
+    var description = $('#summernote').summernote('code');
+    var projectid = this.getAttribute('data-projectid');
+    $.ajax({
+        url: "{{ url('project') }}/" + projectid + "/editDescription/",
+        type: "POST",
+        data: { description: description },
+        success: function() {
+            bootbox.alert("Description modifiée avec succés.");
+            location.reload();
+        }
+    });
+  });
+});
+</script>
 
 <script>
     $(document).ready(function () {
