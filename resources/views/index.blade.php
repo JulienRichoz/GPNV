@@ -13,8 +13,8 @@
                     <h5>Date de début du projet : {{ $project->startDate }}</h5>
                   </div>
                 </div><!-- Display the project name -->
-                <div class="panel-body">
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" data-toggle="collapse" aria-expanded="false" data-target=".users{{ $project->id }}"></span>
+                <div class="panel-body" aria-hidden="true" data-toggle="collapse" aria-expanded="false" data-target=".users{{ $project->id }}">
+                    <span class="glyphicon glyphicon-chevron-down disclosureIndicator"></span>
                     <h4 style="display: inline-flex;">Membres : </h4>
                     <!-- Display all project members -->
                     <div class="users{{ $project->id }} collapse">
