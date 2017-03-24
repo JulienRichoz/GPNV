@@ -39,15 +39,11 @@ $(document).ready(function() {
     $('#createDescription').summernote();
   });
 
-  $('span.glyphicon-chevron-down').click(function () {
+  /*$('span.glyphicon-chevron-down').click(function () {
     if(!$( this ).hasClass( "disclosureIndicator" )){
       $( this ).toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
     }
-  });
-
-  $('span.glyphicon-chevron-down').click(function () {
-    $( this ).toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
-  });
+  });*/
 
   $('div').click(function () {
     var attribute = $( this ).attr("data-target");
