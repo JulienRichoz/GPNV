@@ -19,14 +19,15 @@
     <div class="form-group">
       <label for="scenario">Scénario: </label>
       <select id="scenario" class="form-control">
-        <option value="12">Test</option>
         @foreach($scenarios as $scenario)
           <option value="{{$scenario->id}}">{{$scenario->name}}</option>
         @endforeach
       </select>
     </div>
-    <button type="submit" class="btn btn-default">Afficher</button>
-    <a href="#" class="btn btn-default">Créer nouveau scénario</a>
+    @if(count($scenarios)>0)
+      <button type="submit" class="btn btn-default">Afficher</button>
+    @endif
+    <a class="addScenario" data-id="{{$item->id}}" data-projectid="{{$projectId}}" data-URL="{{ URL('project') }}" class="btn btn-default"><label>Créer nouveau scénario</label></a>
   </form>
 
   @endif
