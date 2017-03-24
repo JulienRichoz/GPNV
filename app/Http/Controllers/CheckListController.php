@@ -9,6 +9,9 @@ use App\Livrable;
 use DB;
 use Redirect;
 use App\Models\CheckList;
+use App\Models\Event;
+use App\Models\AcknowledgedEvent;
+use Illuminate\Support\Facades\Auth;
 
 class CheckListController extends Controller
 {
@@ -49,6 +52,20 @@ class CheckListController extends Controller
   function store(Request $requete, $id, $checkListId)
   {
     CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
+
+    // Logging the objective creation in the logbook
+
+    $event = new Event;
+    $event->user_id = Auth::user()->id;
+    $event->project_id = $id;
+    $event->description = "Création de l'objectif \"" . $requete->get('name') . "\"";
+    $event->save();
+
+    $acknowledgement = new AcknowledgedEvent;
+    $acknowledgement->user_id = Auth::user()->id;
+    $acknowledgement->event_id = $event->id;
+    $acknowledgement->save();
+
     return redirect()->back();
   }
 }
