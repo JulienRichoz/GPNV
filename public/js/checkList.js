@@ -43,14 +43,14 @@ $(document).ready(function () {
 
     var taskOwner = $(".dropTaskFilter .dropdown-menu li a.activeOwner").attr("data-taskOwner");
 
-    console.log(status);
+    //console.log(status);
 
     $.ajax({
       url: projectId + "/getTasks",
       type: 'get',
       data: {status: status, taskOwner: taskOwner},
       success: function (tasks) {
-        console.log(tasks);
+        //console.log(tasks);
         $("#tree-menu ul").html(tasks);
       },
       error: function() {

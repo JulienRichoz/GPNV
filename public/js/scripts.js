@@ -40,7 +40,31 @@ $(document).ready(function() {
   });
 
   $('span.glyphicon-chevron-down').click(function () {
+    if(!$( this ).hasClass( "disclosureIndicator" )){
+      $( this ).toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+    }
+  });
+
+  $('span.glyphicon-chevron-down').click(function () {
     $( this ).toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+  });
+
+  $('div').click(function () {
+    var attribute = $( this ).attr("data-target");
+    if(attribute!=null){
+      var DivCollapse = $("div"+attribute);
+      if(!DivCollapse.hasClass("in")){
+        $( this ).find("span.disclosureIndicator").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+      }
+      else{
+        $( this ).find("span.disclosureIndicator").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+
+      }
+    }
+  });
+
+  $('div').change(function () {
+    alert('');
   });
 
 });
