@@ -35,9 +35,9 @@ class CheckListController extends Controller
   }
 
   //update checkListItem
-  function update(Request $requete, $projectId,  $id)
+  function update($projectId,  $id, Request $requete)
   {
-    if(null !== $requete->get('done'))
+    if(null !== $requete->get('validate'))
     {
       CheckList::validate($id, $requete->get('done'));
     }
