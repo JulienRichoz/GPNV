@@ -33,24 +33,24 @@ $(document).ready(function () {
   // ------------------------------ Task research ------------------------------
   // Displays / hides tasks according to the active filters
   function refreshDisplayedTasks() {
-    //var projectId = $('#taskBanner').attr('data-projectId');
+    var projectId = $('#taskBanner').attr('data-projectid');
     var status = [];
     $(".checkboxFilter").each(function(checkbox) {
       if (this.checked) {
         status.push($(this).attr('data-status'));
       }
     });
-   
+
     var taskOwner = $(".dropTaskFilter .dropdown-menu li a.activeOwner").attr("data-taskOwner");
-    
+
     console.log(status);
 
     $.ajax({
-      url: window.location.href + "/getTasks",
+      url: projectId + "/getTasks",
       type: 'get',
       data: {status: status, taskOwner: taskOwner},
       success: function (tasks) {
-        //console.log(tasks);
+        console.log(tasks);
         $("#tree-menu ul").html(tasks);
       },
       error: function() {
