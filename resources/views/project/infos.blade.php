@@ -1,9 +1,9 @@
 <div class="trigger well well-sm" data-toggle="collapse" data-target=".projectInfo" aria-expanded="false">
     <h1>Informations du projet</h1>
-    <span class="glyphicon glyphicon-chevron-down disclosureIndicator"/>
+    <span class="glyphicon glyphicon-chevron-up disclosureIndicator"/>
 </div>
 
-<div class="projectInfo collapse">
+<div class="projectInfo collapse in">
     <!-- Display all project informations like the members, a description and so on -->
     <div class="panel panel-default">
         <div class="panel-body">

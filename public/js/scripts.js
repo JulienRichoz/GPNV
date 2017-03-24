@@ -59,8 +59,4 @@ $(document).ready(function() {
     }
   });
 
-  $('div').change(function () {
-    alert('');
-  });
-
 });
