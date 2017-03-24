@@ -32,6 +32,13 @@ class ScenarioController extends Controller
     return redirect()->back();
   }
 
+  //Delete a scenario
+  function delete($projectId, Request $requete)
+  {
+    Scenario::destroy($requete->get('scenario'));
+    return redirect()->back();
+  }
+
   //addNewItem form
   function addItem($projectId, $checkListId)
   {

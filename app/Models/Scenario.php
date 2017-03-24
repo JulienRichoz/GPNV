@@ -12,4 +12,5 @@ class Scenario extends Model
   {
     DB::table('scenarios')->insert(array('name' => $name, 'description' => $description, 'checkList_item_id' => $checkListId));
   }
+  //public static function delete()
 }
