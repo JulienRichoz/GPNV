@@ -52,15 +52,22 @@ class CheckListController extends Controller
   function store(Request $requete, $id, $checkListId)
   {
     CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
+    // Getting the checklist type to display in the logs
+    $checkList = DB::table('checklist_types')->where('id', $checkListId)->first();
+    $type = $checkList->name;
+    $singularType = substr($type, 0, strlen($type) - 1);
+    $formattedType = strtolower($singularType);
 
-    // Logging the objective creation in the logbook
+    // Defining the preposition that will be used in the log entry according to the checklist type
+    $preposition = ($type == "Livrables") ? 'du ' : 'de l\'';
 
     $event = new Event;
     $event->user_id = Auth::user()->id;
     $event->project_id = $id;
-    $event->description = "Création de l'objectif \"" . $requete->get('name') . "\"";
+    $event->description = "Création " . $preposition . $formattedType . " \"" . $requete->get('name') . "\"";
     $event->save();
 
+    // Logging the objective creation in the logbook
     $acknowledgement = new AcknowledgedEvent;
     $acknowledgement->user_id = Auth::user()->id;
     $acknowledgement->event_id = $event->id;
