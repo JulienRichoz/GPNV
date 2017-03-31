@@ -10,7 +10,13 @@
 }
 
 #filters {
-    display: inline;
+  /*display: inline;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 100%;
+
 }
 
 #taskBanner .filterCheckboxes {
@@ -22,11 +28,14 @@
 }
 
 .dropTaskFilter {
+    /*
     position: absolute;
+    margin-right: 20px;
+    */
     top: 50%;
     transform: translate(0,-50%);
     right: 0px;
-    margin-right: 20px;
+
     z-index: 1;
 }
 

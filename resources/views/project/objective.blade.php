@@ -3,7 +3,7 @@
     <span class="glyphicon glyphicon-chevron-down disclosureIndicator"/>
 </div>
 
-<div class="objectives collapse">
+<div class="objectives collapse" data-projectid="{{$project->id}}">
     <!-- Display all project informations like the members, a description and so on -->
     <div class="panel panel-default">
       <div class="panel-body">

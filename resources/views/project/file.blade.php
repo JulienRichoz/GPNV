@@ -3,7 +3,7 @@
     <span class="glyphicon glyphicon-chevron-down disclosureIndicator"/>
 </div>
 
-<div class="filesInfo collapse">
+<div class="filesInfo collapse" data-projectid="{{$project->id}}">
     <div class="panel panel-default" id="files">
         @if(Auth::user()->projects()->find($project->id))
             <div class="panel-heading">Ajoutez des fichiers</div>

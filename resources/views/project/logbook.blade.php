@@ -1,5 +1,5 @@
 <div id="logBookContainer" data-projectId="{{$project->id}}">
-  <div id="logBook" class="collapse">
+  <div id="logBook" class="collapse" data-projectid="{{$project->id}}">
   <form role="form">
       <div class="awesomeCheckbox awesomeCheckbox-primary logBookCheckbox">
       <input type="checkbox" id="toggleUserEntries" class="styled">
