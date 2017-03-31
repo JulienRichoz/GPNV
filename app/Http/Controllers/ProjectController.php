@@ -480,6 +480,11 @@ class ProjectController extends Controller
       $Event->description = "L'utilisateur a changé la description";
       $Event->save();
 
+      $AcknowledgedEvent = new AcknowledgedEvent;
+      $AcknowledgedEvent->user_id = Auth::user()->id;
+      $AcknowledgedEvent->event_id = $Event->id;
+      $AcknowledgedEvent->save();
+
       return redirect('project/' . $ProjectID);
     }
 

@@ -25,15 +25,15 @@ $(document).ready(function () {
   });
 
   // Displays / hides the filter controls depending on whether the task container is collapsed or not
-  $("#taskHeading").click(function() {
+  /*$("#taskHeading").click(function() {
     $("#filters").toggleClass("hidden");
-  });
+  });*/
 
 
   // ------------------------------ Task research ------------------------------
   // Displays / hides tasks according to the active filters
   function refreshDisplayedTasks() {
-    var projectId = $('#taskBanner').attr('data-projectid');
+    var projectId = $('.projectTasks').attr('data-projectid');
     var status = [];
     $(".checkboxFilter").each(function(checkbox) {
       if (this.checked) {

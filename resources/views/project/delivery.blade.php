@@ -7,7 +7,7 @@ Description: Show the checkList "Livrables"
     <span class="glyphicon glyphicon-chevron-down disclosureIndicator"/>
 </div>
 
-<div class="deliverables collapse">
+<div class="deliverables collapse" data-projectid="{{$project->id}}">
     <div class="checkList">
         <div class="progressionCheckList">
             <div class="barre" style="background: linear-gradient(90deg, #20DE13 {{$livrables->getCompletedPercent()}}%, #efefef 0%);"></div>
