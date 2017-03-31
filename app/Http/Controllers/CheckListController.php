@@ -61,13 +61,13 @@ class CheckListController extends Controller
     // Defining the preposition that will be used in the log entry according to the checklist type
     $preposition = ($type == "Livrables") ? 'du ' : 'de l\'';
 
+    // Logging the objective creation in the logbook
     $event = new Event;
     $event->user_id = Auth::user()->id;
     $event->project_id = $id;
     $event->description = "Création " . $preposition . $formattedType . " \"" . $requete->get('name') . "\"";
     $event->save();
 
-    // Logging the objective creation in the logbook
     $acknowledgement = new AcknowledgedEvent;
     $acknowledgement->user_id = Auth::user()->id;
     $acknowledgement->event_id = $event->id;
