@@ -2,10 +2,12 @@
   <div id="logBook" class="collapse" data-projectid="{{$project->id}}">
   <form role="form">
       <div class="awesomeCheckbox awesomeCheckbox-primary logBookCheckbox">
-      <input type="checkbox" id="toggleUserEntries" class="styled">
+        @if(Auth::user()->projects()->find($project->id))
+          <input type="checkbox" id="toggleUserEntries" class="styled">
           <label for="toggleUserEntries">
               Avec mes entrées
           </label>
+        @endif
       </div>
   </form>
 
@@ -38,13 +40,17 @@
                   @endforeach
 
                   @unless(in_array($currentUser->id, $validations[$event->id]))
+                    @if(Auth::user()->projects()->find($project->id))
                       <button type="button" class="btn btn-primary validationButton" style="margin-left: 20px;" data-userId="{{$currentUser->id}}">Valider</button>
+                    @endif
                   @endunless
               </td>
                   </tr>
           @endforeach
       </table>
       </div>
-      <a class="btn btn-warning events" data-id="{{$project->id}}">Ajouter un événement</a>
+      @if(Auth::user()->projects()->find($project->id))
+        <a class="btn btn-warning events" data-id="{{$project->id}}">Ajouter un événement</a>
+      @endif
     </div>
 </div><!-- End of logbook -->

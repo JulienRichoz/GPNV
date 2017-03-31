@@ -26,7 +26,9 @@
             @endforeach
           @endif
         </ul>
-        <a class="btn btn-warning addCheckList" data-id="{{$objectifs->getId()}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">Ajouter</a>
+        @if(Auth::user()->projects()->find($project->id))
+          <a class="btn btn-warning addCheckList" data-id="{{$objectifs->getId()}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">Ajouter</a>
+        @endif
         @if($objectifs->getNbItemsDone())
           <a class="btn btn-warning changeView">Voir les objectifs validés</a>
           <a class="btn btn-warning changeView hidden">Cacher les objectifs validés</a>
