@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
     {
       // Student
       DB::table('users')->insert([
+          'id' => '1',
           'firstname' => "John",
           'lastname' => "Doe",
           'mail' => "utilisateur@mail.com",
@@ -61,6 +62,7 @@ class DatabaseSeeder extends Seeder
 
       // Teachers
       DB::table('users')->insert([
+          'id' => '2',
           'firstname' => "Professeur",
           'lastname' => "Tournesol",
           'mail' => "tournesol@mail.com",
@@ -71,16 +73,28 @@ class DatabaseSeeder extends Seeder
           'password' => bcrypt('secret'),
           'avatar'=> 'default.png',
       ]);
+
+      DB::table('users')->insert([
+          'id' => '3',
+          'firstname' => "Anno",
+          'lastname' => "Nimme",
+          'mail' => "utilisateur@mail.com",
+          'friendlyid' => "3",
+          'role_id' => "1",
+          'class_id' => "1",
+          'state_id' => "1",
+          'password' => bcrypt('secret'),
+          'avatar'=> 'default.png',
+      ]);
     }
 
     public function addProjects()
     {
       // Basic Data
-      DB::table('checkList_Types')->insert(['id' => "1", 'name' => "Livrables",]);
-      DB::table('checkList_Types')->insert(['id' => "2", 'name' => "Objectifs",]);
       DB::table('checkList_Tables')->insert(['id' => "1", 'name' => "Project",]);
-      $this->Project001();
 
+      $this->Project001();
+      $this->Project002();
     }
 
     public function Project001()
@@ -145,6 +159,9 @@ class DatabaseSeeder extends Seeder
       DB::table('memberships')->insert(['user_id' => "2", 'project_id' => "1",]);
       DB::table('memberships')->insert(['user_id' => "1", 'project_id' => "1",]);
 
+      DB::table('checkList_Types')->insert(['id' => "1", 'name' => "Livrables",]);
+      DB::table('checkList_Types')->insert(['id' => "2", 'name' => "Objectifs",]);
+
       // CheckLists (Objectives and Deliveries)
       DB::table('checkLists')->insert([
         'id' => "1", 'recordId' => "1",
@@ -153,16 +170,6 @@ class DatabaseSeeder extends Seeder
 
       DB::table('checkLists')->insert([
         'id' => "2", 'recordId' => "1",
-        'checkListTable_id' => "1", 'checkListType_id' => "2",
-      ]);
-
-      DB::table('checkLists')->insert([
-        'id' => "3", 'recordId' => "2",
-        'checkListTable_id' => "1", 'checkListType_id' => "1",
-      ]);
-
-      DB::table('checkLists')->insert([
-        'id' => "4", 'recordId' => "2",
         'checkListTable_id' => "1", 'checkListType_id' => "2",
       ]);
 
@@ -194,6 +201,127 @@ class DatabaseSeeder extends Seeder
       DB::table('checkList_Items')->insert([
         'id' => "6", 'title' => "Création d'une procédure d'installation",
         'done' => "0", 'checkList_id' => "2",
+      ]);
+    }
+
+    public function Project002()
+    {
+      // Project N°001
+      DB::table('projects')->insert([
+          'id' => "2",
+          'name' => "Système d’annuaire",
+          'description' => '<p>Le projet système consiste à prendre un sujet,
+            ici le système d’annuaire, afin de l’analyser, de le présenter et
+            de lui trouver une utilisation au sein du CPNV.
+            <br/>
+            Cette documentation sera accompagnée d’une présentation PowerPoint
+            ainsi qu’une analyse plus précise de deux systèmes d’annuaire :
+            l’Active Directory qui est le payant et le OpenLDAP qui est le gratuit.
+          </p>',
+          'startDate' => "2016-11-16 08:05:00",
+          'endDate' => "2017-01-17 16:55:00",
+      ]);
+
+      // Tasks
+      DB::table('tasks')->insert([
+          'id' => "5",
+          'name' => "Documentation",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "6",
+          'name' => "Design",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "7",
+          'name' => "Test",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "8",
+          'name' => "Analyse AD",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "1",
+          'parent_id' => "2",
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "9",
+          'name' => "Analyse AD",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+          'parent_id' => "8",
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "10",
+          'name' => "Analyse OpenLDAP",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+          'parent_id' => "8",
+      ]);
+
+      // Memberships
+      DB::table('memberships')->insert(['user_id' => "2", 'project_id' => "2",]);
+      DB::table('memberships')->insert(['user_id' => "1", 'project_id' => "2",]);
+      DB::table('memberships')->insert(['user_id' => "3", 'project_id' => "2",]);
+
+      DB::table('checkList_Types')->insert(['id' => "3", 'name' => "Livrables",]);
+      DB::table('checkList_Types')->insert(['id' => "4", 'name' => "Objectifs",]);
+
+      // CheckLists (Objectives and Deliveries)
+      DB::table('checkLists')->insert([
+        'id' => "3", 'recordId' => "2",
+        'checkListTable_id' => "1", 'checkListType_id' => "1",
+      ]);
+
+      DB::table('checkLists')->insert([
+        'id' => "4", 'recordId' => "2",
+        'checkListTable_id' => "1", 'checkListType_id' => "2",
+      ]);
+
+      DB::table('checkList_Items')->insert([
+        'id' => "7", 'title' => "Intérêt Général",
+        'done' => "0", 'checkList_id' => "4",
+      ]);
+
+      DB::table('checkList_Items')->insert([
+        'id' => "8", 'title' => "Faire une documentation",
+        'done' => "0", 'checkList_id' => "4",
+      ]);
+
+      DB::table('checkList_Items')->insert([
+        'id' => "9", 'title' => "Documentation",
+        'done' => "0", 'checkList_id' => "4",
+      ]);
+
+      DB::table('checkList_Items')->insert([
+        'id' => "10", 'title' => "Manuel d'installation",
+        'done' => "0", 'checkList_id' => "3",
+      ]);
+
+      DB::table('checkList_Items')->insert([
+        'id' => "11", 'title' => "Création d'une procédure d'installation",
+        'done' => "0", 'checkList_id' => "4",
       ]);
     }
 
