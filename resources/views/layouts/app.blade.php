@@ -287,23 +287,25 @@
                 title: "Insérez un évènement",
                 inputType: 'textarea',
                 callback: function(result){
-                    if (result != "") {
-                        $.ajax({
-                            url: "{{ route('project.storeEvents', '@') }}".replace('@', projectId),
-                            type: 'post',
-                            data: { description: result },
-                            success: function() {
-                                if (result != null) {
-                                    callEvents(projectId);
-                                    displayConfirmation(true);
+                    if (result != null) {
+                        if (result != "") {
+                            $.ajax({
+                                url: "{{ route('project.storeEvents', '@') }}".replace('@', projectId),
+                                type: 'post',
+                                data: { description: result },
+                                success: function() {
+                                    if (result != null) {
+                                        callEvents(projectId);
+                                        displayConfirmation(true);
+                                    }
+                                },
+                                error: function() {
+                                    displayConfirmation(false);
                                 }
-                            },
-                            error: function() {
-                                displayConfirmation(false);
-                            }
-                        });
-                    } else {
-                        bootbox.alert("La description d'un évènement ne peut pas être vide");
+                            });
+                        } else {
+                            bootbox.alert("La description d'un évènement ne peut pas être vide");
+                        }
                     }
                 }
             });
@@ -530,18 +532,35 @@
         // Delete a user for a task
         $('#app-layout').on('click', 'button.usertaskdestroy', function () {
             var usertaskdestroy = this.getAttribute('data-id');
-            $.ajax({
-                url: "{{ route('tasks.userTaskDelete', '@') }}".replace('@', usertaskdestroy),
-                type: 'delete',
-                success: function (data) {
-                    bootbox.hideAll();
-                    bootbox.dialog({
-                        title: "Suppression participant à la tâche",
-                        message: "Participant bien retiré de la tâche"
-                    });
-                },
-                error: function (data) {
-                    console.log(data);
+            var projectId = $('.projectTasks').data('projectid');
+            bootbox.prompt({
+                size: "medium",
+                backdrop: true,
+                title: "Insérez un commentaire",
+                inputType: 'textarea',
+                callback: function(result){
+                    if (result != null) {
+                        if (result != "") {
+                            $.ajax({
+                                url: "{{ route('tasks.userTaskDelete', '@') }}".replace('@', usertaskdestroy),
+                                type: 'delete',
+                                data: { projectId: projectId, comment: result, },
+                                success: function (data) {
+                                    bootbox.hideAll();
+                                    bootbox.dialog({
+                                        title: "Suppression participant à la tâche",
+                                        message: "Participant bien retiré de la tâche"
+                                    });
+                                    console.log(data);
+                                },
+                                error: function (data) {
+                                    console.log(data);
+                                }
+                            });
+                        } else {
+                            bootbox.alert("Veuillez insérer un commentaire");
+                        }
+                    }
                 }
             });
         });

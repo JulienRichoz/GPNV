@@ -163,11 +163,13 @@ class ProjectController extends Controller
         switch ($taskOwner) {
             case 'all':
                 $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
+                    ->select('tasks.*') 
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
                     })
                     ->whereNull('tasks.parent_id')
+                    ->distinct()
                     ->get();
                 break;
 
@@ -183,6 +185,7 @@ class ProjectController extends Controller
 
             default:
                 $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
+                    ->select('tasks.*') 
                     ->where('users_tasks.user_id', "=", $taskOwner)
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
