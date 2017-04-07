@@ -52,7 +52,7 @@
                       @foreach($members as $member)
                           {{-- Making sure not to display the current user --}}
                           @unless($member->id == $currentUser->id)
-                              <li><a href="#" data-taskOwner="{{$member->id}}">{{$member->firstname}} {{$member->lastname}}</a></li>
+                              <li><a data-taskOwner="{{$member->id}}">{{$member->firstname}} {{$member->lastname}}</a></li>
                           @endunless
                       @endforeach
                   </ul>
