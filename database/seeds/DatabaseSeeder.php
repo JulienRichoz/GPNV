@@ -302,12 +302,11 @@ class DatabaseSeeder extends Seeder
 
       DB::table('tasks')->insert([
           'id' => "8",
-          'name' => "Analyse AD",
+          'name' => "Analyse",
           'duration' => "1",
           'status' => "wip",
           'priority' => "0",
-          'project_id' => "1",
-          'parent_id' => "2",
+          'project_id' => "2",
       ]);
 
       DB::table('tasks')->insert([

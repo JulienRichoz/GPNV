@@ -4,6 +4,9 @@
 
         <div class="panel-body">
             <p>Durée initial : {{$task->duration}}</p>
+            @if($task->getObjective())
+              <p>Objectif : {{$task->getObjective()->title}}</p>
+            @endif
         </div>
 
         <div class="panel-heading">Avancement</div>
