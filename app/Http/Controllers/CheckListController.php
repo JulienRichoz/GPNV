@@ -11,6 +11,7 @@ use Redirect;
 use App\Models\CheckList;
 use App\Models\Event;
 use App\Models\AcknowledgedEvent;
+use App\Models\Scenario;
 use Illuminate\Support\Facades\Auth;
 
 class CheckListController extends Controller
@@ -29,7 +30,7 @@ class CheckListController extends Controller
     $item = CheckList::getItem($itemId);
 
     //get scenarios linked to the item
-    $scenarios = DB::table('scenarios')->where('checkList_item_id', $item->id)->get();
+    $scenarios = Scenario::where('checkList_item_id', $item->id)->get();//DB::table('scenarios')->where('checkList_item_id', $item->id)->get();
 
     return view('checkList.showItem', ['item'=>$item, 'scenarios'=>$scenarios, 'projectId'=>$projectId]);
   }

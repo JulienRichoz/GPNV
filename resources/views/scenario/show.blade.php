@@ -1,7 +1,9 @@
 <div class="scenario">
-  <h1>Scénario: Créer un nouveau project</h1>
-  <p>Se scénario permet de vérifier si l'application fonctionne correctement</p>
-<form>
+  <h1>Scénario: {{$scenario->name}}</h1>
+  <p>{{$scenario->description}}</p>
+<form method="post" action="./{{$scenario->id}}">
+  {{ csrf_field() }}
+  {{ method_field('PUT') }}
   <div class="elements">
     <h2>Etapes</h2>
     <table class="table table-hover">
@@ -10,102 +12,41 @@
           <th>#</th>
           <th>Action</th>
           <th>Réponse</th>
+          <th>Modif</th>
           <!--<th>Résultat</th>-->
         </tr>
       </thead>
       <tbody>
-        <tr data-imgurl="{{ URL::asset('images/scenario1.png') }}">
-          <td>1</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-          <!--<td>
-            <textarea></textarea>
-            <i class="btn btn-success fa fa-check validate"></i>
-            <i class="btn btn-danger fa fa-times reject"></i>
-            <input type="hidden" value="" name="state">
-          </td>-->
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario2.png') }}">
-          <td>2</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario3.png') }}">
-          <td>3</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario4.png') }}">
-          <td>4</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario1.png') }}">
-          <td>5</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario2.png') }}">
-          <td>6</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario3.png') }}">
-          <td>7</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario4.png') }}">
-          <td>8</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario1.png') }}">
-          <td>9</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario2.png') }}">
-          <td>10</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario3.png') }}">
-          <td>11</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario4.png') }}">
-          <td>12</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario1.png') }}">
-          <td>13</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario2.png') }}">
-          <td>14</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario3.png') }}">
-          <td>15</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
-        <tr data-imgurl="{{ URL::asset('images/scenario4.png') }}">
-          <td>16</td>
-          <td>Cliquer sur le bouton "Créer un nouveau project"</td>
-          <td>la page nouveau project s'affiche</td>
-        </tr>
+        @foreach($scenario->steps as $step)
+          <tr data-stepId="{{$step->id}}" data-imgurl="{{ URL::asset('images/{{-- $step->mockup --}}') }}">
+            <td name="order{{$step->id}}">{{ $step->order }}</td>
+            <td name="action{{$step->id}}">{{ $step->action }}</td>
+            <td name="reponse{{$step->id}}">{{ $step->result }}</td>
+            <td><button name="submit" value="delete{{$step->id}}">Delete</button>
+            <!--<td>
+              <textarea></textarea>
+              <i class="btn btn-success fa fa-check validate"></i>
+              <i class="btn btn-danger fa fa-times reject"></i>
+              <input type="hidden" value="" name="state">
+            </td>-->
+          </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
+  <button>Enregistrer les modifications</button>
   <div class="maquette">
     <h2>Maquette</h2>
     <a href="{{ URL::asset('images/scenario1.png') }}" target="_blank"><img src=""/></a>
   </div>
+</form>
+<form method="post" action="./{{$scenario->id}}/create">
+  {{ csrf_field() }}
+  {{ method_field('POST') }}
+  <label for="action">Action</label>
+  <textarea id="action" name="action"></textarea>
+  <label for="reponse">Réponse</label>
+  <textarea id="reponse" name="reponse"></textarea>
+  <button>Ajouter un étape</button>
 </form>
 </div>
