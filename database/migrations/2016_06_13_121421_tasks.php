@@ -20,6 +20,7 @@ class Tasks extends Migration
             $table->integer('priority');
             $table->integer('project_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable(true);
+            $table->integer('objective_id')->unsigned()->nullable(true);
             $table->timestamps(); // Creation the column "created_at" and "updated_at"
         });
 

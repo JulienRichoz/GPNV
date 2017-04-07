@@ -117,44 +117,6 @@ class DatabaseSeeder extends Seeder
           'endDate' => "2016-06-27 16:55:00",
       ]);
 
-      // Tasks
-      DB::table('tasks')->insert([
-          'id' => "1",
-          'name' => "Documentation",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "1",
-      ]);
-
-      DB::table('tasks')->insert([
-          'id' => "2",
-          'name' => "Design",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "1",
-      ]);
-
-      DB::table('tasks')->insert([
-          'id' => "3",
-          'name' => "Test",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "1",
-      ]);
-
-      DB::table('tasks')->insert([
-          'id' => "4",
-          'name' => "Analyse",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "1",
-          'parent_id' => "1",
-      ]);
-
       // Memberships
       DB::table('memberships')->insert(['user_id' => "2", 'project_id' => "1",]);
       DB::table('memberships')->insert(['user_id' => "1", 'project_id' => "1",]);
@@ -202,6 +164,47 @@ class DatabaseSeeder extends Seeder
         'id' => "6", 'title' => "Création d'une procédure d'installation",
         'done' => "0", 'checkList_id' => "2",
       ]);
+
+      // Tasks
+      DB::table('tasks')->insert([
+          'id' => "1",
+          'name' => "Documentation",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "1",
+          'objective_id' => '3',
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "2",
+          'name' => "Design",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "1",
+          'objective_id' => '1',
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "3",
+          'name' => "Test",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "1",
+          'objective_id' => '3',
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "4",
+          'name' => "Analyse",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "1",
+          'parent_id' => "1",
+      ]);
     }
 
     public function Project002()
@@ -220,64 +223,6 @@ class DatabaseSeeder extends Seeder
           </p>',
           'startDate' => "2016-11-16 08:05:00",
           'endDate' => "2017-01-17 16:55:00",
-      ]);
-
-      // Tasks
-      DB::table('tasks')->insert([
-          'id' => "5",
-          'name' => "Documentation",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "2",
-      ]);
-
-      DB::table('tasks')->insert([
-          'id' => "6",
-          'name' => "Design",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "2",
-      ]);
-
-      DB::table('tasks')->insert([
-          'id' => "7",
-          'name' => "Test",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "2",
-      ]);
-
-      DB::table('tasks')->insert([
-          'id' => "8",
-          'name' => "Analyse AD",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "1",
-          'parent_id' => "2",
-      ]);
-
-      DB::table('tasks')->insert([
-          'id' => "9",
-          'name' => "Analyse AD",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "2",
-          'parent_id' => "8",
-      ]);
-
-      DB::table('tasks')->insert([
-          'id' => "10",
-          'name' => "Analyse OpenLDAP",
-          'duration' => "1",
-          'status' => "wip",
-          'priority' => "0",
-          'project_id' => "2",
-          'parent_id' => "8",
       ]);
 
       // Memberships
@@ -322,6 +267,67 @@ class DatabaseSeeder extends Seeder
       DB::table('checkList_Items')->insert([
         'id' => "11", 'title' => "Création d'une procédure d'installation",
         'done' => "0", 'checkList_id' => "4",
+      ]);
+
+      // Tasks
+      DB::table('tasks')->insert([
+          'id' => "5",
+          'name' => "Documentation",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+          'objective_id' => '9',
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "6",
+          'name' => "Design",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+          'objective_id' => '7',
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "7",
+          'name' => "Test",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+          'objective_id' => '7',
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "8",
+          'name' => "Analyse AD",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "1",
+          'parent_id' => "2",
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "9",
+          'name' => "Analyse AD",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+          'parent_id' => "8",
+      ]);
+
+      DB::table('tasks')->insert([
+          'id' => "10",
+          'name' => "Analyse OpenLDAP",
+          'duration' => "1",
+          'status' => "wip",
+          'priority' => "0",
+          'project_id' => "2",
+          'parent_id' => "8",
       ]);
     }
 

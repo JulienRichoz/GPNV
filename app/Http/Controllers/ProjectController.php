@@ -263,6 +263,7 @@ class ProjectController extends Controller
         $newTask = new Task;
         $newTask->name = $request->input('name');
         $newTask->duration = $request->input('duration');
+        $newTask->Objective_id = $request->input('root_task');
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
         $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
