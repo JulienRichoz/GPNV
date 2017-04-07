@@ -79,9 +79,11 @@
     <!-- Custom journal -->
     <div class="trigger well well-sm" data-toggle="collapse" data-target="#logBook" aria-expanded="false" data-projectid="{{$project->id}}">
         <h1 id="logBookHeading">
-            @unless ($badgeCount == 0)
-                <span id="logBookBadge" class="badge">{{$badgeCount}}</span>
-            @endunless
+            @if ($members->contains($currentUser))
+                @unless ($badgeCount == 0)
+                    <span id="logBookBadge" class="badge">{{$badgeCount}}</span>
+                @endunless
+            @endif
             Journal de bord
         </h1>
         <span class="glyphicon glyphicon-chevron-down disclosureIndicator"/>
