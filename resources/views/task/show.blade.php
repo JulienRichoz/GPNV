@@ -1,9 +1,12 @@
 <div class="col-md-10">
     <div class="panel panel-default">
-        <div class="panel-heading">{{$task->name}} - {{$task->id}}</div>
+        <div class="panel-heading">{{$task->name}}</div>
 
         <div class="panel-body">
             <p>Durée initial : {{$task->duration}}</p>
+            @if($task->getObjective())
+              <p>Objectif : {{$task->getObjective()->title}}</p>
+            @endif
         </div>
 
         <div class="panel-heading">Avancement</div>

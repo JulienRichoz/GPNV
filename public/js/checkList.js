@@ -41,14 +41,16 @@ $(document).ready(function () {
       }
     });
 
-    var taskOwner = $(".dropTaskFilter .dropdown-menu li a.activeOwner").attr("data-taskOwner");
+    var taskOwner = $(".dropTaskFilter .owner li a.activeOwner").attr("data-taskOwner");
+    var taskObjective = $(".dropTaskFilter .objective li a.activeOwner").attr("data-objective");
 
     //console.log(status);
+    console.log(taskObjective);
 
     $.ajax({
       url: projectId + "/getTasks",
       type: 'get',
-      data: {status: status, taskOwner: taskOwner},
+      data: {status: status, taskOwner: taskOwner, taskObjective: taskObjective},
       success: function (tasks) {
         //console.log(tasks);
         $("#tree-menu ul").html(tasks);
@@ -68,13 +70,27 @@ $(document).ready(function () {
 
   // ------------------------------ Dropdown handling ------------------------------
   // Dropdown links marking
-  $(".dropTaskFilter .dropdown-menu li a").click(function(event) {
+  $(".dropTaskFilter .owner li a").click(function(event) {
     event.preventDefault();
 
-    $('#dropdownTitle').html($(this).html());
+    $('#dropdownTitleOwner').html($(this).html());
 
     // Removing the "activeOwner" class from the previously active status checkbox
-    $(".dropTaskFilter .dropdown-menu li a").removeClass("activeOwner");
+    $(".dropTaskFilter .owner li a").removeClass("activeOwner");
+
+    // Adding the class to the newly clicked link
+    $(this).addClass("activeOwner");
+
+    refreshDisplayedTasks();
+  });
+
+  $(".dropTaskFilter .objective li a").click(function(event) {
+    event.preventDefault();
+
+    $('#dropdownTitleObjective').html($(this).html());
+
+    // Removing the "activeOwner" class from the previously active status checkbox
+    $(".dropTaskFilter .objective li a").removeClass("activeOwner");
 
     // Adding the class to the newly clicked link
     $(this).addClass("activeOwner");

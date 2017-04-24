@@ -1,6 +1,8 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
+use App\Models\CheckList;
 
 class Task extends Model
 {
@@ -10,8 +12,7 @@ class Task extends Model
      */
 
     protected $table = 'tasks';
-    protected $fillable = ['id', 'name', 'duration', 'status', 'priority', 'project_id', 'parent_id', 'created_at'];
-
+    protected $fillable = ['id', 'name', 'duration', 'status', 'priority', 'objective_id', 'project_id', 'parent_id', 'created_at'];
 
     public function project()
     {
@@ -39,7 +40,11 @@ class Task extends Model
 
     public function allChildren()
     {
-        return $this->children()->with('allChildren');
+      return $this->children()->with('allChildren');
+    }
+
+    public function getObjective(){
+      return DB::table('checkList_Items')->where('id', $this->objective_id)->first();
     }
 
     //modified By :Fabio Marques

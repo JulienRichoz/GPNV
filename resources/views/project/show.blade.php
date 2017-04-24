@@ -39,22 +39,37 @@
               </div>
 
               <div class="dropdown dropTaskFilter">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  <span id="dropdownTitle">tous</span>
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span id="dropdownTitleOwner">Tous</span>
                   <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
-                      <li><a href="#" data-taskOwner="all" class="activeOwner">Tous</a></li>
-                      <li><a href="#" data-taskOwner="{{$currentUser->id}}">Moi</a></li>
-                      <li><a href="#" data-taskOwner="nobody">Personne</a></li>
+                  <ul class="dropdown-menu owner" aria-labelledby="dropdownMenu" >
+                      <li><a data-taskOwner="all" class="activeOwner">Tous</a></li>
+                      <li><a data-taskOwner="{{$currentUser->id}}">Moi</a></li>
+                      <li><a data-taskOwner="nobody">Personne</a></li>
                       <li role="separator" class="divider"></li>
                       {{-- Displaying project members --}}
                       @foreach($members as $member)
                           {{-- Making sure not to display the current user --}}
                           @unless($member->id == $currentUser->id)
-                              <li><a href="#" data-taskOwner="{{$member->id}}">{{$member->firstname}} {{$member->lastname}}</a></li>
+                              <li><a data-taskOwner="{{$member->id}}">{{$member->firstname}} {{$member->lastname}}</a></li>
                           @endunless
                       @endforeach
+                  </ul>
+              </div>
+
+              <div class="dropdown dropTaskFilter">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span id="dropdownTitleObjective">Tous les objectifs</span>
+                  <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu objective" aria-labelledby="dropdownMenu" >
+                      <li><a data-objective="all" class="activeOwner">Tous les objectifs</a></li>
+                      @if($objectifs->showToDo())
+                        @foreach($objectifs->showToDo() as $checkListItem)
+                          <li><a data-objective="{{$checkListItem->id}}">{{$checkListItem->title}}</a></li>
+                        @endforeach
+                      @endif
                   </ul>
               </div>
           </div>
