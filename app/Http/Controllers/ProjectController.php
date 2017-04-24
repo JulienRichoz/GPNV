@@ -153,6 +153,7 @@ class ProjectController extends Controller
         $projectId = $request->id;
         $status = $request->status;
         $taskOwner = $request->taskOwner;
+        $taskObjective = $request->taskObjective;
 
         // Stores the task views representations that will be displayed to the user
         $viewStack = "";
@@ -162,35 +163,45 @@ class ProjectController extends Controller
 
         switch ($taskOwner) {
             case 'all':
-                $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
+                $query = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
                     })
-                    ->whereNull('tasks.parent_id')
-                    ->get();
+                    ->whereNull('tasks.parent_id');
+
+                if(isset($taskObjective) && $taskObjective!='all')
+                  $query->where('tasks.Objective_id','=', $taskObjective);
+                $tasks = $query->get();
                 break;
 
             case 'nobody':
-                $tasks = Task::doesntHave('usersTasks')
+                $query = Task::doesntHave('usersTasks')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
                     })
-                    ->whereNull('tasks.parent_id')
-                    ->get();
+                    ->whereNull('tasks.parent_id');
+
+                if(isset($taskObjective) && $taskObjective!='all')
+                  $query->where('tasks.Objective_id','=', $taskObjective);
+
+                $tasks = $query->get();
                 break;
 
             default:
-                $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
+                $query = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
                     ->where('users_tasks.user_id', "=", $taskOwner)
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
                     })
-                    ->whereNull('tasks.parent_id')
-                    ->get();
+                    ->whereNull('tasks.parent_id');
 
+                if(isset($taskObjective) && $taskObjective!='all')
+                  $query->where('tasks.Objective_id','=', $taskObjective);
+
+                $tasks = $query->get();
                 break;
         }
 
