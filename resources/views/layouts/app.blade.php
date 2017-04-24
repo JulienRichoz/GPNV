@@ -532,7 +532,7 @@
         // Delete a user for a task
         $('#app-layout').on('click', 'button.usertaskdestroy', function () {
             var usertaskdestroy = this.getAttribute('data-id');
-            var projectId = $('.projectTasks').data('projectid');
+            var projectId = $('#taskBanner').data('projectid');
             bootbox.prompt({
                 size: "medium",
                 backdrop: true,
@@ -544,12 +544,12 @@
                             $.ajax({
                                 url: "{{ route('tasks.userTaskDelete', '@') }}".replace('@', usertaskdestroy),
                                 type: 'delete',
-                                data: { projectId: projectId, comment: result, },
+                                data: { projectId: projectId, comment: result},
                                 success: function (data) {
                                     bootbox.hideAll();
                                     bootbox.dialog({
                                         title: "Suppression participant à la tâche",
-                                        message: "Participant bien retiré de la tâche"
+                                        message: "Participant retiré de la tâche avec succès"
                                     });
                                     console.log(data);
                                 },

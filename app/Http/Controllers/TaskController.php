@@ -147,21 +147,21 @@ class TaskController extends Controller
 
     // Delete a user of task
     public function userTaskDelete(UsersTask $usersTask, Request $request){
-        /*$taskName = $usersTask;
-        $author = Auth::user()->firstname . " " . Auth::user()->lastname;*/
+        $taskName = $usersTask->task->name;
+        $taskUser = $usersTask->user->firstname . " " . $usersTask->user->lastname;
         $usersTask->delete();
 
-        /*$event = new Event;
+        $event = new Event;
         $event->user_id = Auth::user()->id;
         $event->project_id = $request->projectId;
-        $event->description = "Abandon..."; //"Abandon de la tâche \"" .$taskName. "\" par: " . $author . ". Raison: " . $request->comment;
+        $event->description = "Abandon de la tâche \"" . $taskName . "\" par: " . $taskUser . ". Raison: " . $request->comment;
         $event->save();
 
         // relationship management
         $relation = new AcknowledgedEvent;
         $relation->event_id = $event->id;
         $relation->user_id = Auth::user()->id;
-        $relation->save();*/
+        $relation->save();
     }
 
 
