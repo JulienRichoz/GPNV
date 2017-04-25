@@ -153,6 +153,7 @@ class ProjectController extends Controller
         $projectId = $request->id;
         $status = $request->status;
         $taskOwner = $request->taskOwner;
+        $taskObjective = $request->taskObjective;
 
         // Stores the task views representations that will be displayed to the user
         $viewStack = "";
@@ -162,38 +163,47 @@ class ProjectController extends Controller
 
         switch ($taskOwner) {
             case 'all':
-                $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
+                $query = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
                     ->select('tasks.*') 
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
                     })
-                    ->whereNull('tasks.parent_id')
                     ->distinct()
-                    ->get();
+                    ->whereNull('tasks.parent_id')
+                if(isset($taskObjective) && $taskObjective!='all')
+                  $query->where('tasks.Objective_id','=', $taskObjective);
+                $tasks = $query->get();
                 break;
 
             case 'nobody':
-                $tasks = Task::doesntHave('usersTasks')
+                $query = Task::doesntHave('usersTasks')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
                     })
-                    ->whereNull('tasks.parent_id')
-                    ->get();
+                    ->whereNull('tasks.parent_id');
+
+                if(isset($taskObjective) && $taskObjective!='all')
+                  $query->where('tasks.Objective_id','=', $taskObjective);
+
+                $tasks = $query->get();
                 break;
 
             default:
-                $tasks = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
+                $query = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
                     ->select('tasks.*') 
                     ->where('users_tasks.user_id', "=", $taskOwner)
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
                     })
-                    ->whereNull('tasks.parent_id')
-                    ->get();
+                    ->whereNull('tasks.parent_id');
 
+                if(isset($taskObjective) && $taskObjective!='all')
+                  $query->where('tasks.Objective_id','=', $taskObjective);
+
+                $tasks = $query->get();
                 break;
         }
 
@@ -266,6 +276,7 @@ class ProjectController extends Controller
         $newTask = new Task;
         $newTask->name = $request->input('name');
         $newTask->duration = $request->input('duration');
+        $newTask->Objective_id = $request->input('root_task');
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
         $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
@@ -482,6 +493,11 @@ class ProjectController extends Controller
       $Event->project_id = $ProjectID;
       $Event->description = "L'utilisateur a changé la description";
       $Event->save();
+
+      $AcknowledgedEvent = new AcknowledgedEvent;
+      $AcknowledgedEvent->user_id = Auth::user()->id;
+      $AcknowledgedEvent->event_id = $Event->id;
+      $AcknowledgedEvent->save();
 
       return redirect('project/' . $ProjectID);
     }

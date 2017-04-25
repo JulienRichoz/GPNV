@@ -1,5 +1,5 @@
 <li>
-  <a href="#" ><span class="taskshow" data-id="{{$task->id}}"><p> {{$task->name}}</p></span>
+  <a><span class="taskshow" data-id="{{$task->id}}"><p> {{$task->name}}</p></span>
     @if($task->children->isEmpty())
       <button class="right btn taskuser" data-id="{{$task->id}}"> <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> </button>
       <button class="right btn taskdestroy"  data-id="{{$task->id}}"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>

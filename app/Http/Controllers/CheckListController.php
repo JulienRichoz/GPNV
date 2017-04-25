@@ -53,7 +53,8 @@ class CheckListController extends Controller
   {
     CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
     // Getting the checklist type to display in the logs
-    $checkList = DB::table('checklist_types')->where('id', $checkListId)->first();
+    $checkList = DB::table('checkList_Types')->where('id', $checkListId)->first();
+    var_dump($checkListId);
     $type = $checkList->name;
     $singularType = substr($type, 0, strlen($type) - 1);
     $formattedType = strtolower($singularType);

@@ -3,7 +3,7 @@
     <span class="glyphicon glyphicon-chevron-up disclosureIndicator"/>
 </div>
 
-<div class="projectInfo collapse in">
+<div class="projectInfo collapse in" data-projectid="{{$project->id}}">
     <!-- Display all project informations like the members, a description and so on -->
     <div class="panel panel-default">
         <div class="panel-body">
@@ -14,8 +14,10 @@
               Description :<br/>
               <div id="summernote">{!! $project->description !!}</div>
             </p>
-            <a class="btn btn-warning editDescription">Editer la description</a>
-            <a class="btn btn-warning saveDescription" data-projectid="{{$project->id}}" style="display:none;">Sauvegarder description</a>
+            @if(Auth::user()->projects()->find($project->id))
+              <a class="btn btn-warning editDescription">Editer la description</a>
+              <a class="btn btn-warning saveDescription" data-projectid="{{$project->id}}" style="display:none;">Sauvegarder description</a>
+            @endif
         </div>
     </div>
 </div>
