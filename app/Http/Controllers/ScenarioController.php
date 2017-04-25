@@ -18,10 +18,6 @@ class ScenarioController extends Controller
   {
     $scenario = Scenario::find($scenarioId);
     return view('scenario.show', ['projectId'=>$projectId, 'scenario'=>$scenario]);
-    //return view('scenario.show');
-      /*$checkList = new CheckList($element, $checkListType);
-      $checkListItems = $checkList->showAll();
-      return view('welcome', compact('checkListItems'));*/
   }
 
   //update checklistItem
@@ -95,8 +91,8 @@ class ScenarioController extends Controller
 
   }
 
-  function update($projectid, $scenarioId, Request $requete)
+  /*function update($projectid, $scenarioId, Request $requete)
   {
-    
-  }
+
+  }*/
 }
