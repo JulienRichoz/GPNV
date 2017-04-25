@@ -170,7 +170,7 @@ class ProjectController extends Controller
                         return $query->whereIn("tasks.status", $status);
                     })
                     ->distinct()
-                    ->whereNull('tasks.parent_id')
+                    ->whereNull('tasks.parent_id');
                 if(isset($taskObjective) && $taskObjective!='all')
                   $query->where('tasks.Objective_id','=', $taskObjective);
                 $tasks = $query->get();

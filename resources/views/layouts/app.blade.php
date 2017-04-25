@@ -532,7 +532,7 @@
         // Delete a user for a task
         $('#app-layout').on('click', 'button.usertaskdestroy', function () {
             var usertaskdestroy = this.getAttribute('data-id');
-            var projectId = $('#taskBanner').data('projectid');
+            var projectId = $('.projectTasks').data('projectid');
             bootbox.prompt({
                 size: "medium",
                 backdrop: true,
