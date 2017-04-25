@@ -45,7 +45,6 @@ $(document).ready(function () {
     var taskObjective = $(".dropTaskFilter .objective li a.activeOwner").attr("data-objective");
 
     //console.log(status);
-    console.log(taskObjective);
 
     $.ajax({
       url: projectId + "/getTasks",

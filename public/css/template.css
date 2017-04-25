@@ -149,9 +149,25 @@
   display: flex;
   position: relative;
   top: -27px;
+  background-color: unset;
+  padding: 6px 5px;
 }
 
 .removeUser button{
+  padding: 3px 10px;
+}
+
+.sendMail{
+  float: right;
+  display: flex;
+  position: relative;
+  top: -28px;
+  height: 20px;
+  padding: 6px 5px;
+  background-color: unset;
+}
+
+.sendMail button{
   padding: 3px 10px;
 }
 

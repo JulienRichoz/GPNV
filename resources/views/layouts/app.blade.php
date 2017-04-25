@@ -630,7 +630,6 @@
             });
         });
 
-
         // Tooltip handling (enabling bootstrap tooltips)
         $('[data-toggle="tooltip"]').tooltip();
 
