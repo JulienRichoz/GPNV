@@ -7,6 +7,10 @@ use DB;
 
 class Scenario extends Model
 {
+  public function steps()
+  {
+    return $this->hasMany('App\Models\ScenarioStep');
+  }
   //add new item to the checkList
   public static function newItem($checkListId, $name, $description=null)
   {

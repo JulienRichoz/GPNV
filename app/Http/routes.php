@@ -66,8 +66,8 @@ Route::group(['middleware' => 'web'], function () {
 
         /*-----------------------------Routes CheckList --------------------------*/
         Route::get('project/{id}/checkListItem/{itemId}','CheckListController@showItem');
-        Route::put('project/{id}/id/{CheckListId}','CheckListController@update');
         Route::get('project/{id}/checklist/{CheckListId}/create','ProjectController@createCheckListItem');
+        Route::put('project/{id}/id/{CheckListId}','CheckListController@update');
         Route::post('project/{id}/checklist/{CheckListId}/create','CheckListController@store');
         /*--------------------------------------------------------------------*/
 
@@ -76,6 +76,8 @@ Route::group(['middleware' => 'web'], function () {
         Route::delete('project/{id}/scenario','ScenarioController@delete');
         Route::get('project/{id}/checkListItem/{itemId}/scenario/create','ScenarioController@addItem');
         Route::post('project/{id}/checkListItem/{itemId}/scenario/create','ScenarioController@store');
+        Route::post('project/{id}/scenario/{scenarioId}/create','ScenarioController@addStep');
+        Route::put('project/{id}/scenario/{scenarioId}','ScenarioController@update');
 
         /*--------------------- Routes objectifs -----------------------------*/
 
