@@ -78,6 +78,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('project/{id}/checkListItem/{itemId}/scenario/create','ScenarioController@store');
         Route::post('project/{id}/scenario/{scenarioId}/create','ScenarioController@addStep');
         Route::put('project/{id}/scenario/{scenarioId}','ScenarioController@update');
+        Route::get('project/{id}/scenario/{stepId}/delete','ScenarioController@delStep');
 
         /*--------------------- Routes objectifs -----------------------------*/
 

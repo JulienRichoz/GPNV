@@ -21,7 +21,6 @@
     <div class="form-group">
       <label for="scenario">Scénario</label>
       @if(count($scenarios)>0)
-        <pre>{{$scenarios[0]->steps}}</pre>
         <select id="scenario" name="scenario" class="form-control">
           @foreach($scenarios as $scenario)
             <option value="{{$scenario->id}}">{{$scenario->name}}</option>
