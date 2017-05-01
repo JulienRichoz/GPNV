@@ -26,7 +26,9 @@ $('.showObjectif').click(function () {
             var id = this.getAttribute('data-id');
             var projectId = this.getAttribute('data-projectid');
             var baseUrl = this.getAttribute('data-URL');
-            $.get(baseUrl+"/"+projectId+"/scenario/"+id, {}, function (form) {
+            var scenarioId = $(this).parent().children('div.form-group').children('select').val();
+            window.location.href = baseUrl+"/"+projectId+"/scenario/"+scenarioId;
+            /*$.get(baseUrl+"/"+projectId+"/scenario/"+id, {}, function (form) {
                 bootbox.dialog({
                     message: form,
                     className: "modalScenario",
@@ -35,12 +37,7 @@ $('.showObjectif').click(function () {
                           label: 'Valider',
                           className: 'btn-success',
                           callback:''
-                      },/*
-                      save: {
-                          label: 'Sauvegarder',
-                          className: 'btn-warning',
-                          callback:''
-                      },*/
+                      },
                       cancel: {
                           label: 'Quitter',
                           className: 'btn-danger'
@@ -66,7 +63,7 @@ $('.showObjectif').click(function () {
                   $(this).parent().parent().addClass('danger');
                   $(this).siblings( "input[name=state]" ).val("false");
                 });
-            });
+            });*/
         });
     });
   });

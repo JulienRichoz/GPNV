@@ -20,11 +20,12 @@ class ScenarioController extends Controller
     return view('scenario.show', ['projectId'=>$projectId, 'scenario'=>$scenario]);
   }
 
-  //update checklistItem
-  function update(Request $requete,  $id)
+  //update scenarioItem
+  function update($projectId, $scenarioId, Request $requete)
   {
-    /*CheckList::validate($id, $requete->get('done'));
-    return redirect()->back();*/
+
+    DB::table('steps')->where('id', $requete->id)->update(array('order'=>$requete->order, 'action'=>$requete->action, 'result'=>$requete->reponse));
+    return redirect()->back();
   }
 
   //create new scenario item
@@ -91,6 +92,11 @@ class ScenarioController extends Controller
 
   }
 
+  function delStep($projectId, $stepId)
+  {
+    DB::table('steps')->delete($stepId);
+    return redirect()->back();
+  }
   /*function update($projectid, $scenarioId, Request $requete)
   {
 
