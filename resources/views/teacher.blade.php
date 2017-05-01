@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container">
-
             <!-- Display all projects for the user connected -->
             @foreach($projects as $project)
 
