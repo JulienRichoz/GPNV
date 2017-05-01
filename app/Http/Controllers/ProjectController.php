@@ -453,9 +453,9 @@ class ProjectController extends Controller
             $UserTask[0]->delete();
 
             $Event = new Event;
-            $Event->user_id = $currentUser->id;
+            $Event->user_id = Auth::user()->id;
             $Event->project_id = $ProjectId;
-            $Event->description = "Suppression de l'attribution de la tâche : \"" . $Task->name . "\" par : " . $currentUser->lastname . " "  . $currentUser->firstname;
+            $Event->description = $currentUser->getFullNameAttribute() . " a été retiré de la tâche \"" . $Task->name . "\"";
             $Event->save();
         }
       }
