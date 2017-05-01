@@ -418,15 +418,18 @@ class ProjectController extends Controller
     public function addUsers(Request $request, $ProjectID){
       if($request->input('user')) {
           foreach ($request->input('user') as $key => $value) {
-              $Member = new Memberships;
-              $Member->user_id = $key;
-              $Member->project_id = $ProjectID;
-              $Member->save();
+              $memberShip = new Memberships;
+              $memberShip->user_id = $key;
+              $memberShip->project_id = $ProjectID;
+              $memberShip->save();
+
+              $member = User::find($key);
+              $memberFullName = $member->getFullNameAttribute();
 
               $Event = new Event;
-              $Event->user_id = $key;
+              $Event->user_id = Auth::user()->id;
               $Event->project_id = $ProjectID;
-              $Event->description = "Utilisateur ajouté par : " . Auth::user()->lastname . " "  . Auth::user()->firstname;
+              $Event->description = $memberFullName . " a été ajouté au projet";
               $Event->save();
           }
       }
@@ -470,12 +473,12 @@ class ProjectController extends Controller
       }
 
       $Event = new Event;
-      $Event->user_id = $currentUser->id;
+      $Event->user_id =  Auth::user()->id;
       $Event->project_id = $ProjectId;
       if($UserID!=null)
-        $Event->description = "L'Utilisateur a été retiré du projet par: ". Auth::user()->lastname . " "  . Auth::user()->firstname;
+        $Event->description = $currentUser->getFullNameAttribute() . " a été retiré du projet";
       else
-        $Event->description = "L'Utilisateur a quitté le projet";
+        $Event->description = "Abandon du projet";
       $Event->save();
 
       $Memberships->delete();
