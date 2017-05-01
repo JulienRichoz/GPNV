@@ -494,7 +494,7 @@ class ProjectController extends Controller
       $Event = new Event;
       $Event->user_id = Auth::user()->id;
       $Event->project_id = $ProjectID;
-      $Event->description = "L'utilisateur a changé la description";
+      $Event->description = "Modification de la description du projet";
       $Event->save();
 
       $AcknowledgedEvent = new AcknowledgedEvent;
