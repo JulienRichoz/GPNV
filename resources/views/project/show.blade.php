@@ -40,11 +40,11 @@
 
               <div class="dropdown dropTaskFilter">
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  <span id="dropdownTitleOwner">Tous</span>
+                  <span id="dropdownTitleOwner">N'importe qui</span>
                   <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu owner" aria-labelledby="dropdownMenu" >
-                      <li><a data-taskOwner="all" class="activeOwner">Tous</a></li>
+                      <li><a data-taskOwner="all" class="activeOwner">N'importe qui</a></li>
                       <li><a data-taskOwner="{{$currentUser->id}}">Moi</a></li>
                       <li><a data-taskOwner="nobody">Personne</a></li>
                       <li role="separator" class="divider"></li>
