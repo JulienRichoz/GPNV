@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="panel-body collapse logbook" id="logBook logbookPanel" data-projectid="{{$project->id}}">
-      <div id="logBook" class="collapse" data-projectid="{{$project->id}}">
+      <div id="logBook" data-projectid="{{$project->id}}">
       <form role="form">
           <div class="awesomeCheckbox awesomeCheckbox-primary logBookCheckbox">
             @if(Auth::user()->projects()->find($project->id))
