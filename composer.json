@@ -31,7 +31,10 @@
         },
         "psr-0":{
             "Lavary\\Menu\\": "src/"
-        }
+        },
+        "files":[
+          "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
