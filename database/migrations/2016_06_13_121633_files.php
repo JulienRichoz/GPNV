@@ -20,11 +20,13 @@ class Files extends Migration
             $table->string('mime', 45);
             $table->string('size', 45);
             $table->integer('project_id')->unsigned();
+            $table->integer('checkListItem_id')->unsigned()->nullable(true);
             $table->timestamps(); // Creation the column "created_at" and "updated_at"
         });
 
         Schema::table('files', function($table) {
             $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('checkListItem_id')->references('id')->on('checkList_Items');
         });
     }
 
