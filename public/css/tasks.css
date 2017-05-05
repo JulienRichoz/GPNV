@@ -42,3 +42,7 @@
 #taskList {
     margin-top: 20px;
 }
+
+.taskStatus {
+    margin-right: 5px;
+}
