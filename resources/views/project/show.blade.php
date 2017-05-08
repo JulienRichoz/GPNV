@@ -22,6 +22,7 @@
         <div class="col-md-12">
           <div id="filters">
               <div class="awesomeCheckbox awesomeCheckbox-primary filterCheckboxes">
+                  <span class="instruction">Afficher les tâches</span>
                   <input data-status="wip" type="checkbox" checked="checked" id="checkWip" class="styled checkboxFilter">
                   <label for="checkWip" class="checkboxFilterLabel">
                       <span class="taskStatus glyphicon glyphicon-time"></span>
@@ -42,6 +43,7 @@
               </div>
 
               <div class="dropdown dropTaskFilter">
+                  <span class="instruction">assignées à</span>
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   <span id="dropdownTitleOwner">N'importe qui</span>
                   <span class="caret"></span>
@@ -62,6 +64,7 @@
               </div>
 
               <div class="dropdown dropTaskFilter">
+                  <span class="instruction">et liées à</span>
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   <span id="dropdownTitleObjective">Tous les objectifs</span>
                   <span class="caret"></span>
