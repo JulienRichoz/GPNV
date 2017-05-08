@@ -49,7 +49,7 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ route('home') }}">
                 GPNV <div class="version"><?=getVersion(); ?></div>
             </a>
         </div>
@@ -61,19 +61,19 @@
                 <ul class="nav navbar-nav">
                     @if (Auth::user()->role->id == 2)
                       <li><a>|</a></li>
-                      <li><a href="{{ url('/admin') }}">Admin</a></li>
+                      <li><a href="{{ route('admin') }}">Admin</a></li>
                     @endif
 
                 </ul>
 
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/project/create') }}">Nouveau projet</a></li>
+                    <li><a href="{{ route('project.create') }}">Nouveau projet</a></li>
                 </ul>
 
                 {{-- Takes the Route name and show the apropriate menu --}}
                 @if(Route::current() ->getName() === 'project.show')
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/') }}">Tous les projets</a></li>
+                        <li><a href="{{ route('home') }}">Tous les projets</a></li>
                     </ul>
                     @endif
 
@@ -83,7 +83,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ route('login') }}">Login</a></li>
 
                         @else
                             <li><a href="{{route('user.show', Auth::user()->id)}}">{{Auth::user()->fullname}}</a></li>
@@ -94,7 +94,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a>
+                                    <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a>
                                     </li>
                                 </ul>
                             </li>
@@ -143,7 +143,7 @@
         $('#app-layout').on('click', '.taskshow', function () {
             console.log(this);
             var task = this.getAttribute('data-id');
-            $.get("{{ url('tasks') }}/" + task, {}, function (task) {
+            $.get("{{ route('tasks.index') }}/" + task, {}, function (task) {
                 // console.log(task);
                 $('#taskdetail').html(task);
             });
@@ -156,7 +156,7 @@
         // Add student user to project
         $('a.addStudents').click(function () {
             var projectid = this.getAttribute('data-projectid');
-            $.get("{{ url('project') }}/" + projectid + "/getStudents", function (projectid) {
+            $.get("{{ route('project.index') }}/" + projectid + "/getStudents", function (projectid) {
                 bootbox.dialog({
                     title: "Ajouter un élève de la classe",
                     message: projectid
@@ -167,7 +167,7 @@
         // Add teacher user to project
         $('a.addTeachers').click(function () {
             var projectid = this.getAttribute('data-projectid');
-            $.get("{{ url('project') }}/" + projectid + "/getTeachers", function (projectid) {
+            $.get("{{ route('project.index') }}/" + projectid + "/getTeachers", function (projectid) {
                 bootbox.dialog({
                     title: "Ajouter un enseignant",
                     message: projectid
@@ -195,7 +195,7 @@
                 callback: function(result){
                     if (result) {
                         $.ajax({
-                            url: "{{ url('project') }}/" + projectid + "/removeFromProject/" + userid,
+                            url: "{{ route('project.index') }}/" + projectid + "/removeFromProject/" + userid,
                             type: "POST",
                             success: function() {
                                 bootbox.alert("Projet quitté avec succés.");
@@ -230,7 +230,7 @@
               callback: function(result){
                   if (result) {
                       $.ajax({
-                          url: "{{ url('project') }}/" + projectid + "/removeFromProject/" + userid,
+                          url: "{{ route('project.index') }}/" + projectid + "/removeFromProject/" + userid,
                           type: "POST",
                           success: function() {
                               bootbox.alert("Utilisateur supprimé avec succés.");
@@ -258,7 +258,7 @@
         // Add a parent task
         $('#app-layout').on('click', 'button.taskplus', function () {
             var task = this.getAttribute('data-id');
-            $.get("{{ url('tasks') }}/" + task + "/children/create", {}, function (task) {
+            $.get("{{ route('tasks.index') }}/" + task + "/children/create", {}, function (task) {
                 bootbox.dialog({
                     title: "Créer une tâche enfant",
                     message: task
@@ -269,7 +269,7 @@
         // Add a root task
         $('#app-layout').on('click', '.taskroot', function () {
             var task = this.getAttribute('data-id');
-            $.get("{{ url('project') }}/" + task + "/tasks/create", {}, function (task) {
+            $.get("{{ route('project.index') }}/" + task + "/tasks/create", {}, function (task) {
                 bootbox.dialog({
                     title: "Créer une tâche racine",
                     message: task
@@ -334,7 +334,7 @@
                 if (result) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ url('tasks') }}/" + task,
+                        url: "{{ route('tasks.index') }}/" + task,
                         data: task,
                         success: function (task) {
                             location.reload();
@@ -357,7 +357,7 @@
                 if (result) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ url('project') }}/" + projectid + "/users/" + id + "/destroy",
+                        url: "{{ route('project.index') }}/" + projectid + "/users/" + id + "/destroy",
                         success: function (data) {
                             //alert(data);
                             bootbox.alert("Element supprimer avec succès");

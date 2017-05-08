@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <a class="button btn btn-default synchro" href="{{ url('/admin/sync') }}">Synchro Intranet</a>
+        <a class="button btn btn-default synchro" href="{{ route('admin.sync') }}">Synchro Intranet</a>
         </br>
 
         @if(isset($Update) && $Update==true)
