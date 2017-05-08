@@ -50,7 +50,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                GPNV <div class="version"><?=getGitLastTag(); ?></div>
+                GPNV <div class="version"><?=getVersion(); ?></div>
             </a>
         </div>
 
