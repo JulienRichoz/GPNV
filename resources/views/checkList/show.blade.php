@@ -13,7 +13,20 @@
             {{ method_field('PUT') }}
 
             <input name="done" class="styled custom-control-input" onchange="this.form.submit()" type="checkbox" @if($checkListItem->done) checked @endif>
-            <a @if(isset($modalBox) && $modalBox) class="showObjectif" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}" @endif><label>{{$checkListItem->title}}</label></a>
+            @if(isset($modalBox) && $modalBox)
+              <a class="showObjectif" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">
+
+            @else
+              <a>
+            @endif
+
+              <label>{{$checkListItem->title}}</label>
+            </a>
+            @if(isset($file))
+              {{$file->name}}
+            @else
+              fioshddfioshhdf
+            @endif
             <input type="hidden" id="validate" name="validate" value="true"/>
           </form>
         </div>

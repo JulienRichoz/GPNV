@@ -142,4 +142,9 @@ class CheckList extends Model
   public static function getItem($id){
     return DB::table('checkList_Items')->where('id',$id)->first();
   }
+
+  public static function getFile($checkListItemID)
+  {
+    return DB::table('files')->where('checkListItem_id',$checkListItemID)->first();
+  }
 }
