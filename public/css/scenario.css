@@ -1,19 +1,19 @@
 .modalScenario>.modal-dialog{
   width:70%;
 }
-.scenario{
+/*.scenario{
   display: flex;
   flex-direction: column;
 }
-.scenario form{
+/*.scenario form{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.scenario form>div{
+/*.scenario form>div{
   width:45%;
-}
+}*/
 
 .maquette img{
   max-width: 100%;
-} 
+}

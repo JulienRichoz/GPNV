@@ -3,9 +3,27 @@
 @section('content')
 <div class="scenario container">
   <div class="row">
-    <h1>Scénario: {{$scenario->name}} <input type="checkbox" checked="{{$scenario->actif}}" data-toggle="toggle" data-on="actif" data-off="Inactif" ></h1>
-    <p>{{$scenario->description}}</p>
-    <div class="elements col-md-6">
+    <form method="POST" action="" class="col-xs-12 col-md-6 col-md-offset-3">
+      {{ csrf_field() }}
+      {{ method_field('PUT') }}
+      <div class="form-group">
+        <label for="name">Nom:</label>
+        <input class="form-control" type="text" name="name" value="{{$scenario->name}}">
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" name="description" rows="8">{{$scenario->description}}</textarea>
+      </div>
+      <div class="form-group">
+        <input name="actif" type="checkbox" data-toggle="toggle" data-onstyle="success" data-on="Validé" data-off="Non Validé">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-warning">Modifier</button>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="elements col-xs-12 col-md-6">
       <h2>Etapes</h2>
       <table class="table table-hover">
         <thead>
