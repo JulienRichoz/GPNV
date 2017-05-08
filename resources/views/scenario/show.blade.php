@@ -3,7 +3,7 @@
 @section('content')
 <div class="scenario container">
   <div class="row">
-    <h1>Scénario: {{$scenario->name}}</h1>
+    <h1>Scénario: {{$scenario->name}} <input type="checkbox" checked="{{$scenario->actif}}" data-toggle="toggle" data-on="actif" data-off="Inactif" ></h1>
     <p>{{$scenario->description}}</p>
     <div class="elements col-md-6">
       <h2>Etapes</h2>
