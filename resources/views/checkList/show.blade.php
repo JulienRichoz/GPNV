@@ -23,9 +23,13 @@
               <label>{{$checkListItem->title}}</label>
             </a>
             @if(isset($file))
-              {{$file->name}}
+              @if(isset($fileData))
+                {{$fileData->name}}
+              @else
+                No File Linked
+              @endif
             @else
-              fioshddfioshhdf
+
             @endif
             <input type="hidden" id="validate" name="validate" value="true"/>
           </form>
