@@ -76,7 +76,7 @@ class SessionController extends Controller
         ]);
 
         //Auth::login(User::first());
-        //Return redirect('/');
+        //return redirect()->route('home');
 
     }
 
@@ -123,6 +123,6 @@ class SessionController extends Controller
     public function destroy()
     {
         Auth::logout();
-        Return redirect('/');
+        return redirect()->route('home');
     }
 }

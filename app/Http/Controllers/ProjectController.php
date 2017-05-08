@@ -164,7 +164,7 @@ class ProjectController extends Controller
         switch ($taskOwner) {
             case 'all':
                 $query = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
-                    ->select('tasks.*') 
+                    ->select('tasks.*')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
@@ -192,7 +192,7 @@ class ProjectController extends Controller
 
             default:
                 $query = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
-                    ->select('tasks.*') 
+                    ->select('tasks.*')
                     ->where('users_tasks.user_id', "=", $taskOwner)
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
@@ -288,7 +288,7 @@ class ProjectController extends Controller
 
         (new EventController())->store($project_id, $request); // Create an event
 
-        return redirect("project/" . $request->input('project_id'));
+        return redirect()->route("project/", ['id'=>$project_id]);
     }
 
     // Delete one or more users for a project
@@ -306,7 +306,7 @@ class ProjectController extends Controller
         $target->status = "Wait";
         $target->save();
 
-        return redirect("project/" . $id);
+        return redirect()->route("project/", ['id'=>$id]);
     }
 
    // Validate a target
@@ -431,7 +431,7 @@ class ProjectController extends Controller
           }
       }
 
-      return redirect('project/' . $ProjectID);
+      return redirect()->route("project/", ['id'=>$ProjectID]);
     }
 
     public function removeUserFromProject($ProjectId, $UserID=null){
@@ -480,7 +480,7 @@ class ProjectController extends Controller
 
       $Memberships->delete();
 
-      return redirect('project/' . $ProjectId);
+      return redirect()->route("project/", ['id'=>$ProjectId]);
     }
 
     public function editDescription(Request $request, $ProjectID){
@@ -499,7 +499,7 @@ class ProjectController extends Controller
       $AcknowledgedEvent->event_id = $Event->id;
       $AcknowledgedEvent->save();
 
-      return redirect('project/' . $ProjectID);
+      return redirect()->route("project/", ['id'=>$ProjectID]);
     }
 
     public function getTask(Request $request){

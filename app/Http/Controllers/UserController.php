@@ -46,7 +46,7 @@ class UserController extends Controller
             $user->update(['avatar' => $fileName]);
         };
 
-        return redirect("user/" . Auth::user()->id);
+        return redirect()->route("user/", ['id', Auth::user()->id]);
     }
 
     public function search($name)
