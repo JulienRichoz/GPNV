@@ -35,7 +35,7 @@ class SessionController extends Controller
     {
         $Header = Request::header('X-Forwarded-User');
         if($Header!=''){
-          $user = User::where('id', '=', $Header)->first();
+          $user = User::where('friendlyid', '=', $Header)->first();
           if($user){
               Auth::login($user);
               return redirect()->route('project.index');
