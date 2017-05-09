@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('js/summernote-0.8.2/summernote.css') }}">
 
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Lato';
@@ -97,6 +99,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{ URL::asset('js/scripts.js') }}"></script>
 <script src="{{ URL::asset('js/summernote-0.8.2/summernote.min.js') }}"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 
 <script>
     $(document).ready(function () {

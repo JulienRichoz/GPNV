@@ -23,6 +23,7 @@ class Scenarios extends Migration
       $table->increments('id')->index();
       $table->string('description', 500)->nullable();
       $table->string('name', 200);
+      $table->boolean('actif')->default(0);
       $table->integer('checkList_item_id')->unsigned();
     });
 
