@@ -78,9 +78,10 @@ Route::group(['middleware' => 'web'], function () {
         Route::delete('project/{id}/scenario','ScenarioController@delete');
         Route::get('project/{id}/checkListItem/{itemId}/scenario/create','ScenarioController@addItem');
         Route::post('project/{id}/checkListItem/{itemId}/scenario/create','ScenarioController@store');
-        Route::post('project/{id}/scenario/{scenarioId}/create','ScenarioController@addStep');
-        Route::put('project/{id}/scenario/{scenarioId}','ScenarioController@update');
-        Route::get('project/{id}/scenario/{stepId}/delete','ScenarioController@delStep');
+        Route::post('project/{id}/scenario/{scenarioId}/create',['as'=>'scenario.create.item', 'uses' => 'ScenarioController@addStep']);
+        Route::put('project/{id}/scenario/{scenarioId}/item/{itemId}',['as'=>'scenario.item.modify', 'uses' => 'ScenarioController@updateStep']);
+        Route::put('project/{id}/scenario/{scenarioId}',['as'=>'scenario.modify', 'uses' => 'ScenarioController@update']);
+        Route::get('project/{id}/scenario/{stepId}/delete',['as'=>'scenario.del.item', 'uses' => 'ScenarioController@delStep']);
 
         /*--------------------- Routes objectifs -----------------------------*/
 

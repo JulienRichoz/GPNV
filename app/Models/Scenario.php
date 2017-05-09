@@ -7,6 +7,7 @@ use DB;
 
 class Scenario extends Model
 {
+  public $timestamps = false;
   public function steps()
   {
     return $this->hasMany('App\Models\ScenarioStep');
