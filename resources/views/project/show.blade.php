@@ -19,24 +19,29 @@
             <div id="projectTasks" class="panel-body projectTasks collapse" data-projectid="{{$project->id}}">
               <div class="col-md-12">
                 <div id="filters">
+                    <span class="instruction">Afficher les tâches</span>
                     <div class="awesomeCheckbox awesomeCheckbox-primary filterCheckboxes">
                         <input data-status="wip" type="checkbox" checked="checked" id="checkWip" class="styled checkboxFilter">
                         <label for="checkWip" class="checkboxFilterLabel">
+                            <span class="taskStatus glyphicon glyphicon-time"></span>
                             En cours
                         </label>
 
                         <input data-status="todo" type="checkbox" id="checkTodo" class="styled checkboxFilter">
                         <label for="checkTodo" class="checkboxFilterLabel">
+                            <span class="taskStatus glyphicon glyphicon-pushpin"></span>
                             A faire
                         </label>
 
                         <input data-status="done" type="checkbox" id="checkDone" class="styled checkboxFilter">
                         <label for="checkDone" class="checkboxFilterLabel">
+                            <span class="taskStatus glyphicon glyphicon-ok"></span>
                             Terminée
                         </label>
                     </div>
 
                     <div class="dropdown dropTaskFilter">
+                        <span class="instruction">assignées à</span>
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span id="dropdownTitleOwner">Tous</span>
                         <span class="caret"></span>
@@ -57,6 +62,7 @@
                     </div>
 
                     <div class="dropdown dropTaskFilter">
+                        <span class="instruction">et liées à</span>
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span id="dropdownTitleObjective">Tous les objectifs</span>
                         <span class="caret"></span>
