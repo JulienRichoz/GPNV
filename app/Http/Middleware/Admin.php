@@ -22,6 +22,6 @@ class Admin extends Validator
       if (Auth::user()->role_id==2)
         return $next($request);
       else
-        return redirect('/');
+        return redirect()->route('home');
     }
 }

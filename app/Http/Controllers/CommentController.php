@@ -16,7 +16,7 @@ class CommentController extends Controller
     {
         return view('comment.show', ['comment' => $comment]);
     }
-    
+
     // Create a new comment for a task
     function store(Request $request, Task $task)
     {
@@ -26,6 +26,6 @@ class CommentController extends Controller
         $newComment->task_id = $request->task->id;
         $newComment->save();
 
-        return redirect("project/" . $request->task->project_id);
+        return redirect()->route("project/", ['id'=>$request->task->project_id]);
     }
 }

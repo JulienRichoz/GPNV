@@ -51,7 +51,7 @@ class TaskController extends Controller
         foreach ($parentTask->usersTasks as  $usertask) {
           $usertask->delete();
         }
-        return redirect("project/" . $task->project_id);
+        return redirect()->route("project/", ['id'=>$task->project_id]);
     }
 
     // Delete a task
@@ -86,7 +86,7 @@ class TaskController extends Controller
 
         //(new EventController())->store($request->input('project_id'), "Créer une tâche enfant"); // Create an event
 
-        return redirect("project/" . $task->project_id);
+        return redirect()->route("project/", ['id'=>$task->project_id]);
     }
 
     // Start a task
@@ -142,7 +142,7 @@ class TaskController extends Controller
             $newUserTask->save();
         }
 
-        return redirect("project/" . $task->project_id);
+        return redirect()->route("project/", ['id'=>$task->project_id]);
     }
 
     // Delete a user of task

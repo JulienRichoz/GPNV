@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/tasks.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/checkList.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/scenario.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('js/summernote-0.8.2/summernote.css') }}">
 
     <style>
@@ -34,80 +35,55 @@
     </style>
 </head>
 <body id="app-layout">
-<nav class="navbar navbar-default navbar-static-top ">
-    <div class="container">
-        <div class="navbar-header">
+<nav id="top" class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{{ route('home') }}">GPNV <div class="version">{{getVersion()}}</div></a>
 
+          <!-- Collapsed Hamburger -->
+          <button type="button" class="navbar-toggle" data-toggle="collapse"
+                  data-target="#nav-collapse">
+              <span class="sr-only">Toggle Navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+      </div>
+      <div class="collapse navbar-collapse" id="nav-collapse">
+        <ul class="nav navbar-nav">
+        @if (Auth::user())
+          @if (Auth::user()->role->id == 2)
+            <li class="hidden-xs"><a>|</a></li>
+            <li><a href="{{ route('admin') }}">Admin</a></li>
+          @endif
 
-            <!-- Collapsed Hamburger -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
-                GPNV
-            </a>
-        </div>
-
-        <div class="collapse navbar-collapse " id="app-navbar-collapse">
-            <!-- Left Side Of Navbar -->
+          <li class="hidden-xs"><a>|</a></li>
+          <li><a href="{{ route('project.create') }}">Nouveau projet</a></li>
+          @if(Route::current() ->getName() === 'project.show')
+            <li class="hidden-xs"><a>|</a></li>
+            <li><a href="{{ route('home') }}">Tous les projets</a></li>
+          @endif
+        @endif
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
             <!-- Authentication Links -->
-            @if (Auth::user())
-                <ul class="nav navbar-nav">
-                    @if (Auth::user()->role->id == 2)
-                      <li><a>|</a></li>
-                      <li><a href="{{ url('/admin') }}">Admin</a></li>
-                    @endif
-
-                </ul>
-
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/project/create') }}">Nouveau projet</a></li>
-                </ul>
-
-                {{-- Takes the Route name and show the apropriate menu --}}
-                @if(Route::current() ->getName() === 'project.show')
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/') }}">Tous les projets</a></li>
-                    </ul>
-                    @endif
-
-                    @endif
-
-                            <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-
-                        @else
-                            <li><a href="{{route('user.show', Auth::user()->id)}}">{{Auth::user()->fullname}}</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-        </div>
+            @if (Auth::guest())
+                <li><a href="{{ route('login') }}">Login</a></li>
+            @else
+                <li><a href="{{route('user.show', Auth::user()->id)}}">{{Auth::user()->fullname}}</a></li>
+                <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+            @endif
+        </ul>
+      </div>
     </div>
 </nav>
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
 @yield('content')
-
+<a id="ancre" class="btn btn-default btn-lg" href="#top">
+  <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+</a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="{{ URL::asset('js/jquery.ntm.js') }}"></script>
@@ -143,7 +119,7 @@
         $('#app-layout').on('click', '.taskshow', function () {
             console.log(this);
             var task = this.getAttribute('data-id');
-            $.get("{{ url('tasks') }}/" + task, {}, function (task) {
+            $.get("{{ route('tasks.index') }}/" + task, {}, function (task) {
                 // console.log(task);
                 $('#taskdetail').html(task);
             });
@@ -156,7 +132,7 @@
         // Add student user to project
         $('a.addStudents').click(function () {
             var projectid = this.getAttribute('data-projectid');
-            $.get("{{ url('project') }}/" + projectid + "/getStudents", function (projectid) {
+            $.get("{{ route('project.index') }}/" + projectid + "/getStudents", function (projectid) {
                 bootbox.dialog({
                     title: "Ajouter un élève de la classe",
                     message: projectid
@@ -167,7 +143,7 @@
         // Add teacher user to project
         $('a.addTeachers').click(function () {
             var projectid = this.getAttribute('data-projectid');
-            $.get("{{ url('project') }}/" + projectid + "/getTeachers", function (projectid) {
+            $.get("{{ route('project.index') }}/" + projectid + "/getTeachers", function (projectid) {
                 bootbox.dialog({
                     title: "Ajouter un enseignant",
                     message: projectid
@@ -195,7 +171,7 @@
                 callback: function(result){
                     if (result) {
                         $.ajax({
-                            url: "{{ url('project') }}/" + projectid + "/removeFromProject/" + userid,
+                            url: "{{ route('project.index') }}/" + projectid + "/removeFromProject/" + userid,
                             type: "POST",
                             success: function() {
                                 bootbox.alert("Projet quitté avec succés.");
@@ -230,7 +206,7 @@
               callback: function(result){
                   if (result) {
                       $.ajax({
-                          url: "{{ url('project') }}/" + projectid + "/removeFromProject/" + userid,
+                          url: "{{ route('project.index') }}/" + projectid + "/removeFromProject/" + userid,
                           type: "POST",
                           success: function() {
                               bootbox.alert("Utilisateur supprimé avec succés.");
@@ -258,7 +234,7 @@
         // Add a parent task
         $('#app-layout').on('click', 'button.taskplus', function () {
             var task = this.getAttribute('data-id');
-            $.get("{{ url('tasks') }}/" + task + "/children/create", {}, function (task) {
+            $.get("{{ route('tasks.index') }}/" + task + "/children/create", {}, function (task) {
                 bootbox.dialog({
                     title: "Créer une tâche enfant",
                     message: task
@@ -269,7 +245,7 @@
         // Add a root task
         $('#app-layout').on('click', '.taskroot', function () {
             var task = this.getAttribute('data-id');
-            $.get("{{ url('project') }}/" + task + "/tasks/create", {}, function (task) {
+            $.get("{{ route('project.index') }}/" + task + "/tasks/create", {}, function (task) {
                 bootbox.dialog({
                     title: "Créer une tâche racine",
                     message: task
@@ -334,7 +310,7 @@
                 if (result) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ url('tasks') }}/" + task,
+                        url: "{{ route('tasks.index') }}/" + task,
                         data: task,
                         success: function (task) {
                             location.reload();
@@ -357,7 +333,7 @@
                 if (result) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ url('project') }}/" + projectid + "/users/" + id + "/destroy",
+                        url: "{{ route('project.index') }}/" + projectid + "/users/" + id + "/destroy",
                         success: function (data) {
                             //alert(data);
                             bootbox.alert("Element supprimer avec succès");

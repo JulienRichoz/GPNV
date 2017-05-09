@@ -13,7 +13,9 @@
 
 Route::group(['middleware' => 'web'], function () {
 
-    Route::get('login', 'SessionController@create');
+    //,['as' => '','uses' => '']
+
+    Route::get('login',['as' => 'login','uses' => 'SessionController@create'] );
     Route::post('login', 'SessionController@store');
 
     Route::get('test', 'Welcome@Test');
@@ -22,8 +24,8 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['middleware' => 'admin'], function(){
         /* ADMIN */
-          Route::get('admin', 'AdminController@show');
-          Route::get('admin/sync', 'AdminController@synchro');
+          Route::get('admin',['as' => 'admin','uses' => 'AdminController@show']);
+          Route::get('admin/sync',['as' => 'admin.sync','uses' => 'AdminController@synchro']);
         });
 
         /* TASK */
@@ -49,7 +51,7 @@ Route::group(['middleware' => 'web'], function () {
             ['parameters' => ['project' => 'id']],
             ['only' => ['index']]
         );
-        Route::get('/', 'ProjectController@index');
+        Route::get('',['as' => 'home','uses' => 'ProjectController@index']);
         Route::get('project/{id}', ['as' => 'project.show', 'uses' => 'ProjectController@show' ])->where('id', '[0-9]+');
         Route::get('project/{id}/tasks/create', 'ProjectController@createTask')->where('id', '[0-9]+');
         Route::post('project/{id}/tasks', 'ProjectController@storeTask')->where('id', '[0-9]+');
@@ -90,7 +92,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store'])->where('id', '[0-9]+');
 
         /* APP */
-        Route::get('logout', 'SessionController@destroy');
+        Route::get('logout', ['as' => 'logout','uses' => 'SessionController@destroy']);
 
         /* Add User */
         Route::get('project/{id}/getStudents/', 'ProjectController@getStudents')->where('id', '[0-9]+');

@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "illuminate/support": ">=5.0",
         "illuminate/view": ">=5.0",
-        "laravelcollective/html": "5.2.*"
+        "laravelcollective/html": "5.2.*",
+        "mortimer/rootrelativeurls": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -30,7 +31,10 @@
         },
         "psr-0":{
             "Lavary\\Menu\\": "src/"
-        }
+        },
+        "files":[
+          "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
@@ -62,6 +66,10 @@
         {
             "type": "git",
             "url": "git@github.com:jamisonvalenta/Laravel-4-Generators.git"
+        },
+        {
+            "url": "git@github.com:phurni/mortimer-rootrelativeurls.git",
+            "type": "git"
         }
     ]
 }

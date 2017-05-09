@@ -53,7 +53,7 @@ class FileController extends Controller
             $store->save();
         };
 
-        return redirect("project/" . $id);
+        return redirect()->route("project/", ['id'=>$id]);
 
     }
 
