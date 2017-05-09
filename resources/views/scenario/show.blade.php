@@ -3,7 +3,7 @@
 @section('content')
 <div class="scenario container">
   <div class="row">
-    <form method="POST" action="" class="col-xs-12 col-md-6 col-md-offset-3">
+    <form method="POST" action="{{route('scenario.modify', array('projectId' => $projectId, 'scenarioId' => $scenario->id))}}" class="col-xs-12 col-md-6 col-md-offset-3">
       {{ csrf_field() }}
       {{ method_field('PUT') }}
       <div class="form-group">
@@ -15,7 +15,7 @@
         <textarea class="form-control" name="description" rows="8">{{$scenario->description}}</textarea>
       </div>
       <div class="form-group">
-        <input name="actif" type="checkbox" data-toggle="toggle" data-onstyle="success" data-on="Validé" data-off="Non Validé">
+        <input @if($scenario->actif == 1) checked @endif name="actif" type="checkbox" data-toggle="toggle" data-onstyle="success" data-on="Validé" data-off="Non Validé">
       </div>
       <div class="form-group">
         <button class="btn btn-warning">Modifier</button>
@@ -40,7 +40,7 @@
           @foreach($scenario->steps as $step)
             <?php $order++;?>
             <tr data-stepId="{{$step->id}}" data-imgurl="{{ URL::asset('images/{{-- $step->mockup --}}') }}">
-              <form method="post" action="#">
+              <form method="post" action="{{route('scenario.item.modify', array('projectId' => $projectId, 'scenarioId' => $scenario->id, 'itemId' => $step->id))}}">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 <input type="hidden" name="id" value="{{$step->id}}">
@@ -52,7 +52,7 @@
                   <button type="submit" class="btn btn-warning">
                     <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
                   </button>
-                  <a href="./{{$step->id}}/delete" name="submit" class="btn btn-danger">
+                  <a href="{{route('scenario.del.item', array('projectId'=>$projectId, 'stepId'=>$step->id))}}" name="submit" class="btn btn-danger">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                   </a>
                 </td>
@@ -66,7 +66,7 @@
             </tr>
           @endforeach
           <tr>
-            <form method="post" action="./{{$scenario->id}}/create">
+            <form method="post" action="{{route('scenario.create.item', array('projectId'=>$projectId, 'scenarioId'=>$scenario->id))}}">
               {{ csrf_field() }}
               {{ method_field('POST') }}
               <td>n°</td>
