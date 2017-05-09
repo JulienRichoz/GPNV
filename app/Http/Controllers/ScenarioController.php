@@ -38,7 +38,11 @@ class ScenarioController extends Controller
   //create new scenario item
   function store($projectId, $checkListId, Request $requete)
   {
-    Scenario::newItem($checkListId, $requete->get('name'));
+    $scenario = new Scenario();
+    $scenario->name = $requete->name;
+    $scenario->checkList_item_id = $checkListId;
+    $scenario->save();
+    //$scenarioId = Scenario::newItem($checkListId, $requete->get('name'));
 
     // Logging the scenario creation in the logbook
     $event = new Event;
@@ -52,7 +56,7 @@ class ScenarioController extends Controller
     $acknowledgement->event_id = $event->id;
     $acknowledgement->save();
 
-    return redirect()->back();
+    return redirect()->route('scenario.show', ['projectId'=>$projectId, 'scenarioId'=>$scenario->id]);
   }
 
   //Delete a scenario
