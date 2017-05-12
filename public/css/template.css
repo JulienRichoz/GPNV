@@ -8,7 +8,7 @@
     vertical-align: middle;
     text-decoration: none;
     padding: 6px;
-    background-color: #efefef;
+    /*background-color: #efefef;*/
     border-radius: 4px;
     margin-bottom: 1px;
     color: #002888;
@@ -58,7 +58,7 @@
 
 .tree-menu .active > a:hover,
 .tree-menu .selected > a,
-.tree-menu a:hover { background-color: #c6cdde; }
+/*.tree-menu a:hover { background-color: #c6cdde; }*/
 
 .tree-menu .selected > a {
     color: #f53d3e;
