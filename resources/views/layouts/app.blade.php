@@ -630,6 +630,19 @@
             });
         });
 
+        // Link file with delivery
+        $('a.linkDelivery').click(function () {
+          var deliveryID = this.getAttribute('data-id');
+          var projectID = this.getAttribute('data-projectid');
+
+          $.get("{{ url('project') }}/" + projectID + "/link/" + deliveryID, function (projectid) {
+              bootbox.dialog({
+                  title: "Choisir le lien",
+                  message: projectid
+              })
+          });
+        });
+
         // Tooltip handling (enabling bootstrap tooltips)
         $('[data-toggle="tooltip"]').tooltip();
 

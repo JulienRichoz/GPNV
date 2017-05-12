@@ -86,8 +86,10 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store']);
         //Route::get('project/{id}/file', ['as' => 'files.show', 'uses' => 'FileController@show']);
         Route::delete('project/{id}/file/{file}', ['as' => 'files.destroy', 'uses' => 'FileController@destroy']);
-
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store'])->where('id', '[0-9]+');
+
+        Route::get('project/{id}/link/{check}', ['as' => 'deliveries.getToLink', 'uses' => 'ProjectController@getToLink']);
+        Route::post('project/{id}/link', ['as' => 'deliveries.link', 'uses' => 'ProjectController@LinkToDelivery']);
 
         /* APP */
         Route::get('logout', 'SessionController@destroy');

@@ -26,7 +26,7 @@ class Files extends Migration
 
         Schema::table('files', function($table) {
             $table->foreign('project_id')->references('id')->on('projects');
-            $table->foreign('checkListItem_id')->references('id')->on('checkList_Items');
+            //$table->foreign('checkListItem_id')->references('id')->on('checkList_Items');
         });
     }
 

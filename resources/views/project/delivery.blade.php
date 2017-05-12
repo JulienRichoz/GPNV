@@ -20,14 +20,14 @@ Description: Show the checkList "Livrables"
             <!-- Display all livrables -->
             @if($livrables->showToDo())
                 @foreach($livrables->showToDo() as $checkListItem)
-                    @include('checkList.show', array('checkListItem'=>$checkListItem, 'projectId'=>$project->id, 'fileData'=>$livrables->getFile($checkListItem->id), 'file'=>true ))
+                    @include('checkList.show', array('checkListItem'=>$checkListItem, 'projectId'=>$project->id, 'fileData'=>$livrables->getLink($checkListItem->link), 'file'=>true ))
                 @endforeach
             @endif
         </div>
         <div class="completed hidden">
             @if($livrables->showCompleted())
                 @foreach($livrables->showCompleted() as $checkListItem)
-                    @include('checkList.show', array('checkListItem'=>$checkListItem, 'projectId'=>$project->id, 'fileData'=>$livrables->getFile($checkListItem->id), 'file'=>true ))
+                    @include('checkList.show', array('checkListItem'=>$checkListItem, 'projectId'=>$project->id, 'fileData'=>$livrables->getLink($checkListItem->link), 'file'=>true ))
                 @endforeach
             @endif
         </div>

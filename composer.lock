@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "723aaddb2188ee48b29205e4deee72c1",
+    "content-hash": "7f0817b8abc59821d21c227ba7bdc31b",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -651,6 +651,32 @@
             "time": "2017-03-13T07:08:03+00:00"
         },
         {
+            "name": "mortimer/header-token-guard",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phurni/mortimer-header-token-guard.git",
+                "reference": "b4435292e4eadcc7d41c917b3ac6b809cba681eb"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mortimer\\HeaderTokenGuard\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pascal Hurni",
+                    "email": "phi@pragmaticpurist.org"
+                }
+            ],
+            "description": "Laravel package providing a Guard that let's you au authenticate users from a token in a custom HTTP header",
+            "time": "2017-05-12 07:25:34"
+        },
+        {
             "name": "mortimer/rootrelativeurls",
             "version": "dev-master",
             "source": {
@@ -993,16 +1019,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.7",
+            "version": "v5.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "56db4ed32a6d5c9824c3ecc1d2e538f663f47eb4"
+                "reference": "9a06dc570a0367850280eefd3f1dc2da45aef517"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/56db4ed32a6d5c9824c3ecc1d2e538f663f47eb4",
-                "reference": "56db4ed32a6d5c9824c3ecc1d2e538f663f47eb4",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/9a06dc570a0367850280eefd3f1dc2da45aef517",
+                "reference": "9a06dc570a0367850280eefd3f1dc2da45aef517",
                 "shasum": ""
             },
             "require": {
@@ -1043,7 +1069,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2017-04-20T17:32:18+00:00"
+            "time": "2017-05-01T15:54:03+00:00"
         },
         {
             "name": "symfony/console",
@@ -3854,6 +3880,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "mortimer/rootrelativeurls": 20,
+        "mortimer/header-token-guard": 20,
         "xethron/migrations-generator": 20,
         "way/generators": 20
     },

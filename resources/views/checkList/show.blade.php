@@ -23,14 +23,27 @@
               <label>{{$checkListItem->title}}</label>
             </a>
             @if(isset($file))
-              @if(isset($fileData))
-                {{$fileData->name}}
+              @if(isset($fileData->id))
+                <a class="btn removeFileLink pull-right" data-fileid="{{$fileData->id}}" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
+                <a class="btn viewFile pull-right" data-fileid="{{$fileData->id}}" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;">
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                </a>
+              @elseif($fileData!=null)
+                <a class="btn removeURLLink pull-right" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
+                <a class="btn pull-right" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;" onclick="window.open('{{$fileData}}', '_blank');">
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                </a>
               @else
-                No File Linked
+                <a class="btn linkDelivery pull-right" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" style="position: relative;top: -8px;background-color: unset;">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </a>
               @endif
-            @else
-
             @endif
+
             <input type="hidden" id="validate" name="validate" value="true"/>
           </form>
         </div>

@@ -37,8 +37,10 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
+          'driver' => 'header_token',
+          'provider' => 'users',
+          'input_key' => 'X-Forwarded-User',
+          'storage_key' => 'friendlyid'
         ],
 
         'api' => [
