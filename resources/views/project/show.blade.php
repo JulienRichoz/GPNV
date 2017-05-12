@@ -18,7 +18,7 @@
             </div>
             <div id="projectTasks" class="panel-body projectTasks collapse" data-projectid="{{$project->id}}">
               <div id="filters" class="col-md-12">
-                  <div class="awesomeCheckbox awesomeCheckbox-primary filterCheckboxes col-xs-12 col-lg-6">
+                  <div class="awesomeCheckbox awesomeCheckbox-primary filterCheckboxes">
                       <span class="instruction">Afficher les tâches</span>
                       <input data-status="wip" type="checkbox" checked="checked" id="checkWip" class="styled checkboxFilter">
                       <label for="checkWip" class="checkboxFilterLabel">
@@ -39,7 +39,7 @@
                       </label>
                   </div>
 
-                  <div class="dropdown dropTaskFilter col-md-12">
+                  <div class="dropdown dropTaskFilter">
                       <span class="instruction">assignées à</span>
                       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       <span id="dropdownTitleOwner">Tous</span>
@@ -60,7 +60,7 @@
                       </ul>
                   </div>
 
-                  <div class="dropdown dropTaskFilter col-md-12">
+                  <div class="dropdown dropTaskFilter">
                       <span class="instruction">et liées à</span>
                       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       <span id="dropdownTitleObjective">Tous les objectifs</span>
@@ -75,7 +75,7 @@
                           @endif
                       </ul>
                   </div>
-              <hr/>
+              <!-- <hr/> -->
               </div>
 
               <div id="taskList" class="col-md-6">
