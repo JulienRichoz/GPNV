@@ -24,7 +24,7 @@ class ProjectControl extends Validator
         elseif ($request->isMethod('get'))
           return $next($request);
         else
-          return redirect()->route('project/', ['id'=>$request->id]);
+          return redirect()->route('project.show', ['id'=>$request->id]);
       }
       else
         return redirect()->route('home');

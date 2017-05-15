@@ -288,7 +288,7 @@ class ProjectController extends Controller
 
         (new EventController())->store($project_id, $request); // Create an event
 
-        return redirect()->route("project/", ['id'=>$project_id]);
+        return redirect()->route("project.show", ['id'=>$project_id]);
     }
 
     // Delete one or more users for a project
@@ -306,7 +306,7 @@ class ProjectController extends Controller
         $target->status = "Wait";
         $target->save();
 
-        return redirect()->route("project/", ['id'=>$id]);
+        return redirect()->route("project.show", ['id'=>$id]);
     }
 
    // Validate a target
@@ -431,7 +431,7 @@ class ProjectController extends Controller
           }
       }
 
-      return redirect()->route("project/", ['id'=>$ProjectID]);
+      return redirect()->route("project.show", ['id'=>$ProjectID]);
     }
 
     public function removeUserFromProject($ProjectId, $UserID=null){
@@ -480,7 +480,7 @@ class ProjectController extends Controller
 
       $Memberships->delete();
 
-      return redirect()->route("project/", ['id'=>$ProjectId]);
+      return redirect()->route("project.show", ['id'=>$ProjectId]);
     }
 
     public function editDescription(Request $request, $ProjectID){
@@ -499,7 +499,7 @@ class ProjectController extends Controller
       $AcknowledgedEvent->event_id = $Event->id;
       $AcknowledgedEvent->save();
 
-      return redirect()->route("project/", ['id'=>$ProjectID]);
+      return redirect()->route("project.show", ['id'=>$ProjectID]);
     }
 
     public function getTask(Request $request){
@@ -540,7 +540,8 @@ class ProjectController extends Controller
 
       DB::table('checkList_Items')->where('id', $checkListID)->update(['link' => $request->input('data')]);
 
-      return redirect('project/' . $ProjectID);
+      //return redirect('project/' . $ProjectID);
+      return redirect()->route("project.show", ['id'=>$ProjectID]);
 
     }
 

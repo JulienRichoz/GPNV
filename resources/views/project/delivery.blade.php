@@ -5,7 +5,7 @@ Description: Show the checkList "Livrables"
 <div class="col-xs-12 col-lg-6">
   <div class="panel panel-default">
       <!-- Display all project informations like the members, a description and so on -->
-      <div class="panel-heading showPanel" data-toggle="collapse" data-target="#deliverables">
+      <div class="panel-heading showPanel" data-toggle="collapse" data-target=".deliverables">
           <h1>Livrables <span class="glyphicon glyphicon-chevron-down pull-right"></span></h1>
       </div>
     <div class="panel-body deliverables collapse" data-projectid="{{$project->id}}">

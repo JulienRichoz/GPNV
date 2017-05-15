@@ -26,6 +26,6 @@ class CommentController extends Controller
         $newComment->task_id = $request->task->id;
         $newComment->save();
 
-        return redirect()->route("project/", ['id'=>$request->task->project_id]);
+        return redirect()->route("project.show", ['id'=>$request->task->project_id]);
     }
 }

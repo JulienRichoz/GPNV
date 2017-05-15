@@ -109,7 +109,7 @@ class InvitationController extends Controller
            }
        }
 
-       return redirect()->route('project/', ['id'=>$project->id]);
+       return redirect()->route('project.show', ['id'=>$project->id]);
 
     }
     /*
