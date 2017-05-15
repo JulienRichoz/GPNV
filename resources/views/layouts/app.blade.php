@@ -73,7 +73,6 @@
                 <li><a href="{{ route('login') }}">Login</a></li>
             @else
                 <li><a href="{{route('user.show', Auth::user()->id)}}">{{Auth::user()->fullname}}</a></li>
-                <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
             @endif
         </ul>
       </div>
