@@ -36,6 +36,7 @@ class checkLists extends Migration
         $table->longText('description')->nullable();
         $table->boolean('done');
         $table->integer('checkList_id')->unsigned();
+        $table->longText('link')->nullable();
       });
 
       Schema::table('checkLists', function($table){
