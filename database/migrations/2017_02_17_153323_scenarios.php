@@ -14,9 +14,10 @@ class Scenarios extends Migration
   {
     Schema::create('mockups', function (Blueprint $table) {
       $table->increments('id')->index();
-      $table->string('name', 45)->nullable();
-      $table->string('description', 500)->nullable();
-      $table->string('url', 500);
+      //$table->string('name', 45)->nullable();
+      //$table->string('description', 500)->nullable();
+      $table->string('file_name', 500);
+      $table->integer('scenario_id')->unsigned();
     });
 
     Schema::create('scenarios', function (Blueprint $table) {
@@ -59,6 +60,9 @@ class Scenarios extends Migration
       $table->foreign('scenario_id')->references('id')->on('scenarios');
       $table->foreign('mockup_id')->references('id')->on('mockups');
     });
+    Schema::table('mockups', function($table){
+      $table->foreign('scenario_id')->references('id')->on('scenarios');
+    });
     Schema::table('step_test_results', function($table){
       $table->foreign('step_id')->references('id')->on('steps');
       $table->foreign('test_id')->references('id')->on('scenario_tests');
@@ -76,9 +80,9 @@ class Scenarios extends Migration
    */
   public function down() {
     Schema::drop('step_test_results');
-        Schema::drop('scenario_tests');
-        Schema::drop('steps');
-        Schema::drop('mockups');
-        Schema::drop('scenarios');
+    Schema::drop('scenario_tests');
+    Schema::drop('steps');
+    Schema::drop('mockups');
+    Schema::drop('scenarios');
     }
 }
