@@ -113,4 +113,9 @@ $(document).ready(function() {
     }
   });
 
+  $('button.viewFile').click(function () {
+      var fileID = this.getAttribute('data-fileid');
+      var deliveryID = this.getAttribute('data-id');
+  });
+
 });

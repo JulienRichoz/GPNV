@@ -142,4 +142,14 @@ class CheckList extends Model
   public static function getItem($id){
     return DB::table('checkList_Items')->where('id',$id)->first();
   }
+
+  public static function getLink($link)
+  {
+    if (filter_var($link, FILTER_VALIDATE_URL)) {
+      return $link;
+    }
+    else{
+      return DB::table('files')->where('id',$link)->first();
+    }
+  }
 }

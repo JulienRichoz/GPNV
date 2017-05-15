@@ -70,4 +70,10 @@ class FileController extends Controller
         File::where('id','=',$file->id)->delete();
 
     }
+
+    public function LinkToDelivery($id,File $file, $checklistID){
+      $file->checkListItem_id = $checklistID;
+      $file->save();
+      return true;
+    }
 }

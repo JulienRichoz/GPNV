@@ -10,7 +10,8 @@
         "illuminate/support": ">=5.0",
         "illuminate/view": ">=5.0",
         "laravelcollective/html": "5.2.*",
-        "mortimer/rootrelativeurls": "dev-master"
+        "mortimer/rootrelativeurls": "dev-master",
+        "mortimer/header-token-guard": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -69,6 +70,10 @@
         },
         {
             "url": "git@github.com:phurni/mortimer-rootrelativeurls.git",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/phurni/mortimer-header-token-guard.git",
             "type": "git"
         }
     ]

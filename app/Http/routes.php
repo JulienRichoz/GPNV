@@ -35,6 +35,8 @@ Route::group(['middleware' => 'web'], function () {
             ]
         );
 
+        Route::delete('delivery/unlink/{checkList_id}/', ['as' => 'delivery.unlink', 'uses' => 'CheckListController@unlink']);
+
         Route::get('tasks/{task}/',['as' => 'tasks.show','uses' => 'TaskController@show'])->where('task', '[0-9]+');
         Route::get('tasks/{task}/children/create', ['as' => 'tasks.createChildren','uses' => 'TaskController@createChildren'])->where('task', '[0-9]+');
         Route::post('tasks/{task}/children/', ['as' => 'tasks.storeChildren','uses' => 'TaskController@storeChildren'])->where('task', '[0-9]+');
@@ -51,7 +53,7 @@ Route::group(['middleware' => 'web'], function () {
             ['parameters' => ['project' => 'id']],
             ['only' => ['index']]
         );
-        Route::get('',['as' => 'home','uses' => 'ProjectController@index']);
+        Route::get('/', ['as' => 'home', 'uses' => 'ProjectController@index' ]);
         Route::get('project/{id}', ['as' => 'project.show', 'uses' => 'ProjectController@show' ])->where('id', '[0-9]+');
         Route::get('project/{id}/tasks/create', 'ProjectController@createTask')->where('id', '[0-9]+');
         Route::post('project/{id}/tasks', 'ProjectController@storeTask')->where('id', '[0-9]+');
@@ -89,8 +91,10 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store']);
         //Route::get('project/{id}/file', ['as' => 'files.show', 'uses' => 'FileController@show']);
         Route::delete('project/{id}/file/{file}', ['as' => 'files.destroy', 'uses' => 'FileController@destroy']);
-
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store'])->where('id', '[0-9]+');
+
+        Route::get('project/{id}/link/{check}', ['as' => 'deliveries.getToLink', 'uses' => 'ProjectController@getToLink']);
+        Route::post('project/{id}/link', ['as' => 'deliveries.link', 'uses' => 'ProjectController@LinkToDelivery']);
 
         /* APP */
         Route::get('logout', ['as' => 'logout','uses' => 'SessionController@destroy']);

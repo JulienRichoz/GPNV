@@ -517,4 +517,31 @@ class ProjectController extends Controller
         }
     }
 
+    public function getToLink($projectID, $check){
+      $Project = Project::find($projectID);
+
+      $linkedFiles = DB::table('checkList_Items')->whereNotNull('link')->pluck('link');
+      $filesInProject = $Project->files()->whereNotIn('id', $linkedFiles)->get();
+
+      return view('project.toLink', ['project' => $Project, 'files' => $filesInProject, 'checkID'=> $check]);
+    }
+
+    public function LinkToDelivery(Request $request, $ProjectID){
+      if( $request->input('check')==null || $request->input('type')==null || $request->input('data')==null) return redirect('project/' . $ProjectID);
+
+      $checkListID = $request->input('check');
+      $checkListItem = DB::table('checkList_Items')->where('id', $checkListID)->first();
+      if( $checkListItem==null ) return redirect('project/' . $ProjectID);
+
+      if($request->input('type')=="file"){
+        $file = DB::table('file')->where('id','=',$data)->first();
+        if( $file==null ) return redirect('project/' . $ProjectID);
+      }
+
+      DB::table('checkList_Items')->where('id', $checkListID)->update(['link' => $request->input('data')]);
+
+      return redirect('project/' . $ProjectID);
+
+    }
+
 }

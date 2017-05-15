@@ -610,6 +610,54 @@
             });
         });
 
+        // Link file with delivery
+        $('a.linkDelivery').click(function () {
+          var deliveryID = this.getAttribute('data-id');
+          var projectID = this.getAttribute('data-projectid');
+
+          $.get("{{ url('project') }}/" + projectID + "/link/" + deliveryID, function (projectid) {
+              bootbox.dialog({
+                  title: "Choisir le lien",
+                  message: projectid
+              })
+          });
+        });
+
+        $('a.removeLink').click(function () {
+            var checkListID = this.getAttribute('data-id');
+
+              bootbox.confirm({
+                title: "Voulez-vous delier ce fichier/lien ?",
+                message: "Cette action deliera le fichier/lien de ce livrable et le rendra disponible pour d'autres livrables",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Retour',
+                        className: 'btn-success'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Délier le fichier/lien',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result){
+                    if (result) {
+                        $.ajax({
+                            url: "{{ url('delivery/unlink/') }}/" + checkListID,
+                            type: "DELETE",
+                            data: { _method: "DELETE"},
+                            success: function() {
+                                bootbox.alert("Fichier/lien délié avec succés.");
+                                location.reload();
+                            },
+                            error: function() {
+                                console.log(result);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
         // Tooltip handling (enabling bootstrap tooltips)
         $('[data-toggle="tooltip"]').tooltip();
 

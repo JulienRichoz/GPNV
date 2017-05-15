@@ -31,6 +31,7 @@
     27 => 'Xethron\\MigrationsGenerator\\MigrationsGeneratorServiceProvider',
     28 => 'User11001\\EloquentModelGenerator\\EloquentModelGeneratorProvider',
     29 => 'Mortimer\\Rootrelativeurls\\RootrelativeurlsServiceProvider',
+    30 => 'Mortimer\\HeaderTokenGuard\\ServiceProvider',
   ),
   'eager' => 
   array (
@@ -51,6 +52,7 @@
     14 => 'Xethron\\MigrationsGenerator\\MigrationsGeneratorServiceProvider',
     15 => 'User11001\\EloquentModelGenerator\\EloquentModelGeneratorProvider',
     16 => 'Mortimer\\Rootrelativeurls\\RootrelativeurlsServiceProvider',
+    17 => 'Mortimer\\HeaderTokenGuard\\ServiceProvider',
   ),
   'deferred' => 
   array (
