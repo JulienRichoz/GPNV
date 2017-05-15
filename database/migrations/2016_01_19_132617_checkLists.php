@@ -13,7 +13,7 @@ class checkLists extends Migration
      */
     public function up()
     {
-      Schema::create('checkList_Tables', function (Blueprint $table) {
+      /*Schema::create('checkList_Tables', function (Blueprint $table) {
         $table->increments('id')->index();
         $table->string('name', 45);
       });
@@ -21,13 +21,14 @@ class checkLists extends Migration
       Schema::create('checkList_Types', function(Blueprint $table){
         $table->increments('id')->index();
         $table->string('name',45);
-      });
+      });*/
 
       Schema::create('checkLists', function(Blueprint $table){
         $table->increments('id')->index();
-        $table->integer('recordId');
-        $table->integer('checkListTable_id')->unsigned();
-        $table->integer('checkListType_id')->unsigned();
+        $table->string('name',45);
+        $table->integer('parent_id');
+        //$table->integer('checkListTable_id')->unsigned();
+        $table->string('checkList_type',45)->nullable();
       });
 
       Schema::create('checkList_Items', function(Blueprint $table){
@@ -38,10 +39,10 @@ class checkLists extends Migration
         $table->integer('checkList_id')->unsigned();
       });
 
-      Schema::table('checkLists', function($table){
+      /*Schema::table('checkLists', function($table){
         $table->foreign('checkListTable_id')->references('id')->on('checkList_Tables');
         $table->foreign('checkListType_id')->references('id')->on('checkList_Types');
-      });
+      });*/
 
       Schema::table('checkList_Items', function($table){
         $table->foreign('checkList_id')->references('id')->on('checkLists');
@@ -57,7 +58,7 @@ class checkLists extends Migration
     {
         Schema::drop('checkList_Items');
         Schema::drop('checkLists');
-        Schema::drop('checkList_Types');
-        Schema::drop('checkList_Tables');
+        //Schema::drop('checkList_Types');
+        //Schema::drop('checkList_Tables');
     }
 }
