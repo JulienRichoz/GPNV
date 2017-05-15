@@ -77,4 +77,9 @@ class CheckListController extends Controller
 
     return redirect()->back();
   }
+
+  function unlink($checkListID){
+    $checkListItem = DB::table('checkList_Items')->where('id', $checkListID)->update(['link' => '']);
+  }
+
 }
