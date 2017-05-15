@@ -115,4 +115,10 @@ class ScenarioController extends Controller
     DB::table('steps')->where('id', $itemId)->update(array('order'=>$requete->order, 'action'=>$requete->action, 'result'=>$requete->reponse));
     return redirect()->back();
   }
+
+  function addMaquete($projectid, $scenarioId, Request $requete)
+  {
+    $scenario = Scenario::find($scenarioId);
+    $objectifId = $scenario->objectif->id;
+  }
 }

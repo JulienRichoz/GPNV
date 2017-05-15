@@ -77,11 +77,28 @@
           </tr>
         </tbody>
       </table>
-
     </div>
     <div class="maquette col-md-6">
       <h2>Maquette</h2>
       <a href="{{ URL::asset('images/scenario1.png') }}" target="_blank"><img src=""/></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-3">
+      <form method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        {{ method_field('POST') }}
+        <h2>Ajouter une maquette</h2>
+        <div class="form-group">
+          <input type="file" name="maquette" class="form-control">
+        </div>
+        <div class="form-group">
+          <button type="button" name="button" class="btn btn-warning">Ajouter</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-xs-12 col-md-9">
+      <!-- Add existing images here-->
     </div>
   </div>
 </div>
