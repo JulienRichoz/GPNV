@@ -91,13 +91,13 @@
 <script src="{{ URL::asset('js/jquery.ntm.js') }}"></script>
 <script src="{{ URL::asset('js/bootbox.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('js/scripts.js') }}"></script>
 <script src="{{ URL::asset('js/checkList.js') }}"></script>
 <script src="{{ URL::asset('js/scenario.js') }}"></script>
 <script src="{{ URL::asset('js/objectifs.js') }}"></script>
 
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="{{ URL::asset('js/scripts.js') }}"></script>
 <script src="{{ URL::asset('js/summernote-0.8.2/summernote.min.js') }}"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 

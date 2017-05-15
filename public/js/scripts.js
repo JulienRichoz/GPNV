@@ -1,12 +1,12 @@
 $(document).ready(function() {
-  function setCookie(cname, cvalue, path=null){
+  window.setCookie = function(cname, cvalue, path=null){
     if(!path) path="/";
     var d = new Date();
     d.setTime(d.getTime() + (1*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path="+path;
   }
-  function getCookies() {
+  window.getCookies = function() {
     var c = document.cookie, v = 0, cookies = {};
     if (document.cookie.match(/^\s*\$Version=(?:"1"|1);\s*(.*)/)) {
         c = RegExp.$1;
@@ -30,7 +30,7 @@ $(document).ready(function() {
     }
     return cookies;
   }
-  function getCookie(name) {
+  window.getCookie = function(name) {
       return getCookies()[name];
   }
 
@@ -89,6 +89,25 @@ $(document).ready(function() {
       }
     }
   });
+
+  // provisory task filters management
+  $(function() {
+    var theCookies = Object.keys(getCookies());
+    for (var i = 0; i < theCookies.length; i++) {
+      if (theCookies[i].startsWith('#check')){
+        var cookie = getCookie(theCookies[i]);
+        if(cookie == 'true'){
+          $(theCookies[i]).prop('checked', true);
+          console.log(theCookies[i] + " set to true");
+        } else {
+          $(theCookies[i]).prop('checked', false);
+          console.log(theCookies[i] + " set to false");
+        }
+      }
+    }
+  });
+
+
   $('.showPanel').click(function(){
     $(this).children('h1').children('span').toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
     var cookieName = $(this).attr('data-target');

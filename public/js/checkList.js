@@ -63,7 +63,19 @@ $(document).ready(function () {
   // ------------------------------ Event handling ------------------------------
   // Displaying the task list whenever the user clicks a new filter checkbox
   $(".checkboxFilter").change(function() {
+    // Cookie management
+    var checkbox = $(this);
+    var cookieName = "#" + checkbox.attr("id")
+    setCookie(cookieName, checkbox.is(":checked"), document.location.pathname);
+    console.log("saving:\n" + cookieName + " " + checkbox.is(":checked") + " @ " + document.location.pathname);
+
+    // UI management
     refreshDisplayedTasks();
+
+    // tweak
+    console.log(window.getCookie());
+    var theCookies = Object.keys(getCookies());
+    console.log(theCookies);
   });
 
 
