@@ -49,7 +49,7 @@ Route::group(['middleware' => 'web'], function () {
             ['parameters' => ['project' => 'id']],
             ['only' => ['index']]
         );
-        Route::get('/', 'ProjectController@index');
+        Route::get('/', ['as' => 'home', 'uses' => 'ProjectController@index' ]);
         Route::get('project/{id}', ['as' => 'project.show', 'uses' => 'ProjectController@show' ])->where('id', '[0-9]+');
         Route::get('project/{id}/tasks/create', 'ProjectController@createTask')->where('id', '[0-9]+');
         Route::post('project/{id}/tasks', 'ProjectController@storeTask')->where('id', '[0-9]+');

@@ -27,7 +27,8 @@
                 <a class="btn removeFileLink pull-right" data-fileid="{{$fileData->id}}" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
-                <a class="btn viewFile pull-right" data-fileid="{{$fileData->id}}" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;">
+                <a class="btn viewFile pull-right" data-fileid="{{$fileData->id}}" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;"
+                  onclick="window.open('{{asset('files/'.$project->id.'/'.$fileData->url)}}', '_blank');">
                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                 </a>
               @elseif($fileData!=null)
