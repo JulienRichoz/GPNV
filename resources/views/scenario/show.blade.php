@@ -23,7 +23,7 @@
     </form>
   </div>
   <div class="row">
-    <div class="elements col-xs-12 col-md-6">
+    <div class="elements col-xs-12 col-md-5">
       <h2>Etapes</h2>
       <table class="table table-hover">
         <thead>
@@ -79,9 +79,32 @@
       </table>
 
     </div>
-    <div class="maquette col-md-6">
+    <div class="col-xs-12 col-md-3">
+      <h2>Maquetes disponibles</h2>
+      <div class="col-xs-12">
+        @foreach($scenario->mockups as $mockup)
+        <div style="text-align:center; margin-bottom:2px;">
+          <img src="{{ URL::asset('mockups/'.$projectId.'/'.$scenario->id.'/'.$mockup->url)}}" style="max-width:100%; max-height: 200px;">
+        </div>
+        @endforeach
+      </div>
+      <div class="col-xs-12">
+        <h4>Ajouter une maquette</h4>
+        <form enctype="multipart/form-data" action="{{route('scenario.uploadMaquete', array('projectId'=>$projectId, 'scenarioId'=>$scenario->id))}}" method="post">
+          {{ csrf_field() }}
+          {{ method_field('POST') }}
+          <div class="form-group">
+            <input type="file" name="maquette" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <button name="button" class="btn btn-warning">Ajouter une maquette</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="maquette col-xs-12 col-md-4">
       <h2>Maquette</h2>
-      <a href="{{ URL::asset('images/scenario1.png') }}" target="_blank"><img src=""/></a>
+      <a href="{{ URL::asset('mockups/2/2/img58d2c235da868.jpg') }}" target="_blank"><img src="{{ URL::asset('mockups/2/2/img58d2c235da868.jpg') }}"/></a>
     </div>
   </div>
 </div>
