@@ -82,7 +82,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::put('project/{id}/scenario/{scenarioId}/item/{itemId}',['as'=>'scenario.item.modify', 'uses' => 'ScenarioController@updateStep']);
         Route::put('project/{id}/scenario/{scenarioId}',['as'=>'scenario.modify', 'uses' => 'ScenarioController@update']);
         Route::get('project/{id}/scenario/{stepId}/delete',['as'=>'scenario.del.item', 'uses' => 'ScenarioController@delStep']);
-
+        Route::post('project/{id}/scenario/{scenarioId}/uploadMaquete', ['as' => 'scenario.uploadMaquete', 'uses' => 'ScenarioController@uploadMaquete']);
         /*--------------------- Routes objectifs -----------------------------*/
 
         /* FILES */
