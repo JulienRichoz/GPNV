@@ -14,8 +14,7 @@ class Scenarios extends Migration
   {
     Schema::create('mockups', function (Blueprint $table) {
       $table->increments('id')->index();
-      $table->string('name', 45)->nullable();
-      $table->string('description', 500)->nullable();
+      $table->integer('scenario_id')->unsigned();
       $table->string('url', 500);
     });
 
@@ -58,6 +57,9 @@ class Scenarios extends Migration
     Schema::table('steps', function($table){
       $table->foreign('scenario_id')->references('id')->on('scenarios');
       $table->foreign('mockup_id')->references('id')->on('mockups');
+    });
+    Schema::table('mockups', function($table){
+      $table->foreign('scenario_id')->references('id')->on('scenarios');
     });
     Schema::table('step_test_results', function($table){
       $table->foreign('step_id')->references('id')->on('steps');
