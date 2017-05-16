@@ -129,6 +129,12 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function showDeliveries($projectID){
+      $project = Project::find($projectID);
+      $deliveries = new CheckList('Project', $projectID, 'Livrables');
+      return view('project/delivery',['project' => $project, 'livrables'=>$deliveries]);
+    }
+
     // Return the view about files -> not yet made
     public function files()
     {

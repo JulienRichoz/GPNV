@@ -20,8 +20,8 @@ $(document).ready(function () {
   //switch view button hidde or not the completed items
   $('.changeView').click(function(){
     var parent = $(this).parent();
-    parent.children('.completed').toggleClass('hidden');
-    parent.children('.changeView').toggleClass('hidden');
+    parent.children('.deliveriesData').children('.completed').toggleClass('hidden');
+    parent.children('.deliveriesData').children('.changeView').toggleClass('hidden');
   });
 
   // Displays / hides the filter controls depending on whether the task container is collapsed or not
