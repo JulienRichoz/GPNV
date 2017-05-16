@@ -1,16 +1,15 @@
 <?php
 namespace App\Models\CheckList
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\STI
 
 /**
  *
  */
-class CheckList extends Model
+class CheckList extends STI
 {
   protected $table = 'checkLists';
-
-  protected $stiField = 'checkList_type';
+  protected $stiClassField = 'checkList_type';
 
   public function steps()
   {
