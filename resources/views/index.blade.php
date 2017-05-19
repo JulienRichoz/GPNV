@@ -12,7 +12,7 @@
             </div><!-- Display the project name -->
             <div class="panel-body">
               <div class="infos">
-                <h5>Début du projet : {{ $project->startDate }}</h5>
+                <h5>Début du projet : {{ getDateString($project->startDate) }}</h5>
               </div>
               <h4 data-toggle="collapse" data-target="#users_{{ $project->id }}" class="showMembres"><span class="glyphicon glyphicon-chevron-down btn"></span>Membres : </h4>
               <!-- Display all project members -->

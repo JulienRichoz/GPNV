@@ -11,4 +11,8 @@
     fclose($myfile);
     return $version;
   }
+
+  function getDateString($datetime){
+    return date('m/d/Y', strtotime($datetime));
+  }
 ?>
