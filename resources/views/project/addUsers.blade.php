@@ -1,4 +1,24 @@
-<form class="form-horizontal" role="form" method="POST" action="{{ route('project.addUsers', $project->id) }}">
+<script type='text/javascript'>
+  $(document).ready(function () {
+    $("#form").submit(function(event) {
+      event.preventDefault();
+      var form = $( this ), url = form.attr( 'action' );
+      
+      $.ajax({
+          url: url,
+          type: 'POST',
+          data: form.serializeArray(),
+          success: function (data) {
+              var result = $('<div />').append(data).find('.membershipsData').html();
+              $(".membershipsData").html(result);
+              bootbox.hideAll();
+          }
+      });
+    });
+  });
+</script>
+
+<form class="form-horizontal" role="form" method="POST" id="form" action="{{ route('project.addUsers', $project->id) }}">
    {!! csrf_field() !!}
      <div class="checkbox">
         @foreach($users as $user)

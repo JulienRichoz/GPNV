@@ -57,9 +57,13 @@ $(document).ready(function() {
         url: projectid + "/editDescription/",
         type: "POST",
         data: { description: description },
-        success: function() {
+        success: function (data) {
             bootbox.alert("Description modifiée avec succés.");
-            location.reload();
+            var result = $('<div />').append(data).find('#summernote').html();
+            $("#summernote").html(result);
+            $('#summernote').css('display','block');
+            $('div.note-editor').css('display','None');
+            $('a.saveDescription').css('display','None');
         }
     });
   });

@@ -7,10 +7,12 @@
 
     <div id="membership" class="panel-body members membership collapse" data-projectid="{{$project->id}}">
         <?php $Mails="";?>
-        @foreach($project->users as $user)
-            <?php $Mails.=$user->mail.';';?>
-            @include('user.avatar', ['user' => $user, 'inProject' => true, 'projectName' => $project->name])
-        @endforeach
+        <div class="membershipsData">
+          @foreach($project->users as $user)
+              <?php $Mails.=$user->mail.';';?>
+              @include('user.avatar', ['user' => $user, 'inProject' => true, 'projectName' => $project->name])
+          @endforeach
+        </div>
 
         <div class="row">
           <div class="col-md-12">

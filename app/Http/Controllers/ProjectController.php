@@ -442,8 +442,8 @@ class ProjectController extends Controller
               $Event->save();
           }
       }
-
-      return redirect()->route("project.show", ['id'=>$ProjectID]);
+      $Project = Project::find($ProjectID);
+      return view('project.membership', ['project' => $Project]);
     }
 
     public function removeUserFromProject($ProjectId, $UserID=null){
@@ -492,7 +492,7 @@ class ProjectController extends Controller
 
       $Memberships->delete();
 
-      return redirect()->route("project.show", ['id'=>$ProjectId]);
+      return view('project.membership', ['project' => $Project]);
     }
 
     public function editDescription(Request $request, $ProjectID){

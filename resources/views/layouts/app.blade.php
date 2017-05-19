@@ -117,7 +117,6 @@
 </script>
 
 <script type="text/javascript">
-
     $(document).ready(function () {
         // Displays details of a given task
         $('#app-layout').on('click', '.taskshow', function () {
@@ -190,37 +189,36 @@
             });
         });
 
-        $('button.removeUser').click(function () {
-            var projectid = this.getAttribute('data-projectid');
-            var userid = this.getAttribute('data-id');
+        $(document).on("click", 'button.removeUser', function(event) {
+          var projectid = this.getAttribute('data-projectid');
+          var userid = this.getAttribute('data-id');
 
-            bootbox.confirm({
-              title: "Voulez-vous vraiment supprimer cet utilisateur ?",
-              message: "Cette action le retirera du projet, cette action ne peut être annulée.<br/> Les tâches attribuées $ l'utilisateur resteront mais ne vous seront plus attribuées. (Les autres membres seront informés des changements)",
-              buttons: {
-                  cancel: {
-                      label: '<i class="fa fa-times"></i> Retour',
-                      className: 'btn-success'
-                  },
-                  confirm: {
-                      label: '<i class="fa fa-check"></i> Supprimer du projet',
-                      className: 'btn-danger'
-                  }
-              },
-              callback: function(result){
-                  if (result) {
-                      $.ajax({
-                          url: "{{ route('project.index') }}/" + projectid + "/removeFromProject/" + userid,
-                          type: "POST",
-                          success: function() {
-                              bootbox.alert("Utilisateur supprimé avec succés.");
-                          },
-                          error: function() {
-                              console.log(result);
-                          }
-                      });
-                  }
-              }
+          bootbox.confirm({
+            title: "Voulez-vous vraiment supprimer cet utilisateur ?",
+            message: "Cette action le retirera du projet, cette action ne peut être annulée.<br/> Les tâches attribuées $ l'utilisateur resteront mais ne vous seront plus attribuées. (Les autres membres seront informés des changements)",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Retour',
+                    className: 'btn-success'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Supprimer du projet',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result){
+                if (result) {
+                    $.ajax({
+                        url: "{{ route('project.index') }}/" + projectid + "/removeFromProject/" + userid,
+                        type: "POST",
+                        success: function(data) {
+                            var result = $('<div />').append(data).find('.membershipsData').html();
+                            $(".membershipsData").html(result);
+                            bootbox.alert("Utilisateur supprimé avec succés.");
+                        }
+                    });
+                }
+            }
           });
         });
 
@@ -611,7 +609,8 @@
         });
 
         // Link file with delivery
-        $('a.linkDelivery').click(function () {
+        $(document).on("click", 'a.linkDelivery', function(event) {
+        //$('a.linkDelivery').click(function () {
           var deliveryID = this.getAttribute('data-id');
           var projectID = this.getAttribute('data-projectid');
 
