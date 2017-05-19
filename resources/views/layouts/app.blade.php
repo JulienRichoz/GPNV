@@ -733,6 +733,19 @@
                 }
             });
         });
+
+        $('button.objectivesData').click(function () {
+            var projectID = this.getAttribute('data-projectid');
+            $.ajax({
+                url: "{{ route('project.showObjectives', '@') }}".replace('@', projectID),
+                type: 'get',
+                success: function (data) {
+                    var result = $('<div />').append(data).find('.objectivesData').html();
+                    $(".objectivesData").html(result)
+                }
+            });
+        });
+
         @yield('script')
 
     });

@@ -135,6 +135,12 @@ class ProjectController extends Controller
       return view('project/delivery',['project' => $project, 'livrables'=>$deliveries]);
     }
 
+    public function showObjectives($projectID){
+      $project = Project::find($projectID);
+      $objectives = new CheckList('Project', $projectID, 'Objectifs');
+      return view('project/objective',['project' => $project, 'objectifs'=>$objectives]);
+    }
+
     // Return the view about files -> not yet made
     public function files()
     {
