@@ -609,7 +609,8 @@
         });
 
         // Link file with delivery
-        $('a.linkDelivery').click(function () {
+        $(document).on("click", 'a.linkDelivery', function(event) {
+        //$('a.linkDelivery').click(function () {
           var deliveryID = this.getAttribute('data-id');
           var projectID = this.getAttribute('data-projectid');
 
