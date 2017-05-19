@@ -63,7 +63,7 @@
             </table>
             </div>
             @if(Auth::user()->projects()->find($project->id))
-              <a class="btn btn-warning events" data-id="{{$project->id}}">Ajouter un événement</a>
+              <a class="btn btn-primary events" data-id="{{$project->id}}">Ajouter un événement</a>
             @endif
           </div>
   </div>

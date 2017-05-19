@@ -13,8 +13,8 @@
             <div id="summernote">{!! $project->description !!}</div>
           </p>
           @if(Auth::user()->projects()->find($project->id))
-            <a class="btn btn-warning editDescription">Editer la description</a>
-            <a class="btn btn-warning saveDescription" data-projectid="{{$project->id}}" style="display:none;">Sauvegarder description</a>
+            <a class="btn btn-primary editDescription">Editer la description</a>
+            <a class="btn btn-success saveDescription" data-projectid="{{$project->id}}" style="display:none;">Sauvegarder description</a>
           @endif
       </div>
   </div>

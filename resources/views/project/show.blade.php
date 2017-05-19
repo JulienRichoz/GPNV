@@ -85,7 +85,7 @@
                       </ul>
                   </div>
                   @if(Auth::user()->projects()->find($project->id))
-                      <a class="btn btn-warning taskroot" data-id="{{$project->id}}">Créer une tâche racine</a>
+                      <a class="btn btn-primary taskroot" data-id="{{$project->id}}">Créer une tâche racine</a>
                   @endif
               </div>
               <div class="col-md-6"><h1>Détails de la tâche</h1>
