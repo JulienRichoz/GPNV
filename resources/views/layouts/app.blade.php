@@ -719,41 +719,20 @@
         // Init
         // Coping with the fact some browsers preserves the checkbox status after reloading pages
         updateCheckBoxStatus(); // logbook checkboxes
-        
+
 
         /* RELOAD FUNCTION */
-        $(document).ready(function () {
-          $('button.reloadDeliveries').click(function () {
-              var projectID = this.getAttribute('data-projectid');
-              $.ajax({
-                  url: "{{ route('project.showDeliveries', '@') }}".replace('@', projectID),
-                  type: 'get',
-                  success: function (data) {
-                      var result = $('<div />').append(data).find('.deliveriesData').html();
-                      $(".deliveriesData").html(result)
-                  }
-              });
-          });
-
-          $("#updateState").submit(function(event) {
-            console.log("test");
-            event.preventDefault();
-            var form = $(this).parent();
-            var url = form.attr( 'action' );
-            console.log(url);
-
+        $('button.reloadDeliveries').click(function () {
+            var projectID = this.getAttribute('data-projectid');
             $.ajax({
-                url: url,
-                type: 'post',
-                data: {done: $(this).val()},
+                url: "{{ route('project.showDeliveries', '@') }}".replace('@', projectID),
+                type: 'get',
                 success: function (data) {
                     var result = $('<div />').append(data).find('.deliveriesData').html();
                     $(".deliveriesData").html(result)
                 }
             });
-          });
         });
-
         @yield('script')
 
     });
