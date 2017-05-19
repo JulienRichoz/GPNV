@@ -127,5 +127,8 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::get('test','Welcome@test');
         Route::get('user/{search}',array('as' => 'name', 'uses' => 'UserController@search'));
+
+        /* RELOAD ROUTES */
+        Route::get('project/{id}/deliveries', ['as' => 'project.showDeliveries', 'uses' => 'ProjectController@showDeliveries']);
     });
 });
