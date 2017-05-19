@@ -34,11 +34,11 @@ Description: Show the checkList "Livrables"
 
 
         @if(Auth::user()->projects()->find($project->id))
-            <a class="btn btn-warning addCheckList" data-id="{{$livrables->getId()}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">Ajouter</a>
+            <a class="btn btn-primary addCheckList" data-id="{{$livrables->getId()}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">Ajouter</a>
         @endif
         @if($livrables->getNbItemsDone())
-            <a class="btn btn-warning changeView">Voir les éléments effectués</a>
-            <a class="btn btn-warning changeView hidden">Cacher les éléments effectués</a>
+            <a class="btn btn-primary changeView">Voir les éléments effectués</a>
+            <a class="btn btn-primary changeView hidden">Cacher les éléments effectués</a>
         @endif
         <button class="btn btn-primary reloadDeliveries pull-right" data-projectid="{{$project->id}}">
           <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>

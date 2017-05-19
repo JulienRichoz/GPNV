@@ -27,11 +27,11 @@
         </div>
       </div>
       @if(Auth::user()->projects()->find($project->id))
-        <a class="btn btn-warning addCheckList" data-id="{{$objectifs->getId()}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">Ajouter</a>
+        <a class="btn btn-primary addCheckList" data-id="{{$objectifs->getId()}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">Ajouter</a>
       @endif
       @if($objectifs->getNbItemsDone())
-        <a class="btn btn-warning changeView">Voir les objectifs validés</a>
-        <a class="btn btn-warning changeView hidden">Cacher les objectifs validés</a>
+        <a class="btn btn-primary changeView">Voir les objectifs validés</a>
+        <a class="btn btn-primary changeView hidden">Cacher les objectifs validés</a>
       @endif
       <button class="btn btn-primary reloadobjectives pull-right" data-projectid="{{$project->id}}">
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
