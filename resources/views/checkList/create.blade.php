@@ -17,6 +17,8 @@ Description: Form to add a new item to a checkList
           success: function (data) {
               var result = $('<div />').append(data).find('.deliveriesData').html();
               $(".deliveriesData").html(result);
+              var result = $('<div />').append(data).find('.objectivesData').html();
+              $(".objectivesData").html(result);
               bootbox.hideAll();
           }
       });
