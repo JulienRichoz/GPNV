@@ -39,12 +39,14 @@
           <?php $order=0;?>
           @foreach($scenario->steps as $step)
             <?php $order++;?>
-            <tr data-stepId="{{$step->id}}" data-imgurl="{{ URL::asset('images/{{-- $step->mockup --}}') }}">
+            <tr data-stepId="{{$step->id}}">
               <form method="post" action="{{route('scenario.item.modify', array('projectId' => $projectId, 'scenarioId' => $scenario->id, 'itemId' => $step->id))}}">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 <input type="hidden" name="id" value="{{$step->id}}">
                 <input type="hidden" name="order" value="{{ $step->order }}">
+                <input type="hidden" name="mockup" value="@if(isset($step->mockup)) $step->mockup->id @endif">
+                <input type="hidden" name="mockupUrl" value="@if(isset($step->mockup)) $step->mockup->url @endif">
                 <td name="order">{{ $order }}</td>
                 <td ><textarea name="action" class="form-control">{{ $step->action }}</textarea></td>
                 <td ><textarea name="reponse" class="form-control">{{ $step->result }}</textarea></td>
@@ -84,7 +86,7 @@
       <div class="col-xs-12">
         @foreach($scenario->mockups as $mockup)
         <div style="text-align:center; margin-bottom:2px;">
-          <img src="{{ URL::asset('mockups/'.$projectId.'/'.$scenario->id.'/'.$mockup->url)}}" style="max-width:100%; max-height: 200px;">
+          <img src="{{ URL::asset('mockups/'.$projectId.'/'.$scenario->id.'/'.$mockup->url)}}" id='{{$mockup->id}}' style="max-width:100%; max-height: 200px;" draggable="true" ondragstart="drag(event)">
         </div>
         @endforeach
       </div>
@@ -104,9 +106,12 @@
     </div>
     <div class="maquette col-xs-12 col-md-4">
       <h2>Maquette</h2>
-      <a href="{{ URL::asset('mockups/2/2/img58d2c235da868.jpg') }}" target="_blank"><img src="{{ URL::asset('mockups/2/2/img58d2c235da868.jpg') }}"/></a>
+      <div ondrop="drop(event)" ondragover="allowDrop(event)">
+        <a href="#">
+          <img src="{{ URL::asset('mockups/thumbnail-default.jpg') }}"/>
+        </a>
+      </div>
     </div>
   </div>
 </div>
-
 @endsection
