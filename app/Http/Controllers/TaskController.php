@@ -53,7 +53,7 @@ class TaskController extends Controller
         }
 
         // return redirect()->route("project.show", ['id'=>$task->project_id]);
-        return json_encode($transactionResult);
+        // return json_encode($transactionResult);
     }
 
     // Delete a task
@@ -79,7 +79,7 @@ class TaskController extends Controller
     //
     function store(Task $task, Request $request)
     {
-        $task->update([
+        $transactionResult = $task->update([
             'name' => $request->input('name'),
             'duration' => $request->input('duration'),
             'parent_id' => $request->input('parent_id') == '' ? null : $request->input('parent_id'),
@@ -88,7 +88,8 @@ class TaskController extends Controller
 
         //(new EventController())->store($request->input('project_id'), "Créer une tâche enfant"); // Create an event
 
-        return redirect()->route("project.show", ['id'=>$task->project_id]);
+        // return redirect()->route("project.show", ['id'=>$task->project_id]);
+        // return json_encode($transactionResult);
     }
 
     // Start a task

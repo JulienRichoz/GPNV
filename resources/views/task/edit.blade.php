@@ -1,4 +1,31 @@
-<form class="form-horizontal" role="form" method="POST" action="{{ route('tasks.update',$task->id)}}">
+<script type='text/javascript'>
+    $(document).ready(function () {
+        $("#editTaskForm").submit(function(event) {
+            event.preventDefault();
+            var form = $( this ), url = form.attr( 'action' );
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: form.serializeArray(),
+                success: function (data) {
+                    console.log("Task successfully edited!");
+                    refreshDisplayedTasks(); // refresh the task list
+
+                    // Display a confirmation message to the user
+                    var bootBoxContainer = $('#editTaskButton').closest('.bootbox-body');
+                    bootBoxContainer.html('<p>Tâche modifiée avec succès !</p>');
+                }
+            });
+            /*var fields = $( this ).serializeArray()
+            jQuery.each( fields, function( i, field ) {
+                console.log(field);
+            });*/
+        });
+    });
+</script>
+
+<form class="form-horizontal" role="form" method="POST" id="editTaskForm" action="{{ route('tasks.update',$task->id)}}">
     {!! csrf_field() !!}
 
     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -36,7 +63,7 @@
 
     <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" id="editTaskButton">
                 <i class="fa fa-btn fa-sign-in"></i>Editer
             </button>
 

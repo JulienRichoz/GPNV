@@ -23,7 +23,7 @@
             });*/
         });
     });
-    </script>
+</script>
 
 <form class="form-horizontal" role="form" method="POST" id="createChildTaskForm" action="{{ url('/tasks/'.$task->id.'/children') }}">
     {!! csrf_field() !!}

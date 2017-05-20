@@ -229,7 +229,9 @@
             $.get("{{ route('tasks.edit', '@') }}".replace('@', task), {}, function (task) {
                 bootbox.dialog({
                     title: "Editer une tâche",
-                    message: task
+                    message: task,
+                    backdrop: true,
+                    onEscape: true
                 });
             });
         });
