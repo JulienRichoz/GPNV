@@ -305,7 +305,9 @@
                 success: function (data) {
                     bootbox.dialog({
                         title: "Gestion des utilisateurs de la tâche",
-                        message: data
+                        message: data,
+                        backdrop: true,
+                        onEscape: true
                     });
 
                 }

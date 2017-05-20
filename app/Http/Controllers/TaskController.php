@@ -143,10 +143,11 @@ class TaskController extends Controller
             $newUserTask = new UsersTask();
             $newUserTask->task_id = $request->task->id;
             $newUserTask->user_id = $key;
-            $newUserTask->save();
+            $transactionResult = $newUserTask->save();
         }
 
-        return redirect()->route("project.show", ['id'=>$task->project_id]);
+        // return redirect()->route("project.show", ['id'=>$task->project_id]);
+        return json_encode($transactionResult);
     }
 
     // Delete a user of task
