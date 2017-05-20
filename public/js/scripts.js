@@ -1,12 +1,13 @@
 $(document).ready(function() {
-  window.setCookie = function(cname, cvalue, path=null){
+  console.log("script");
+  setCookie = function(cname, cvalue, path=null){
     if(!path) path="/";
     var d = new Date();
     d.setTime(d.getTime() + (1*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path="+path;
   }
-  window.getCookies = function() {
+  getCookies = function() {
     var c = document.cookie, v = 0, cookies = {};
     if (document.cookie.match(/^\s*\$Version=(?:"1"|1);\s*(.*)/)) {
         c = RegExp.$1;
@@ -30,7 +31,7 @@ $(document).ready(function() {
     }
     return cookies;
   }
-  window.getCookie = function(name) {
+  getCookie = function(name) {
       return getCookies()[name];
   }
 
@@ -90,24 +91,6 @@ $(document).ready(function() {
     }
   });
 
-  // provisory task filters management
-  $(function() {
-    var theCookies = Object.keys(getCookies());
-    for (var i = 0; i < theCookies.length; i++) {
-      if (theCookies[i].startsWith('#check')){
-        var cookie = getCookie(theCookies[i]);
-        if(cookie == 'true'){
-          $(theCookies[i]).prop('checked', true);
-          console.log(theCookies[i] + " set to true");
-        } else {
-          $(theCookies[i]).prop('checked', false);
-          console.log(theCookies[i] + " set to false");
-        }
-      }
-    }
-  });
-
-
   $('.showPanel').click(function(){
     $(this).children('h1').children('span').toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
     var cookieName = $(this).attr('data-target');
@@ -135,6 +118,91 @@ $(document).ready(function() {
   $('button.viewFile').click(function () {
       var fileID = this.getAttribute('data-fileid');
       var deliveryID = this.getAttribute('data-id');
+  });
+
+
+  // ------------------------ Task filter management ------------------------
+  // Displays / hides tasks according to the active filters
+  refreshDisplayedTasks = function() {
+    var projectId = $('.projectTasks').attr('data-projectid');
+    var status = [];
+    $(".checkboxFilter").each(function(checkbox) {
+      if (this.checked) {
+        status.push($(this).attr('data-status'));
+      }
+    });
+
+    var taskOwner = $(".dropTaskFilter .owner li a.activeOwner").attr("data-taskOwner");
+    var taskObjective = $(".dropTaskFilter .objective li a.activeOwner").attr("data-objective");
+
+    //console.log(status);
+
+    $.ajax({
+      url: projectId + "/getTasks",
+      type: 'get',
+      data: {status: status, taskOwner: taskOwner, taskObjective: taskObjective},
+      success: function (tasks) {
+        //console.log(tasks);
+        $("#tree-menu ul").html(tasks);
+      },
+      error: function() {
+        console.log("failed to load project tasks");
+      }
+    });
+  }
+
+  // Checkbox filters management
+  $(function() {
+    var theCookies = Object.keys(getCookies());
+    for (var i = 0; i < theCookies.length; i++) {
+      if (theCookies[i].startsWith('#check')){
+        var cookie = getCookie(theCookies[i]);
+        var checkStatus = (cookie == 'true');
+
+        $(theCookies[i]).prop('checked', checkStatus);
+        console.log(theCookies[i] + " set to true");
+      }
+    }
+  });
+
+  // Dropdown filters management
+  $(function() {
+    var theCookies = Object.keys(getCookies());
+    var cookieValues = Object.values(getCookies());
+
+    var expr = "Dropdown";
+
+    for (var i = 0; i < theCookies.length; i++) {
+      var componentNameIndex = theCookies[i].search(expr);
+      if (componentNameIndex != -1){
+        // ex: extracts 'people' from #peopleDropdown
+        var componentName = theCookies[i].substr(1, componentNameIndex - 1);
+        // Gets the index of the containing <li> within the <ul>
+        var listItemIndex = cookieValues[i];
+
+        switch (componentName) {
+          case 'people':
+            $(".dropTaskFilter .owner li a").removeClass("activeOwner");
+            var listItem = $(".dropTaskFilter .owner li").get(listItemIndex);
+            var targetLink = $(listItem).find('a').first();
+            targetLink.addClass("activeOwner");
+            // Updating dropdown button text
+            $("#dropdownTitleOwner").html(targetLink.text())
+            break;
+          case 'objectives':
+            $(".dropTaskFilter .objective li a").removeClass("activeObjective");
+            var listItem = $(".dropTaskFilter .objective li").get(listItemIndex);
+            var targetLink = $(listItem).find('a').first();
+            targetLink.addClass("activeObjective");
+            $("#dropdownTitleObjective").html(targetLink.text());
+            break;
+
+          default:
+            console.log('No');
+        }
+      }
+    }
+    window.refreshDisplayedTasks();
   });
 
 });

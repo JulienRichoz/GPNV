@@ -4,6 +4,7 @@
     Description: Functions to handle checkLists
 */
 $(document).ready(function () {
+  console.log("checklist");
   // Add a new item on checkList
   $('.addCheckList').click(function () {
       var id = this.getAttribute('data-id');
@@ -30,36 +31,6 @@ $(document).ready(function () {
   });*/
 
 
-  // ------------------------------ Task research ------------------------------
-  // Displays / hides tasks according to the active filters
-  function refreshDisplayedTasks() {
-    var projectId = $('.projectTasks').attr('data-projectid');
-    var status = [];
-    $(".checkboxFilter").each(function(checkbox) {
-      if (this.checked) {
-        status.push($(this).attr('data-status'));
-      }
-    });
-
-    var taskOwner = $(".dropTaskFilter .owner li a.activeOwner").attr("data-taskOwner");
-    var taskObjective = $(".dropTaskFilter .objective li a.activeOwner").attr("data-objective");
-
-    //console.log(status);
-
-    $.ajax({
-      url: projectId + "/getTasks",
-      type: 'get',
-      data: {status: status, taskOwner: taskOwner, taskObjective: taskObjective},
-      success: function (tasks) {
-        //console.log(tasks);
-        $("#tree-menu ul").html(tasks);
-      },
-      error: function() {
-        console.log("failed to load project tasks");
-      }
-    });
-  }
-
   // ------------------------------ Event handling ------------------------------
   // Displaying the task list whenever the user clicks a new filter checkbox
   $(".checkboxFilter").change(function() {
@@ -71,11 +42,6 @@ $(document).ready(function () {
 
     // UI management
     refreshDisplayedTasks();
-
-    // tweak
-    console.log(window.getCookie());
-    var theCookies = Object.keys(getCookies());
-    console.log(theCookies);
   });
 
 
@@ -84,7 +50,9 @@ $(document).ready(function () {
   $(".dropTaskFilter .owner li a").click(function(event) {
     event.preventDefault();
 
-    $('#dropdownTitleOwner').html($(this).html());
+    var currentOwner = $(this).text();
+
+    $('#dropdownTitleOwner').html(currentOwner);
 
     // Removing the "activeOwner" class from the previously active status checkbox
     $(".dropTaskFilter .owner li a").removeClass("activeOwner");
@@ -92,19 +60,38 @@ $(document).ready(function () {
     // Adding the class to the newly clicked link
     $(this).addClass("activeOwner");
 
+    // Cookie management
+    let listItemIndex = $(this).parent().index(); // index of the containing <li>
+
+    var dropdownValue = $(this);
+    var cookieName = "#" + $(this).parent("li").parent("ul").prev("button").attr("id");
+    setCookie(cookieName, listItemIndex, document.location.pathname);
+    console.log("saving:\n" + cookieName + " " + listItemIndex + " @ " + document.location.pathname);
+
+    // UI management
     refreshDisplayedTasks();
   });
 
   $(".dropTaskFilter .objective li a").click(function(event) {
     event.preventDefault();
 
-    $('#dropdownTitleObjective').html($(this).html());
+    var currentObjective = $(this).text();
 
-    // Removing the "activeOwner" class from the previously active status checkbox
-    $(".dropTaskFilter .objective li a").removeClass("activeOwner");
+    $('#dropdownTitleObjective').html(currentObjective);
+
+    // Removing the "activeObjective" class from the previously active status checkbox
+    $(".dropTaskFilter .objective li a").removeClass("activeObjective");
 
     // Adding the class to the newly clicked link
-    $(this).addClass("activeOwner");
+    $(this).addClass("activeObjective");
+
+    // Cookie management
+    let listItemIndex = $(this).parent().index(); // index of the containing <li>
+
+    var dropdownValue = $(this);
+    var cookieName = "#" + $(this).parent("li").parent("ul").prev("button").attr("id");
+    setCookie(cookieName, listItemIndex, document.location.pathname);
+    console.log("saving:\n" + cookieName + " " + listItemIndex + " @ " + document.location.pathname);
 
     refreshDisplayedTasks();
   });
@@ -112,5 +99,6 @@ $(document).ready(function () {
 
   // ------------------------------ Initialization handling ------------------------------
   // Filling the task list when the browser loads the page
+  console.log("refreshing!");
   refreshDisplayedTasks();
 });

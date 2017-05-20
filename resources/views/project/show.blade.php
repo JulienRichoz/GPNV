@@ -41,11 +41,11 @@
 
                   <div class="dropdown dropTaskFilter">
                       <span class="instruction">assignées à</span>
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="peopleDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       <span id="dropdownTitleOwner">Tous</span>
                       <span class="caret"></span>
                       </button>
-                      <ul class="dropdown-menu owner" aria-labelledby="dropdownMenu" >
+                      <ul class="dropdown-menu owner" aria-labelledby="peopleDropdown" >
                           <li><a data-taskOwner="all" class="activeOwner">Tous</a></li>
                           <li><a data-taskOwner="{{$currentUser->id}}">Moi</a></li>
                           <li><a data-taskOwner="nobody">Personne</a></li>
@@ -62,12 +62,12 @@
 
                   <div class="dropdown dropTaskFilter">
                       <span class="instruction">et liées à</span>
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="objectivesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       <span id="dropdownTitleObjective">Tous les objectifs</span>
                       <span class="caret"></span>
                       </button>
-                      <ul class="dropdown-menu objective" aria-labelledby="dropdownMenu" >
-                          <li><a data-objective="all" class="activeOwner">Tous les objectifs</a></li>
+                      <ul class="dropdown-menu objective" aria-labelledby="objectivesDropdown" >
+                          <li><a data-objective="all" class="activeObjective">Tous les objectifs</a></li>
                           @if($objectifs->showToDo())
                             @foreach($objectifs->showToDo() as $checkListItem)
                               <li><a data-objective="{{$checkListItem->id}}">{{$checkListItem->title}}</a></li>
