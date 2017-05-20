@@ -322,10 +322,10 @@
                         url: "{{ route('tasks.index') }}/" + task,
                         data: task,
                         success: function (task) {
-                            location.reload();
+                            refreshDisplayedTasks();
                         },
                         error: function (task) {
-                            location.reload();
+                            refreshDisplayedTasks();
                         }
                     });
                 }

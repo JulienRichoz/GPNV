@@ -63,11 +63,12 @@ class TaskController extends Controller
         foreach ($task->usersTasks as  $usertask) {
           $usertask->delete();
         }
-        $task->delete();
+        $transactionResult = $task->delete();
 
         (new EventController())->store($request->input('project_id'), "Supprimer une tâche"); // Create an event
 
-        return ("destroy" . $task);
+        // return ("destroy" . $task);
+        //return json_encode($transactionResult);
     }
 
     // Return the view about the edition
