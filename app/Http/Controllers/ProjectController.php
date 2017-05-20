@@ -292,7 +292,7 @@ class ProjectController extends Controller
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
         $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
-        $newTask->save();
+        $transactionResult = $newTask->save(); // Indicates whether or not the save was successfull
 
         // Adding the event description into the request object
         $eventDescription = "Création d'une tâche parent";
@@ -300,7 +300,8 @@ class ProjectController extends Controller
 
         (new EventController())->store($project_id, $request); // Create an event
 
-        return redirect()->route("project.show", ['id'=>$project_id]);
+        // return redirect()->route("project.show", ['id'=>$project_id]);
+        // return json_encode($transactionResult);
     }
 
     // Delete one or more users for a project

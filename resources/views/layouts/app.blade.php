@@ -92,6 +92,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{{ URL::asset('js/scripts.js') }}"></script>
 <script src="{{ URL::asset('js/checkList.js') }}"></script>
+<script src="{{ URL::asset('js/tasks.js') }}"></script>
 <script src="{{ URL::asset('js/scenario.js') }}"></script>
 <script src="{{ URL::asset('js/objectifs.js') }}"></script>
 
@@ -250,7 +251,9 @@
             $.get("{{ route('project.index') }}/" + task + "/tasks/create", {}, function (task) {
                 bootbox.dialog({
                     title: "Créer une tâche racine",
-                    message: task
+                    message: task,
+                    backdrop: true,
+                    onEscape: true
                 });
                 //$('#taskdetail').html(task);
             });

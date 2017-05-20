@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  console.log("script");
   setCookie = function(cname, cvalue, path=null){
     if(!path) path="/";
     var d = new Date();

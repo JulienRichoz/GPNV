@@ -1,5 +1,30 @@
+    <script type='text/javascript'>
+    $(document).ready(function () {
+        $("#createTaskForm").submit(function(event) {
+            event.preventDefault();
+            var form = $( this ), url = form.attr( 'action' );
 
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/project/'.$project.'/tasks') }}">
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: form.serializeArray(),
+                success: function (data) {
+                    console.log("Task successfully added!");
+                    refreshDisplayedTasks();
+                    
+                    var bootBoxContainer = $('#createTaskButton').closest('.bootbox-body');
+                    bootBoxContainer.html('<p>Tâche ajoutée avec succès !</p>');
+                }
+            });
+            /*var fields = $( this ).serializeArray()
+            jQuery.each( fields, function( i, field ) {
+                console.log(field);
+            });*/
+        });
+    });
+    </script>
+
+    <form class="form-horizontal" role="form" method="POST" id="createTaskForm" action="{{ url('/project/'.$project.'/tasks') }}">
         {!! csrf_field() !!}
         <?php
           use App\Models\CheckList;
@@ -45,7 +70,7 @@
 
         <div class="form-group">
             <div class="col-md-6 col-md-offset-4">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" id="createTaskButton">
                     <i class="fa fa-btn fa-sign-in"></i>Créer
                 </button>
 
