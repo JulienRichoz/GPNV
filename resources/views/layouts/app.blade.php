@@ -240,7 +240,9 @@
             $.get("{{ route('tasks.index') }}/" + task + "/children/create", {}, function (task) {
                 bootbox.dialog({
                     title: "Créer une tâche enfant",
-                    message: task
+                    message: task,
+                    backdrop: true,
+                    onEscape: true
                 });
             });
         });

@@ -44,14 +44,16 @@ class TaskController extends Controller
         $newTask->project_id = $request->input('project_id');
         $newTask->parent_id = $request->input('parent_id');
         $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
-        $newTask->save();
+        $transactionResult = $newTask->save(); // Indicates whether or not the save was successfull
 
         //modified By: Fabio Marques
         $parentTask = Task::find($request->input('parent_id'));
         foreach ($parentTask->usersTasks as  $usertask) {
           $usertask->delete();
         }
-        return redirect()->route("project.show", ['id'=>$task->project_id]);
+
+        // return redirect()->route("project.show", ['id'=>$task->project_id]);
+        return json_encode($transactionResult);
     }
 
     // Delete a task

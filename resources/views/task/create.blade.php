@@ -10,8 +10,9 @@
                 data: form.serializeArray(),
                 success: function (data) {
                     console.log("Task successfully added!");
-                    refreshDisplayedTasks();
-                    
+                    refreshDisplayedTasks(); // refresh the task list
+
+                    // Display a confirmation message to the user
                     var bootBoxContainer = $('#createTaskButton').closest('.bootbox-body');
                     bootBoxContainer.html('<p>Tâche ajoutée avec succès !</p>');
                 }
