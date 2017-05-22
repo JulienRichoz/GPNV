@@ -125,4 +125,8 @@ class SessionController extends Controller
         Auth::logout();
         return redirect()->route('home');
     }
+
+    public function noLogin(){
+      return view('auth.nologin');
+    }
 }
