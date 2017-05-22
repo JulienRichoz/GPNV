@@ -15,10 +15,13 @@ Route::group(['middleware' => 'web'], function () {
 
     //,['as' => '','uses' => '']
 
-    Route::get('login',['as' => 'login','uses' => 'SessionController@create'] );
-    Route::post('login', 'SessionController@store');
+    /*Route::get('login',['as' => 'login','uses' => 'SessionController@create'] );
+    Route::post('login', 'SessionController@store');*/
 
-    Route::get('test', 'Welcome@Test');
+    //Route::get('login', view('auth.nologin'));
+
+    //Route::get('test', 'Welcome@Test');
+    Route::get('login',['as' => 'login','uses' => 'SessionController@nologin']);
 
     Route::group(['middleware' => 'auth'], function(){
 
