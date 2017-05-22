@@ -1,4 +1,4 @@
-<li>
+<li class="taskContainer">
     @if ($task->status == "wip")
       <a class="bg-info">
         <span class="taskStatus glyphicon glyphicon-time"></span>
