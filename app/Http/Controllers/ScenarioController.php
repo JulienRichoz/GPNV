@@ -20,18 +20,29 @@ class ScenarioController extends Controller
     return view('scenario.show', ['projectId'=>$projectId, 'scenario'=>$scenario]);
   }
 
-  //update scenarioItem
+  //update scenario
   function update($projectId, $scenarioId, Request $requete)
   {
+    $scenario = Scenario::find($scenarioId);
+    $scenario->name = $requete->name;
+    $scenario->description = $requete->description;
+    if($requete->actif && $requete->actif=='on')
+      $scenario->actif = 1;
+    else
+      $scenario->actif = 0;
+    $scenario->save();
 
-    DB::table('steps')->where('id', $requete->id)->update(array('order'=>$requete->order, 'action'=>$requete->action, 'result'=>$requete->reponse));
     return redirect()->back();
   }
 
   //create new scenario item
   function store($projectId, $checkListId, Request $requete)
   {
-    Scenario::newItem($checkListId, $requete->get('name'));
+    $scenario = new Scenario();
+    $scenario->name = $requete->name;
+    $scenario->checkList_item_id = $checkListId;
+    $scenario->save();
+    //$scenarioId = Scenario::newItem($checkListId, $requete->get('name'));
 
     // Logging the scenario creation in the logbook
     $event = new Event;
@@ -45,7 +56,7 @@ class ScenarioController extends Controller
     $acknowledgement->event_id = $event->id;
     $acknowledgement->save();
 
-    return redirect()->back();
+    return redirect()->route('scenario.show', ['projectId'=>$projectId, 'scenarioId'=>$scenario->id]);
   }
 
   //Delete a scenario
@@ -97,8 +108,11 @@ class ScenarioController extends Controller
     DB::table('steps')->delete($stepId);
     return redirect()->back();
   }
-  /*function update($projectid, $scenarioId, Request $requete)
-  {
 
-  }*/
+  //update scenarioItem
+  function updateStep($projectid, $scenarioId, $itemId, Request $requete)
+  {
+    DB::table('steps')->where('id', $itemId)->update(array('order'=>$requete->order, 'action'=>$requete->action, 'result'=>$requete->reponse));
+    return redirect()->back();
+  }
 }

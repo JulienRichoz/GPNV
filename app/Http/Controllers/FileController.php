@@ -53,7 +53,7 @@ class FileController extends Controller
             $store->save();
         };
 
-        return redirect("project/" . $id);
+        return redirect()->route("project.show", ['id'=>$id]);
 
     }
 
@@ -69,5 +69,11 @@ class FileController extends Controller
 
         File::where('id','=',$file->id)->delete();
 
+    }
+
+    public function LinkToDelivery($id,File $file, $checklistID){
+      $file->checkListItem_id = $checklistID;
+      $file->save();
+      return true;
     }
 }

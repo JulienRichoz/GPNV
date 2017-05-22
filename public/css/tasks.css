@@ -1,5 +1,4 @@
 #taskBanner {
-    /*margin-top: 20px;*/
     position: relative;
 }
 
@@ -10,35 +9,52 @@
 }
 
 #filters {
-  /*display: inline;*/
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  width: 100%;
-
+    /*display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 100%;
+    margin-top: 20px;*/
 }
 
-#taskBanner .filterCheckboxes {
+.filterCheckboxes {
     display: inline;
+    margin-top: 20px;
+}
+
+.filterCheckboxes input {
+    margin-left: 20px;
 }
 
 .checkboxFilterLabel {
-    margin-right: 20px;
+
 }
 
 .dropTaskFilter {
-    /*
-    position: absolute;
-    margin-right: 20px;
-    */
-    top: 50%;
-    transform: translate(0,-50%);
-    right: 0px;
+    margin-top: 10px;
+}
 
-    z-index: 1;
+button.dropdown-toggle {
+    margin-left: 20px;
 }
 
 #taskList {
     margin-top: 20px;
+}
+
+.taskStatus {
+    margin-right: 5px;
+}
+
+.instruction {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.taskContainer {
+    cursor: pointer;
+}
+
+.detailsContainer {
+    float: none;
 }

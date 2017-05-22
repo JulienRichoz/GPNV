@@ -129,10 +129,22 @@ class ProjectController extends Controller
         ]);
     }
 
-    // Return the view about files -> not yet made
-    public function files()
+    public function showDeliveries($projectID){
+      $project = Project::find($projectID);
+      $deliveries = new CheckList('Project', $projectID, 'Livrables');
+      return view('project/delivery',['project' => $project, 'livrables'=>$deliveries]);
+    }
+
+    public function showObjectives($projectID){
+      $project = Project::find($projectID);
+      $objectives = new CheckList('Project', $projectID, 'Objectifs');
+      return view('project/objective',['project' => $project, 'objectifs'=>$objectives]);
+    }
+
+    public function files($id)
     {
-        return view('project/show');
+      $project = Project::find($id);
+      return view('project/file', ['project' => $project]);
     }
 
     // Return the view to editing projects
@@ -164,7 +176,7 @@ class ProjectController extends Controller
         switch ($taskOwner) {
             case 'all':
                 $query = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
-                    ->select('tasks.*') 
+                    ->select('tasks.*')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
                         return $query->whereIn("tasks.status", $status);
@@ -192,7 +204,7 @@ class ProjectController extends Controller
 
             default:
                 $query = Task::join('users_tasks', 'tasks.id', '=', 'users_tasks.task_id')
-                    ->select('tasks.*') 
+                    ->select('tasks.*')
                     ->where('users_tasks.user_id', "=", $taskOwner)
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
@@ -280,7 +292,7 @@ class ProjectController extends Controller
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
         $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
-        $newTask->save();
+        $transactionResult = $newTask->save(); // Indicates whether or not the save was successfull
 
         // Adding the event description into the request object
         $eventDescription = "Création d'une tâche parent";
@@ -288,7 +300,8 @@ class ProjectController extends Controller
 
         (new EventController())->store($project_id, $request); // Create an event
 
-        return redirect("project/" . $request->input('project_id'));
+        // return redirect()->route("project.show", ['id'=>$project_id]);
+        // return json_encode($transactionResult);
     }
 
     // Delete one or more users for a project
@@ -306,7 +319,7 @@ class ProjectController extends Controller
         $target->status = "Wait";
         $target->save();
 
-        return redirect("project/" . $id);
+        return redirect()->route("project.show", ['id'=>$id]);
     }
 
    // Validate a target
@@ -433,8 +446,8 @@ class ProjectController extends Controller
               $Event->save();
           }
       }
-
-      return redirect('project/' . $ProjectID);
+      $Project = Project::find($ProjectID);
+      return view('project.membership', ['project' => $Project]);
     }
 
     public function removeUserFromProject($ProjectId, $UserID=null){
@@ -483,7 +496,7 @@ class ProjectController extends Controller
 
       $Memberships->delete();
 
-      return redirect('project/' . $ProjectId);
+      return view('project.membership', ['project' => $Project]);
     }
 
     public function editDescription(Request $request, $ProjectID){
@@ -502,7 +515,7 @@ class ProjectController extends Controller
       $AcknowledgedEvent->event_id = $Event->id;
       $AcknowledgedEvent->save();
 
-      return redirect('project/' . $ProjectID);
+      return redirect()->route("project.show", ['id'=>$ProjectID]);
     }
 
     public function getTask(Request $request){
@@ -518,6 +531,34 @@ class ProjectController extends Controller
         if(Request::ajax()){
             return Response::json(Request::all());
         }
+    }
+
+    public function getToLink($projectID, $check){
+      $Project = Project::find($projectID);
+
+      $linkedFiles = DB::table('checkList_Items')->whereNotNull('link')->pluck('link');
+      $filesInProject = $Project->files()->whereNotIn('id', $linkedFiles)->get();
+
+      return view('project.toLink', ['project' => $Project, 'files' => $filesInProject, 'checkID'=> $check]);
+    }
+
+    public function LinkToDelivery(Request $request, $ProjectID){
+      if( $request->input('check')==null || $request->input('type')==null || $request->input('data')==null) return redirect('project/' . $ProjectID);
+
+      $checkListID = $request->input('check');
+      $checkListItem = DB::table('checkList_Items')->where('id', $checkListID)->first();
+      if( $checkListItem==null ) return redirect('project/' . $ProjectID);
+
+      if($request->input('type')=="file"){
+        $file = DB::table('file')->where('id','=',$data)->first();
+        if( $file==null ) return redirect('project/' . $ProjectID);
+      }
+
+      DB::table('checkList_Items')->where('id', $checkListID)->update(['link' => $request->input('data')]);
+
+      //return redirect('project/' . $ProjectID);
+      return redirect()->route("project.show", ['id'=>$ProjectID]);
+
     }
 
 }

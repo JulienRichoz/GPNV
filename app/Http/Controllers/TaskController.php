@@ -44,14 +44,16 @@ class TaskController extends Controller
         $newTask->project_id = $request->input('project_id');
         $newTask->parent_id = $request->input('parent_id');
         $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
-        $newTask->save();
+        $transactionResult = $newTask->save(); // Indicates whether or not the save was successfull
 
         //modified By: Fabio Marques
         $parentTask = Task::find($request->input('parent_id'));
         foreach ($parentTask->usersTasks as  $usertask) {
           $usertask->delete();
         }
-        return redirect("project/" . $task->project_id);
+
+        // return redirect()->route("project.show", ['id'=>$task->project_id]);
+        // return json_encode($transactionResult);
     }
 
     // Delete a task
@@ -61,11 +63,12 @@ class TaskController extends Controller
         foreach ($task->usersTasks as  $usertask) {
           $usertask->delete();
         }
-        $task->delete();
+        $transactionResult = $task->delete();
 
         (new EventController())->store($request->input('project_id'), "Supprimer une tâche"); // Create an event
 
-        return ("destroy" . $task);
+        // return ("destroy" . $task);
+        //return json_encode($transactionResult);
     }
 
     // Return the view about the edition
@@ -77,7 +80,7 @@ class TaskController extends Controller
     //
     function store(Task $task, Request $request)
     {
-        $task->update([
+        $transactionResult = $task->update([
             'name' => $request->input('name'),
             'duration' => $request->input('duration'),
             'parent_id' => $request->input('parent_id') == '' ? null : $request->input('parent_id'),
@@ -86,7 +89,8 @@ class TaskController extends Controller
 
         //(new EventController())->store($request->input('project_id'), "Créer une tâche enfant"); // Create an event
 
-        return redirect("project/" . $task->project_id);
+        // return redirect()->route("project.show", ['id'=>$task->project_id]);
+        // return json_encode($transactionResult);
     }
 
     // Start a task
@@ -139,10 +143,11 @@ class TaskController extends Controller
             $newUserTask = new UsersTask();
             $newUserTask->task_id = $request->task->id;
             $newUserTask->user_id = $key;
-            $newUserTask->save();
+            $transactionResult = $newUserTask->save();
         }
 
-        return redirect("project/" . $task->project_id);
+        // return redirect()->route("project.show", ['id'=>$task->project_id]);
+        return json_encode($transactionResult);
     }
 
     // Delete a user of task

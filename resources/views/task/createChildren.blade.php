@@ -1,4 +1,31 @@
-<form class="form-horizontal" role="form" method="POST" action="{{ url('/tasks/'.$task->id.'/children') }}">
+<script type='text/javascript'>
+    $(document).ready(function () {
+        $("#createChildTaskForm").submit(function(event) {
+            event.preventDefault();
+            var form = $( this ), url = form.attr( 'action' );
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: form.serializeArray(),
+                success: function (data) {
+                    console.log("Child task successfully added!");
+                    refreshDisplayedTasks(); // refresh the task list
+
+                    // Display a confirmation message to the user
+                    var bootBoxContainer = $('#createChildTaskButton').closest('.bootbox-body');
+                    bootBoxContainer.html('<p>Tâche enfant ajoutée avec succès !</p>');
+                }
+            });
+            /*var fields = $( this ).serializeArray()
+            jQuery.each( fields, function( i, field ) {
+                console.log(field);
+            });*/
+        });
+    });
+</script>
+
+<form class="form-horizontal" role="form" method="POST" id="createChildTaskForm" action="{{ url('/tasks/'.$task->id.'/children') }}">
     {!! csrf_field() !!}
 
     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -31,7 +58,7 @@
 
     <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" id="createChildTaskButton">
                 <i class="fa fa-btn fa-sign-in"></i>Créer
             </button>
 

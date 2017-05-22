@@ -13,17 +13,22 @@
 
 Route::group(['middleware' => 'web'], function () {
 
-    Route::get('login', 'SessionController@create');
-    Route::post('login', 'SessionController@store');
+    //,['as' => '','uses' => '']
 
-    Route::get('test', 'Welcome@Test');
+    /*Route::get('login',['as' => 'login','uses' => 'SessionController@create'] );
+    Route::post('login', 'SessionController@store');*/
+
+    //Route::get('login', view('auth.nologin'));
+
+    //Route::get('test', 'Welcome@Test');
+    Route::get('login',['as' => 'login','uses' => 'SessionController@nologin']);
 
     Route::group(['middleware' => 'auth'], function(){
 
         Route::group(['middleware' => 'admin'], function(){
         /* ADMIN */
-          Route::get('admin', 'AdminController@show');
-          Route::get('admin/sync', 'AdminController@synchro');
+          Route::get('admin',['as' => 'admin','uses' => 'AdminController@show']);
+          Route::get('admin/sync',['as' => 'admin.sync','uses' => 'AdminController@synchro']);
         });
 
         /* TASK */
@@ -32,6 +37,8 @@ Route::group(['middleware' => 'web'], function () {
                 ['tasks' => 'task']
             ]
         );
+
+        Route::delete('delivery/unlink/{checkList_id}/', ['as' => 'delivery.unlink', 'uses' => 'CheckListController@unlink']);
 
         Route::get('tasks/{task}/',['as' => 'tasks.show','uses' => 'TaskController@show'])->where('task', '[0-9]+');
         Route::get('tasks/{task}/children/create', ['as' => 'tasks.createChildren','uses' => 'TaskController@createChildren'])->where('task', '[0-9]+');
@@ -49,11 +56,11 @@ Route::group(['middleware' => 'web'], function () {
             ['parameters' => ['project' => 'id']],
             ['only' => ['index']]
         );
-        Route::get('/', 'ProjectController@index');
+        Route::get('/', ['as' => 'home', 'uses' => 'ProjectController@index' ]);
         Route::get('project/{id}', ['as' => 'project.show', 'uses' => 'ProjectController@show' ])->where('id', '[0-9]+');
         Route::get('project/{id}/tasks/create', 'ProjectController@createTask')->where('id', '[0-9]+');
         Route::post('project/{id}/tasks', 'ProjectController@storeTask')->where('id', '[0-9]+');
-        Route::get('project/{id}/files', 'ProjectController@files')->where('id', '[0-9]+');
+        Route::get('project/{id}/files', ['as' => 'files.show', 'uses' => 'ProjectController@files']);
         Route::delete('project/{id}/users/{user}/destroy', 'ProjectController@destroyUser')->where('id', '[0-9]+');
         Route::post('project/{id}/target', ['as' => 'project.storetarget', 'uses' => 'ProjectController@storeTarget'])->where('projectid', '[0-9]+');
         Route::post('target/{target}/valide', ['as' => 'project.validetarget', 'uses' => 'ProjectController@valideTarget'])->where('target', '[0-9]+');
@@ -72,13 +79,14 @@ Route::group(['middleware' => 'web'], function () {
         /*--------------------------------------------------------------------*/
 
         /*----------------------Routes scenario-------------------------------*/
-        Route::get('project/{id}/scenario/{scenarionId}','ScenarioController@show');
+        Route::get('project/{id}/scenario/{scenarionId}', ['as' => 'scenario.show', 'uses' => 'ScenarioController@show']);
         Route::delete('project/{id}/scenario','ScenarioController@delete');
         Route::get('project/{id}/checkListItem/{itemId}/scenario/create','ScenarioController@addItem');
         Route::post('project/{id}/checkListItem/{itemId}/scenario/create','ScenarioController@store');
-        Route::post('project/{id}/scenario/{scenarioId}/create','ScenarioController@addStep');
-        Route::put('project/{id}/scenario/{scenarioId}','ScenarioController@update');
-        Route::get('project/{id}/scenario/{stepId}/delete','ScenarioController@delStep');
+        Route::post('project/{id}/scenario/{scenarioId}/create',['as'=>'scenario.create.item', 'uses' => 'ScenarioController@addStep']);
+        Route::put('project/{id}/scenario/{scenarioId}/item/{itemId}',['as'=>'scenario.item.modify', 'uses' => 'ScenarioController@updateStep']);
+        Route::put('project/{id}/scenario/{scenarioId}',['as'=>'scenario.modify', 'uses' => 'ScenarioController@update']);
+        Route::get('project/{id}/scenario/{stepId}/delete',['as'=>'scenario.del.item', 'uses' => 'ScenarioController@delStep']);
 
         /*--------------------- Routes objectifs -----------------------------*/
 
@@ -86,11 +94,13 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store']);
         //Route::get('project/{id}/file', ['as' => 'files.show', 'uses' => 'FileController@show']);
         Route::delete('project/{id}/file/{file}', ['as' => 'files.destroy', 'uses' => 'FileController@destroy']);
-
         Route::post('project/{id}/file', ['as' => 'files.store', 'uses' => 'FileController@store'])->where('id', '[0-9]+');
 
+        Route::get('project/{id}/link/{check}', ['as' => 'deliveries.getToLink', 'uses' => 'ProjectController@getToLink']);
+        Route::post('project/{id}/link', ['as' => 'deliveries.link', 'uses' => 'ProjectController@LinkToDelivery']);
+
         /* APP */
-        Route::get('logout', 'SessionController@destroy');
+        Route::get('logout', ['as' => 'logout','uses' => 'SessionController@destroy']);
 
         /* Add User */
         Route::get('project/{id}/getStudents/', 'ProjectController@getStudents')->where('id', '[0-9]+');
@@ -120,5 +130,9 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::get('test','Welcome@test');
         Route::get('user/{search}',array('as' => 'name', 'uses' => 'UserController@search'));
+
+        /* RELOAD ROUTES */
+        Route::get('project/{id}/deliveries', ['as' => 'project.showDeliveries', 'uses' => 'ProjectController@showDeliveries']);
+        Route::get('project/{id}/objectives', ['as' => 'project.showObjectives', 'uses' => 'ProjectController@showObjectives']);
     });
 });

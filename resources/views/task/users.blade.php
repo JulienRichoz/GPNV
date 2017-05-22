@@ -1,3 +1,31 @@
+<script type='text/javascript'>
+    $(document).ready(function () {
+        $("#manageUsersForm").submit(function(event) {
+            event.preventDefault();
+            var form = $( this ), url = form.attr( 'action' );
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: form.serializeArray(),
+                success: function (data) {
+                    console.log("Task successfully delegated!");
+                    console.log(data);
+                    refreshDisplayedTasks(); // refresh the task list
+
+                    // Display a confirmation message to the user
+                    var bootBoxContainer = $('#manageUsersButton').closest('.bootbox-body');
+                    bootBoxContainer.html('<p>Attribution à la tâche effectuée avec succès !</p>');
+                }
+            });
+            /*var fields = $( this ).serializeArray()
+            jQuery.each( fields, function( i, field ) {
+                console.log(field);
+            });*/
+        });
+    });
+</script>
+
 <table class="table">
     <tr>
         <th>Utilisateur</th>
@@ -21,7 +49,7 @@
 <hr>
 <h4>Ajouter des participant à la tâche</h4>
 
-<form class="form-horizontal" role="form" method="POST" action="{{Route('tasks.storeUsers',$task->id)}}">
+<form class="form-horizontal" role="form" method="POST" id="manageUsersForm" action="{{Route('tasks.storeUsers',$task->id)}}">
     {!! csrf_field() !!}
     <div class="checkbox">
         @foreach($project->users as $user)
@@ -39,8 +67,8 @@
 <br>
     <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-btn fa-plus"></i>Ajouter un utilisateur
+            <button type="submit" class="btn btn-primary" id="manageUsersButton">
+                <i class="fa fa-btn fa-plus"></i>Attribuer
             </button>
         </div>
     </div>
