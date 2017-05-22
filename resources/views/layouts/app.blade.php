@@ -595,16 +595,26 @@
             var file = this.getAttribute('data-id');
             var project = this.getAttribute('data-project');
             bootbox.confirm("Voulez-vous supprimer ce fichier ? ", function (result) {
+              if(result){
                 $.ajax({
                     url: "{{ route('files.destroy', ['@', '#']) }}".replace('@', project).replace('#', file),
                     type: 'delete',
                     success: function (data) {
-                        location.reload();
+                      $.ajax({
+                        url: "{{ route('files.show', ['@']) }}".replace('@', project),
+                        type: "get",
+                        success: function (data) {
+                          var result = $('<div />').append(data).find('.files').html();
+                          $(".files").html(result);
+                          bootbox.hideAll();
+                        }
+                      });
                     },
                     error: function (data) {
                         console.log(data);
                     }
                 });
+              }
             });
         });
 
@@ -752,6 +762,32 @@
                     $(".objectivesData").html(result)
                 }
             });
+        });
+
+        $("#sendFile").submit(function(event) {
+          event.preventDefault();
+          var form = $( this ), url = form.attr( 'action' );
+          var data = new FormData($(this)[0]);
+
+          bootbox.dialog({
+                  title: "Envoi de fichier",
+                  closeButton: false,
+                  message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Envoi en cours...</div>'
+          });
+
+          $.ajax({
+              url: url,
+              type: 'POST',
+              data: data,
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function (data) {
+                  var result = $('<div />').append(data).find('.files').html();
+                  $(".files").html(result);
+                  bootbox.hideAll();
+              }
+          });
         });
 
         @yield('script')

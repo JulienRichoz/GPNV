@@ -105,6 +105,7 @@ $(document).ready(function() {
         setCookie(cookieName, 'true', document.location.pathname);
     }
   });
+
   $('.showMembres').click(function(){
     $(this).children('span').toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
     var cookieName = $(this).attr('data-target');
@@ -122,7 +123,6 @@ $(document).ready(function() {
       var fileID = this.getAttribute('data-fileid');
       var deliveryID = this.getAttribute('data-id');
   });
-
 
   // ------------------------ Task filter management ------------------------
   // Displays / hides tasks according to the active filters

@@ -57,7 +57,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('project/{id}', ['as' => 'project.show', 'uses' => 'ProjectController@show' ])->where('id', '[0-9]+');
         Route::get('project/{id}/tasks/create', 'ProjectController@createTask')->where('id', '[0-9]+');
         Route::post('project/{id}/tasks', 'ProjectController@storeTask')->where('id', '[0-9]+');
-        Route::get('project/{id}/files', 'ProjectController@files')->where('id', '[0-9]+');
+        Route::get('project/{id}/files', ['as' => 'files.show', 'uses' => 'ProjectController@files']);
         Route::delete('project/{id}/users/{user}/destroy', 'ProjectController@destroyUser')->where('id', '[0-9]+');
         Route::post('project/{id}/target', ['as' => 'project.storetarget', 'uses' => 'ProjectController@storeTarget'])->where('projectid', '[0-9]+');
         Route::post('target/{target}/valide', ['as' => 'project.validetarget', 'uses' => 'ProjectController@valideTarget'])->where('target', '[0-9]+');
