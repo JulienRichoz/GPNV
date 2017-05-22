@@ -136,4 +136,15 @@ class ScenarioController extends Controller
     }
     return redirect()->back();
   }
+  public function changeMaquete($projectid, $scenarioId, Request $request)
+  {
+    $step = ScenarioStep::find($request->stepId);
+    $image = Mockup::find($request->mockupId);
+
+    if(isset($step) && isset($image))
+    {
+      $step->mockup_id = $image->id;
+      $step->save();
+    }
+  }
 }
