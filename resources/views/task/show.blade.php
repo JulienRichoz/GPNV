@@ -1,4 +1,4 @@
-<div class="col-md-10">
+<div class="col-md-12 detailsContainer">
     <div class="panel panel-default">
         <div class="panel-heading">{{$task->name}}</div>
 
@@ -60,6 +60,7 @@
             <form class="form-horizontal" role="form" method="POST" action="{{route('comment.store', $task->id)}}">
                 {!! csrf_field() !!}
                 <textarea name="comment" rows="8" cols="45" placeholder="Tapez votre commentaire ici"></textarea>
+                <br/>
                 <button type="submit" class="btn btn-primary">
                     <i class="fa fa-btn fa-sign-in"></i>Envoyer
                 </button>
