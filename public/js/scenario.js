@@ -34,7 +34,7 @@ $('.scenario .tableRow').click(function(){
   $('.scenario .tableRow.active').removeClass('active');
   $(this).addClass('active');
 
-  if(typeof this.mockupUrl !== 'undefined')
+  if(typeof this.mockupUrl !== 'undefined' && this.mockupUrl.value != '')
     var mockupUrl = this.mockupUrl.value;
   else{
     var getUrl = window.location;
