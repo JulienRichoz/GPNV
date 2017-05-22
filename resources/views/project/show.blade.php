@@ -78,18 +78,15 @@
               <!-- <hr/> -->
               </div>
 
-              <div id="taskList" class="col-md-6">
+              <div id="taskList" class="col-md-12">
                   <div class="tree-menu" id="tree-menu">
                       <ul>
-                      <!-- project tasks are displayed from refreshDisplayedTasks() in checkList.js -->
+                      <!-- project tasks are displayed from refreshDisplayedTasks() in scripts.js -->
                       </ul>
                   </div>
                   @if(Auth::user()->projects()->find($project->id))
                       <a class="btn btn-primary taskroot" data-id="{{$project->id}}">Créer une tâche racine</a>
                   @endif
-              </div>
-              <div class="col-md-6"><h1>Détails de la tâche</h1>
-                  <div id="taskdetail"></div>
               </div>
             </div>
         </div>

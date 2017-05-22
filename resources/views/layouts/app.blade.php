@@ -120,16 +120,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
         // Displays details of a given task
-        $('#app-layout').on('click', '.taskshow', function () {
-            console.log(this);
-            var task = this.getAttribute('data-id');
-            $.get("{{ route('tasks.index') }}/" + task, {}, function (task) {
-                // console.log(task);
-                $('#taskdetail').html(task);
-            });
-
-            $.get('', function (task) {
-                //console.log(task);
+        $('#app-layout').on('click', '.taskContainer', function () {
+            // var task = this.getAttribute('data-id'); 
+            var task = $(this).find('.taskshow').first().attr('data-id');
+            $.get("{{ route('tasks.index') }}/" + task, {}, function (taskDetails) {
+                /*console.log(taskDetails);
+                $('#taskdetail').html(taskDetails);*/
+                bootbox.dialog({
+                    title: "Détails de la tâche",
+                    message: taskDetails,
+                    backdrop: true,
+                    onEscape: true
+                });
             });
         });
 
@@ -224,7 +226,8 @@
         });
 
         // Edit a task
-        $('#app-layout').on('click', 'button.taskedit', function () {
+        $('#app-layout').on('click', 'button.taskedit', function (event) {
+            event.stopPropagation(); // Prevents the event from triggering functions on parents/**/
             var task = this.getAttribute('data-id');
             $.get("{{ route('tasks.edit', '@') }}".replace('@', task), {}, function (task) {
                 bootbox.dialog({
@@ -237,7 +240,8 @@
         });
 
         // Add a parent task
-        $('#app-layout').on('click', 'button.taskplus', function () {
+        $('#app-layout').on('click', 'button.taskplus', function (event) {
+            event.stopPropagation();
             var task = this.getAttribute('data-id');
             $.get("{{ route('tasks.index') }}/" + task + "/children/create", {}, function (task) {
                 bootbox.dialog({
@@ -297,7 +301,8 @@
         });
 
         // Call a view to add a user for a task
-        $('#app-layout').on('click', 'button.taskuser', function () {
+        $('#app-layout').on('click', 'button.taskuser', function (event) {
+            event.stopPropagation();
             var task = this.getAttribute('data-id');
             $.ajax({
                 url: "{{ route('tasks.users', '@') }}".replace('@', task),
@@ -315,7 +320,8 @@
         });
 
         // Delete a task
-        $('#app-layout').on('click', 'button.taskdestroy', function () {
+        $('#app-layout').on('click', 'button.taskdestroy', function (event) {
+            event.stopPropagation();
             var task = this.getAttribute('data-id');
             bootbox.confirm("Vous allez supprimer cette tâches ? ", function (result) {
                 if (result) {
