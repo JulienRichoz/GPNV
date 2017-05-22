@@ -1,19 +1,24 @@
 .modalScenario>.modal-dialog{
   width:70%;
 }
-/*.scenario{
-  display: flex;
-  flex-direction: column;
+div.table {
+  display: table; border-collapse: collapse;
 }
-/*.scenario form{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+div.table>.tableRow {
+  display: table-row;
 }
-/*.scenario form>div{
-  width:45%;
-}*/
+div.table>form.tableRow:hover,  div.table>form.tableRow.active {
+  background-color: #ddd;
+}
+div.table>.tableRow>.cell {
+  display: table-cell; vertical-align: middle; padding: 5px;
+}
 
 .maquette img{
   max-width: 100%;
+}
+
+.maquettes{
+  max-height: 800px;
+  overflow-y: auto;
 }

@@ -12,12 +12,7 @@ class Scenario extends Model
   {
     return $this->hasMany('App\Models\ScenarioStep');
   }
-  //add new item to the checkList
-  /*public static function newItem($checkListId, $name, $description=null)
-  {
-    DB::table('scenarios')->insert(array('name' => $name, 'description' => $description, 'checkList_item_id' => $checkListId));
-
-    //return
-  }*/
-  //public static function delete()
+  public function mockups(){
+    return $this->hasMany('App\Models\Mockup');
+  }
 }

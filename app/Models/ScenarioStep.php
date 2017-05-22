@@ -17,9 +17,6 @@ class ScenarioStep extends Model
 
   public function mockup()
   {
-    if(isset($this->mockup_id))
-      return DB::table('mockups')->find($this->mockup_id);
-    else
-      return "";
+    return $this->belongsTo('App\Models\Mockup');
   }
 }

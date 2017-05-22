@@ -7,6 +7,7 @@ use DB;
 use Redirect;
 use App\Models\Scenario;
 use App\Models\ScenarioStep;
+use App\Models\Mockup;
 use App\Models\Event;
 use App\Models\AcknowledgedEvent;
 use Illuminate\Support\Facades\Auth;
@@ -114,5 +115,36 @@ class ScenarioController extends Controller
   {
     DB::table('steps')->where('id', $itemId)->update(array('order'=>$requete->order, 'action'=>$requete->action, 'result'=>$requete->reponse));
     return redirect()->back();
+  }
+
+  public function uploadMaquete($projectid, $scenarioId, Request $request)
+  {
+    if($request->hasFile('maquette')){
+      if($request->file('maquette')->isValid()){
+        $file = $request->file('maquette');
+        $newName = uniqid('img').".".$file->getClientOriginalExtension();
+        $path = $file->move("mockups/$projectid/$scenarioId", $newName);
+
+        $scenario = Scenario::find($scenarioId);
+
+        $mockup = new Mockup;
+        $mockup->url = $newName;
+        $mockup->scenario()->associate($scenario);
+        $mockup->save();
+
+      }
+    }
+    return redirect()->back();
+  }
+  public function changeMaquete($projectid, $scenarioId, Request $request)
+  {
+    $step = ScenarioStep::find($request->stepId);
+    $image = Mockup::find($request->mockupId);
+
+    if(isset($step) && isset($image))
+    {
+      $step->mockup_id = $image->id;
+      $step->save();
+    }
   }
 }
