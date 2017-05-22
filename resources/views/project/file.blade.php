@@ -10,7 +10,7 @@
                   <div class="panel-heading">Ajoutez des fichiers</div>
                   <div class="panel-body">
                       <div class="container">
-                      <form enctype="multipart/form-data" action="{{route('files.store', $project->id)}}" method="post">
+                      <form enctype="multipart/form-data" action="{{route('files.store', $project->id)}}" method="post" id="sendFile">
                           {!! csrf_field() !!}
 
                           <label class="col-md-4 control-label">Description du fichier</label>
@@ -36,7 +36,7 @@
 
               <div class="panel-heading">Fichiers du projet</div>
               <div class="panel-body">
-                  <div class="container">
+                  <div class="container files">
                       @foreach($project->files as $file)
                           <div class="file">
                               <a href="{{asset('files/'.$project->id.'/'.$file->url)}}" download="{{$file->name}}">

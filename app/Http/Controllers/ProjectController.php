@@ -141,10 +141,10 @@ class ProjectController extends Controller
       return view('project/objective',['project' => $project, 'objectifs'=>$objectives]);
     }
 
-    // Return the view about files -> not yet made
-    public function files()
+    public function files($id)
     {
-        return view('project/show');
+      $project = Project::find($id);
+      return view('project/file', ['project' => $project]);
     }
 
     // Return the view to editing projects
