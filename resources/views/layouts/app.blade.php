@@ -227,7 +227,7 @@
 
         // Edit a task
         $('#app-layout').on('click', 'button.taskedit', function (event) {
-            event.stopPropagation(); // Prevents the event from triggering functions on parents/**/
+            event.stopPropagation(); // Prevents the event from triggering functions on parents
             var task = this.getAttribute('data-id');
             $.get("{{ route('tasks.edit', '@') }}".replace('@', task), {}, function (task) {
                 bootbox.dialog({
@@ -493,7 +493,8 @@
                     });
 
                     content += ("</table>");
-                    $('#logbookPanel').html(content);
+                    console.log(content);
+                    $('#logBook').html(content);
 
                     // enabling bootstrap tooltips
                     $('[data-toggle="tooltip"]').tooltip();
@@ -507,7 +508,7 @@
                     if(badgeCount > 0) {
                         if($('#logBookBadge').length == 0) {
                             var badge = "<span id=\"logBookBadge\" class=\"badge\">" + badgeCount + "</span>";
-                            $("#logBookContainer h1").append(badge);
+                            $("#logBook h1").append(badge);
                         } else {
                             $('#logBookBadge').html(badgeCount);
                         }
@@ -708,7 +709,7 @@
         }
 
         function updateValidationStatus(elem) {
-            var projectId = $('#logBookContainer').attr('data-projectId');
+            var projectId = $('#logBook').attr('data-projectId');
             var userId = $(elem).attr('data-userId');
             var eventId = $(elem).closest('tr').attr('data-eventId');
             /*console.log(projectId);
