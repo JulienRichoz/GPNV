@@ -46,7 +46,7 @@
             <div class="cell"><textarea name="reponse" class="form-control">{{ $step->result }}</textarea></div>
             <div class="cell">
               <button type="submit" class="btn btn-warning">
-                <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
               </button>
               <a href="{{route('scenario.del.item', array('projectId'=>$projectId, 'stepId'=>$step->id))}}" name="submit" class="btn btn-danger">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -57,15 +57,15 @@
         <form method="post" class="tableRow" action="{{route('scenario.create.item', array('projectId'=>$projectId, 'scenarioId'=>$scenario->id))}}">
           {{ csrf_field() }}
           {{ method_field('POST') }}
-          <div class="cell">n°</div>
+          <div class="cell"></div>
           <div class="cell"><textarea id="action" name="action" class="form-control"></textarea></div>
           <div class="cell"><textarea id="reponse" name="reponse" class="form-control"></textarea></div>
-          <div class="cell"><button class="btn btn-success">Ajouter un étape</button></div>
+          <div class="cell"><button class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div>
         </form>
       </div>
     </div>
     <div class="col-xs-12 col-md-3">
-      <h2>Maquetes disponibles</h2>
+      <h2>Images disponibles</h2>
       <div class="col-xs-12 maquettes">
         @foreach($scenario->mockups as $mockup)
         <div style="text-align:center; margin-bottom:2px;">
@@ -74,7 +74,7 @@
         @endforeach
       </div>
       <div class="col-xs-12">
-        <h4>Ajouter une maquette</h4>
+        <h4>Ajouter une Image</h4>
         <form enctype="multipart/form-data" action="{{route('scenario.uploadMaquete', array('projectId'=>$projectId, 'scenarioId'=>$scenario->id))}}" method="post">
           {{ csrf_field() }}
           {{ method_field('POST') }}
@@ -82,13 +82,13 @@
             <input type="file" name="maquette" class="form-control" required>
           </div>
           <div class="form-group">
-            <button name="button" class="btn btn-warning">Ajouter une maquette</button>
+            <button name="button" class="btn btn-warning">Ajouter une image</button>
           </div>
         </form>
       </div>
     </div>
     <div class="maquette col-xs-12 col-md-4">
-      <h2>Maquette</h2>
+      <h2>Image</h2>
       <div ondrop="drop(event)" ondragover="allowDrop(event)">
         <a href="#">
           <img src="{{ URL::asset('mockups/thumbnail-default.jpg') }}"/>
