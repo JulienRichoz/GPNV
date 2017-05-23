@@ -19,22 +19,28 @@
     {{ csrf_field() }}
     {{ method_field('DELETE') }}
     <div class="form-group">
-      <label for="scenario">Scénario</label>
+      <label>Scénarios</label>
       @if(count($scenarios)>0)
-        <select id="scenario" name="scenario" class="form-control">
-          @foreach($scenarios as $scenario)
-            <option value="{{$scenario->id}}">{{$scenario->name}}</option>
-          @endforeach
-        </select>
+      <div class="container">
+        @foreach($scenarios as $scenario)
+        <div class="row">
+          <div class="col-xs-10">
+            <label>{{$scenario->name}}</label>
+          </div>
+          <div class="col-xs-1">
+            <a href="{{route('scenario.show', array('projectId'=>$projectId, 'stepId'=>$scenario->id))}}" class="btn btn-primary pull-rigth"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+          </div>
+          <div class="col-xs-1">
+            <a href="{{route('scenario.delete', array('projectId'=>$projectId, 'stepId'=>$scenario->id))}}" class="btn btn-danger pull-rigth"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+          </div>
+        </div>
+        @endforeach
+      </div>
       @else
-        <p>Aucun scénario disponible</p>
+      <p>Aucun scénario disponible</p>
       @endif
     </div>
-      @if(count($scenarios)>0)
-        <a data-projectid="{{$projectId}}" data-URL="{{ URL('project') }}" class="btn btn-default showScenario">Afficher</a>
-        <button type="submit" class="btn btn-default">Supprimer</button>
-      @endif
-      <a data-id="{{$item->id}}" data-projectid="{{$projectId}}" data-URL="{{ URL('project') }}" class="btn btn-default addScenario">Créer nouveau scénario</a>
+    <a data-id="{{$item->id}}" data-projectid="{{$projectId}}" data-URL="{{ URL('project') }}" class="btn btn-default addScenario">Créer nouveau scénario</a>
   </form>
 
   @endif
