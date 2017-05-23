@@ -53,18 +53,18 @@
     </div>
 
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label class="col-md-4 control-label">Parent id</label>
 
         <div class="col-md-6">
             <input type="text" class="form-control" name="parent_id" value="{{ $task->parent_id }}">
         </div>
-    </div>
+    </div> -->
 
     <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
             <button type="submit" class="btn btn-primary" id="editTaskButton">
-                <i class="fa fa-btn fa-sign-in"></i>Editer
+                <i class="fa fa-btn fa-sign-in"></i>Enregistrer
             </button>
 
 
