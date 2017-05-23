@@ -61,11 +61,11 @@ class ScenarioController extends Controller
   }
 
   //Delete a scenario
-  function delete($projectId, Request $requete)
+  function delete($projectId, $scenarioId)
   {
-    $scenarioName = Scenario::find($requete->get('scenario'))->name;
+    $scenarioName = Scenario::find($scenarioId)->name;
 
-    Scenario::destroy($requete->get('scenario'));
+    Scenario::destroy($scenarioId);
 
     // Logging the scenario removal in the logbook
     $event = new Event;
