@@ -127,11 +127,11 @@ class ScenarioController extends Controller
         $newName = uniqid('img').".".$file->getClientOriginalExtension();
         $path = $file->move("mockups/$projectid/", $newName);
 
-        $scenario = Scenario::find($scenarioId);
+        $project = Project::find($projectid);
 
         $mockup = new Mockup;
         $mockup->url = $newName;
-        $mockup->scenario()->associate($scenario);
+        $mockup->project()->associate($project);
         $mockup->save();
 
       }
