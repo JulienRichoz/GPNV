@@ -87,7 +87,7 @@
       </div>
       <div class="col-xs-12">
         <h4>Ajouter une Image</h4>
-        <form enctype="multipart/form-data" action="{{route('scenario.uploadMaquete', array('projectId'=>$projectId, 'scenarioId'=>$scenario->id))}}" method="post">
+        <form id="uploadMockup" enctype="multipart/form-data" action="{{route('scenario.uploadMaquete', array('projectId'=>$projectId, 'scenarioId'=>$scenario->id))}}" method="post">
           {{ csrf_field() }}
           {{ method_field('POST') }}
           <div class="form-group">
@@ -95,6 +95,9 @@
           </div>
           <div class="form-group">
             <button name="button" class="btn btn-warning">Ajouter une image</button>
+            <div ondrop="delPicture(event)" ondragover="allowDrop(event)" class="btn btn-danger pull-right">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </div>
           </div>
         </form>
       </div>
@@ -103,5 +106,6 @@
 </div>
 <script>
  var update_image_route = "{{ route('scenario.changeMaquete', array('projectId'=>$projectId, 'scenarioId'=>$scenario->id)) }}";
+ var del_image_route = "{{route('scenario.delMaquete', array('projectId'=>$projectId, 'scenarioId'=>$scenario->id))}}";
 </script>
 @endsection
