@@ -29,6 +29,23 @@ function drop(ev) {
       data : data
     })
 }
+function remove(id) {
+    var elem = document.getElementById(id);
+    return elem.parentNode.removeChild(elem);
+}
+function delPicture(ev){
+  ev.preventDefault();
+  var id = ev.dataTransfer.getData("id");
+  remove(id);
+  var token = $("#uploadMockup input[name='_token']");
+
+  var data = "_method=DELETE&_token="+token.val()+"&mockupId="+id;
+  $.ajax({
+    url : del_image_route,
+    type : 'POST',
+    data : data
+  })
+}
 
 $('.scenario .tableRow').click(function(){
   $('.scenario .tableRow.active').removeClass('active');
