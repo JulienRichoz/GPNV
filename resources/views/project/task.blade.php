@@ -9,7 +9,13 @@
         <a class="bg-success">
         <span class="taskStatus glyphicon glyphicon-ok"></span>
     @endif
-    <span class="taskshow" data-id="{{$task->id}}"><p> {{$task->name}}</p></span>
+    <span class="taskshow" data-id="{{$task->id}}">
+      <p>{{$task->name}}
+        @if(isset($taskType) && $taskType!="")
+          ({{$taskType->name}})
+        @endif
+      </p>
+    </span>
     @if($task->children->isEmpty())
       <button class="right btn taskuser" data-id="{{$task->id}}"> <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> </button>
       <button class="right btn taskdestroy"  data-id="{{$task->id}}"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>

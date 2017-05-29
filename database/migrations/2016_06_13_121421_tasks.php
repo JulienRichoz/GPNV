@@ -21,12 +21,14 @@ class Tasks extends Migration
             $table->integer('project_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable(true);
             $table->integer('objective_id')->unsigned()->nullable(true);
+            $table->integer('type_id')->unsigned()->nullable(true);
             $table->timestamps(); // Creation the column "created_at" and "updated_at"
         });
 
         Schema::table('tasks', function($table) {
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('parent_id')->references('id')->on('tasks');
+            $table->foreign('type_id')->references('id')->on('taskTypes');
         });
     }
 

@@ -7,6 +7,9 @@
             @if($task->getObjective())
               <p>Objectif : {{$task->getObjective()->title}}</p>
             @endif
+            @if(isset($actualTaskType))
+              <p>Type de tâche: {{$actualTaskType->name}}</p>
+            @endif
         </div>
 
         <div class="panel-heading">Avancement</div>

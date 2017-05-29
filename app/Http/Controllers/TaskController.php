@@ -11,6 +11,7 @@ use DateTime;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\AcknowledgedEvent;
+use DB;
 
 
 use App\Http\Requests;
@@ -20,7 +21,8 @@ class TaskController extends Controller
     // Return the view task
     function show(Task $task)
     {
-        return view('task.show', ['task' => $task]);
+        $actualTaskType = DB::table('taskTypes')->where('id',$task->type_id)->first();
+        return view('task.show', ['task' => $task, "actualTaskType" => $actualTaskType]);
     }
 
     // Return the view about the creation a children task
@@ -74,18 +76,23 @@ class TaskController extends Controller
     // Return the view about the edition
     function edit(Task $task, Request $request)
     {
-        return view('task.edit', ['task' => $task]);
+        $taskType = DB::table('taskTypes')->orderBy('name')->get();
+        $actualTaskType = DB::table('taskTypes')->where('id',$task->type_id)->first();
+        return view('task.edit', ['task' => $task, "taskTypes" => $taskType, "actualTaskType" => $actualTaskType]);
     }
 
     //
     function store(Task $task, Request $request)
     {
+        var_dump($task);
         $transactionResult = $task->update([
             'name' => $request->input('name'),
             'duration' => $request->input('duration'),
             'parent_id' => $request->input('parent_id') == '' ? null : $request->input('parent_id'),
             'status' => $request->input('status'),
+            'type_id' => $request->input('taskTypes'),
         ]);
+        var_dump($task);
 
         //(new EventController())->store($request->input('project_id'), "Créer une tâche enfant"); // Create an event
 
@@ -187,7 +194,5 @@ class TaskController extends Controller
 
         }
     }
-
-
 
 }

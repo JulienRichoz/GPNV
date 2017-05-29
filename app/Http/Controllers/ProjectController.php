@@ -223,7 +223,9 @@ class ProjectController extends Controller
 
         if (count($tasks) > 0) {
             foreach ($tasks as $task) {
-                $taskView = view('project/task', ['task' => $task]);
+
+                $taskType = DB::table('taskTypes')->where('id',$task->type_id)->first();
+                $taskView = view('project/task', ['task' => $task, 'taskType'=>$taskType]);
                 $viewStack .= $taskView;
             }
             return $viewStack;
@@ -276,19 +278,20 @@ class ProjectController extends Controller
     // Return te view to creating tasks
     public function createTask($id)
     {
-        return view('task.create', ['project' => $id]);
+        $taskTypes = DB::table('taskTypes')->get();
+        return view('task.create', ['project' => $id, 'taskTypes' => $taskTypes]);
     }
 
     // Edit a task
     public function storeTask(Request $request)
     {
-
         $project_id = $request->input('project_id');
 
         $newTask = new Task;
         $newTask->name = $request->input('name');
         $newTask->duration = $request->input('duration');
         $newTask->Objective_id = $request->input('root_task');
+        $newTask->type_id = $request->input('taskTypes');
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
         $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
