@@ -42,4 +42,5 @@ $('.scenario .tableRow').click(function(){
   }
 
   $('.maquette img').attr('src', mockupUrl);
+  $('.maquette a').attr('href', mockupUrl);
 });
