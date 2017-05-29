@@ -37,6 +37,7 @@
         </div>
         <?php $order=0;?>
         @foreach($scenario->steps as $step)
+          <?php $order++?>
           <form method="post" class="tableRow" action="{{route('scenario.item.modify', array('projectId' => $projectId, 'scenarioId' => $scenario->id, 'itemId' => $step->id))}}">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
