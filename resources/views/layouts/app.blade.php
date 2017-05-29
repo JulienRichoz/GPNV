@@ -245,7 +245,7 @@
             var task = this.getAttribute('data-id');
             $.get("{{ route('tasks.index') }}/" + task + "/children/create", {}, function (task) {
                 bootbox.dialog({
-                    title: "Créer une tâche enfant",
+                    title: "Créer une sous-tâche",
                     message: task,
                     backdrop: true,
                     onEscape: true
@@ -258,7 +258,7 @@
             var task = this.getAttribute('data-id');
             $.get("{{ route('project.index') }}/" + task + "/tasks/create", {}, function (task) {
                 bootbox.dialog({
-                    title: "Créer une tâche racine",
+                    title: "Créer une tâche",
                     message: task,
                     backdrop: true,
                     onEscape: true
