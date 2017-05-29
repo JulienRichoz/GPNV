@@ -9,6 +9,7 @@ use App\Models\Scenario;
 use App\Models\ScenarioStep;
 use App\Models\Mockup;
 use App\Models\Event;
+use App\Models\Project;
 use App\Models\AcknowledgedEvent;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,8 @@ class ScenarioController extends Controller
   function show($projectId, $scenarioId)
   {
     $scenario = Scenario::find($scenarioId);
-    return view('scenario.show', ['projectId'=>$projectId, 'scenario'=>$scenario]);
+    $project = Project::find($projectId);
+    return view('scenario.show', ['projectId'=>$projectId, 'scenario'=>$scenario, 'mockups' => $project->mockups]);
   }
 
   //update scenario
