@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Livrable;
 use DB;
+use File;
 use Redirect;
 use App\Models\Scenario;
 use App\Models\ScenarioStep;
@@ -147,6 +148,16 @@ class ScenarioController extends Controller
     {
       $step->mockup_id = $image->id;
       $step->save();
+    }
+  }
+
+  public function delMaquete($projectid, $scenarioId, Request $request){
+    $image = Mockup::find($request->mockupId);
+
+    if(!is_null($image)){
+      $filename = "mockups/$projectid/".$image->url;
+      File::delete($filename);
+      $image->delete();
     }
   }
 }
