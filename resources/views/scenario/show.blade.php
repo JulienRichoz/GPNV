@@ -79,9 +79,9 @@
     <div class="col-xs-12 col-md-3">
       <h2>Images disponibles</h2>
       <div class="col-xs-12 maquettes">
-        @foreach($scenario->mockups as $mockup)
+        @foreach($mockups as $mockup)
         <div style="text-align:center; margin-bottom:2px;">
-          <img src="{{ URL::asset('mockups/'.$projectId.'/'.$scenario->id.'/'.$mockup->url)}}" id='{{$mockup->id}}' style="max-width:100%; max-height: 200px;" draggable="true" ondragstart="drag(event)">
+          <img src="{{ URL::asset('mockups/'.$projectId.'/'.$mockup->url)}}" id='{{$mockup->id}}' style="max-width:100%; max-height: 200px;" draggable="true" ondragstart="drag(event)">
         </div>
         @endforeach
       </div>
