@@ -12,7 +12,6 @@
             {{ csrf_field() }}
             {{ method_field('PUT') }}
 
-            <input name="done" class="styled custom-control-input deliveryCheck" onchange="this.form.submit()" type="checkbox" @if($checkListItem->done) checked @endif>
             @if(isset($modalBox) && $modalBox)
               <a class="showObjectif" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">
 
@@ -21,7 +20,17 @@
             @endif
 
               <label>{{$checkListItem->title}}</label>
+              @if(isset($scenarios))
+                <label class="pull-right">
+                @if($scenarios['nbScenarios']!=0)
+                  {{$scenarios['nbScenarios']}}/{{$scenarios['nbValidateScenatios']}}/
+                @else
+                  ?
+                @endif
+                </label>
+              @endif
             </a>
+
             @if(isset($file))
               @if(isset($fileData->id))
                 <a class="btn removeLink pull-right" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;">
