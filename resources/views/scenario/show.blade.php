@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="scenario container">
+  <a href="{{route('project.show', $projectId)}}" class="btn btn-primary">
+    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Retour au projet
+  </a>
   <div class="row">
     <form method="POST" action="{{route('scenario.modify', array('projectId' => $projectId, 'scenarioId' => $scenario->id))}}" class="col-xs-12 col-md-6 col-md-offset-3">
       {{ csrf_field() }}
@@ -64,6 +67,14 @@
         </form>
       </div>
     </div>
+    <div class="maquette col-xs-12 col-md-4">
+      <h2>Image</h2>
+      <div ondrop="drop(event)" ondragover="allowDrop(event)">
+        <a href="#">
+          <img src="{{ URL::asset('mockups/thumbnail-default.jpg') }}"/>
+        </a>
+      </div>
+    </div>
     <div class="col-xs-12 col-md-3">
       <h2>Images disponibles</h2>
       <div class="col-xs-12 maquettes">
@@ -85,14 +96,6 @@
             <button name="button" class="btn btn-warning">Ajouter une image</button>
           </div>
         </form>
-      </div>
-    </div>
-    <div class="maquette col-xs-12 col-md-4">
-      <h2>Image</h2>
-      <div ondrop="drop(event)" ondragover="allowDrop(event)">
-        <a href="#">
-          <img src="{{ URL::asset('mockups/thumbnail-default.jpg') }}"/>
-        </a>
       </div>
     </div>
   </div>
