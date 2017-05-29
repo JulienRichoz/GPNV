@@ -123,7 +123,7 @@ class ScenarioController extends Controller
       if($request->file('maquette')->isValid()){
         $file = $request->file('maquette');
         $newName = uniqid('img').".".$file->getClientOriginalExtension();
-        $path = $file->move("mockups/$projectid/$scenarioId", $newName);
+        $path = $file->move("mockups/$projectid/", $newName);
 
         $scenario = Scenario::find($scenarioId);
 
