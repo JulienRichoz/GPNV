@@ -19,6 +19,9 @@ class Project extends Model {
     public function files() {
         return $this->hasMany(\App\Models\File::class, 'project_id', 'id');
     }
+    public function mockups(){
+      return $this->hasMany('App\Models\Mockup');
+    }
 
     /*public function invitations() {
         return $this->hasMany(\App\Models\Invitation::class, 'project_id', 'id');

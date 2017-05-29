@@ -44,7 +44,7 @@
             <input type="hidden" name="id" value="{{$step->id}}">
             <input type="hidden" name="order" value="{{ $step->order }}">
             <input type="hidden" name="mockup" value="@if(isset($step->mockup)) {{$step->mockup->id}} @endif">
-            <input type="hidden" name="mockupUrl" value="@if(isset($step->mockup)) {{ URL::asset('mockups/'.$projectId.'/'.$scenario->id.'/'.$step->mockup->url)}} @endif">
+            <input type="hidden" name="mockupUrl" value="@if(isset($step->mockup)) {{ URL::asset('mockups/'.$projectId.'/'.$step->mockup->url)}} @endif">
             <div class="cell" name="order">{{ $order }}</div>
             <div class="cell"><textarea name="action" class="form-control">{{ $step->action }}</textarea></div>
             <div class="cell"><textarea name="reponse" class="form-control">{{ $step->result }}</textarea></div>
@@ -71,7 +71,7 @@
     <div class="maquette col-xs-12 col-md-4">
       <h2>Image</h2>
       <div ondrop="drop(event)" ondragover="allowDrop(event)">
-        <a href="#">
+        <a href="{{ URL::asset('mockups/thumbnail-default.jpg') }}" target="_blank">
           <img src="{{ URL::asset('mockups/thumbnail-default.jpg') }}"/>
         </a>
       </div>
@@ -79,9 +79,9 @@
     <div class="col-xs-12 col-md-3">
       <h2>Images disponibles</h2>
       <div class="col-xs-12 maquettes">
-        @foreach($scenario->mockups as $mockup)
+        @foreach($mockups as $mockup)
         <div style="text-align:center; margin-bottom:2px;">
-          <img src="{{ URL::asset('mockups/'.$projectId.'/'.$scenario->id.'/'.$mockup->url)}}" id='{{$mockup->id}}' style="max-width:100%; max-height: 200px;" draggable="true" ondragstart="drag(event)">
+          <img src="{{ URL::asset('mockups/'.$projectId.'/'.$mockup->url)}}" id='{{$mockup->id}}' style="max-width:100%; max-height: 200px;" draggable="true" ondragstart="drag(event)">
         </div>
         @endforeach
       </div>

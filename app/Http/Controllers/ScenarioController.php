@@ -9,6 +9,7 @@ use App\Models\Scenario;
 use App\Models\ScenarioStep;
 use App\Models\Mockup;
 use App\Models\Event;
+use App\Models\Project;
 use App\Models\AcknowledgedEvent;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,8 @@ class ScenarioController extends Controller
   function show($projectId, $scenarioId)
   {
     $scenario = Scenario::find($scenarioId);
-    return view('scenario.show', ['projectId'=>$projectId, 'scenario'=>$scenario]);
+    $project = Project::find($projectId);
+    return view('scenario.show', ['projectId'=>$projectId, 'scenario'=>$scenario, 'mockups' => $project->mockups]);
   }
 
   //update scenario
@@ -123,13 +125,13 @@ class ScenarioController extends Controller
       if($request->file('maquette')->isValid()){
         $file = $request->file('maquette');
         $newName = uniqid('img').".".$file->getClientOriginalExtension();
-        $path = $file->move("mockups/$projectid/$scenarioId", $newName);
+        $path = $file->move("mockups/$projectid/", $newName);
 
-        $scenario = Scenario::find($scenarioId);
+        $project = Project::find($projectid);
 
         $mockup = new Mockup;
         $mockup->url = $newName;
-        $mockup->scenario()->associate($scenario);
+        $mockup->project()->associate($project);
         $mockup->save();
 
       }
