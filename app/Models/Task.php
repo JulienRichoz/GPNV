@@ -106,6 +106,10 @@ class Task extends Model
         return $this->hasMany(\App\Models\Comment::class, 'task_id');
     }
 
+    public function status() {
+        return $this->belongsTo('App\Models\Status');
+    }
+
     // he task if like the entry of the input q with a value before or after
     // do a second where, to do the search for the project and not another
     public static function scopeSearchInAvailableProperty($query, $q, $id)
