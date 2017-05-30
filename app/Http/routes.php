@@ -136,5 +136,6 @@ Route::group(['middleware' => 'web'], function () {
         /* RELOAD ROUTES */
         Route::get('project/{id}/deliveries', ['as' => 'project.showDeliveries', 'uses' => 'ProjectController@showDeliveries']);
         Route::get('project/{id}/objectives', ['as' => 'project.showObjectives', 'uses' => 'ProjectController@showObjectives']);
+        Route::delete('project/{id}/objective/{objectiveId}', ['as' => 'project.deleteObjectives', 'uses' => 'ProjectController@deleteObjectives']);
     });
 });

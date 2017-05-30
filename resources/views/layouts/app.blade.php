@@ -121,7 +121,7 @@
     $(document).ready(function () {
         // Displays details of a given task
         $('#app-layout').on('click', '.taskContainer', function () {
-            // var task = this.getAttribute('data-id'); 
+            // var task = this.getAttribute('data-id');
             var task = $(this).find('.taskshow').first().attr('data-id');
             $.get("{{ route('tasks.index') }}/" + task, {}, function (taskDetails) {
                 /*console.log(taskDetails);
@@ -794,6 +794,25 @@
                   bootbox.hideAll();
               }
           });
+        });
+
+        // Delete objective of project
+        $(document).on("click", 'a.removeObjective', function(event) {
+            var id = this.getAttribute('data-id');
+            var projectid = this.getAttribute('data-projectid');
+
+            bootbox.confirm("Voulez vous vraiment supprimer cet objectif ? ", function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('project.showDeliveries', '@', '#') }}".replace('@', projectid).replace('#', id),
+                        success: function (data) {
+                            bootbox.alert("Objectif supprimé avec succès");
+                        }
+                    });
+                }
+            });
+
         });
 
         @yield('script')

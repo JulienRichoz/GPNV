@@ -542,6 +542,12 @@ class ProjectController extends Controller
       return view('project.toLink', ['project' => $Project, 'files' => $filesInProject, 'checkID'=> $check]);
     }
 
+
+    /*
+    Link a file or link to the selected delivery (Note: the delivery id is in the request parameter)
+    @param $projectID Define the actual project id
+    @param $request Define the request data send by POST
+    */
     public function LinkToDelivery(Request $request, $ProjectID){
       if( $request->input('check')==null || $request->input('type')==null || $request->input('data')==null) return redirect('project/' . $ProjectID);
 
@@ -556,8 +562,22 @@ class ProjectController extends Controller
 
       DB::table('checkList_Items')->where('id', $checkListID)->update(['link' => $request->input('data')]);
 
-      //return redirect('project/' . $ProjectID);
       return redirect()->route("project.show", ['id'=>$ProjectID]);
+
+    }
+
+
+    /*
+    Delete selected objective (also delete scenarios and scenario tests related to it)
+    @param $projectID Define the actual project id
+    @param $objectiveID Define the id of the 'checkList_Items' to delete
+    */
+    public function deleteObjectives($projectID, $objectiveID){
+      $project = Project::find($projectID);
+      $scenarios = DB::table('scenarios')->where('checkList_Item_id', $objectiveID)->get();
+
+      DB::table('scenarios')->where('checkList_Item_id', '=', $objectiveID)->delete();
+      DB::table('checkList_Items')->where('id', '=', $objectiveID)->delete();
 
     }
 
