@@ -572,13 +572,22 @@ class ProjectController extends Controller
     @param $projectID Define the actual project id
     @param $objectiveID Define the id of the 'checkList_Items' to delete
     */
-    public function deleteObjectives($projectID, $objectiveID){
+    public function deleteObjective($projectID, $objectiveID){
       $project = Project::find($projectID);
       $scenarios = DB::table('scenarios')->where('checkList_Item_id', $objectiveID)->get();
 
       DB::table('scenarios')->where('checkList_Item_id', '=', $objectiveID)->delete();
       DB::table('checkList_Items')->where('id', '=', $objectiveID)->delete();
 
+    }
+
+    /*
+    Delete selected delivery
+    @param $projectID Define the actual project id
+    @param $deliveryID Define the id of the 'checkList_Items' to delete
+    */
+    public function deleteDelivery($projectID, $deliveryID){
+      DB::table('checkList_Items')->where('id', '=', $deliveryID)->delete();
     }
 
 }

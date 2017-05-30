@@ -805,14 +805,47 @@
                 if (result) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ route('project.showDeliveries', '@', '#') }}".replace('@', projectid).replace('#', id),
+                        url: projectid + "/objective/" + id,
                         success: function (data) {
                             bootbox.alert("Objectif supprimé avec succès");
+                            $.ajax({
+                                url: "{{ route('project.showObjectives', '@') }}".replace('@', projectid),
+                                type: 'get',
+                                success: function (data) {
+                                    var result = $('<div />').append(data).find('.objectivesData').html();
+                                    $(".objectivesData").html(result)
+                                }
+                            });
                         }
                     });
                 }
             });
+        });
 
+        // Delete delivery of project
+        $(document).on("click", 'a.removeDelivery', function(event) {
+            var id = this.getAttribute('data-id');
+            var projectid = this.getAttribute('data-projectid');
+
+            bootbox.confirm("Voulez vous vraiment supprimer ce livrable ? ", function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: projectid + "/delivery/" + id,
+                        success: function (data) {
+                            bootbox.alert("Livrable supprimé avec succès");
+                            $.ajax({
+                                url: "{{ route('project.showDeliveries', '@') }}".replace('@', projectid),
+                                type: 'get',
+                                success: function (data) {
+                                    var result = $('<div />').append(data).find('.deliveriesData').html();
+                                    $(".deliveriesData").html(result)
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         });
 
         @yield('script')

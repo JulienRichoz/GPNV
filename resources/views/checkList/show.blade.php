@@ -28,6 +28,9 @@
             @endif
 
             @if(isset($file))
+              <a class="btn removeDelivery pull-right" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" style="position: relative;top: -8px;background-color: unset;">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </a>
               @if(isset($fileData->id))
                 <a class="btn removeLink pull-right" data-id="{{$checkListItem->id}}" style="position: relative;top: -8px;background-color: unset;">
                     <span class="glyphicon glyphicon-floppy-remove" aria-hidden="true"></span>
