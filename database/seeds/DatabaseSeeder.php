@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->addDefaultTypes();
+
         $this->addDefaultClasses();
         $this->addDefaultStates();
         $this->addDefaultRoles();
@@ -30,6 +32,12 @@ class DatabaseSeeder extends Seeder
         'name' => "DefaultClass",
         'friendlyId' => "1"
       ]);
+    }
+
+    public function addDefaultTypes(){
+      DB::table('taskTypes')->insert(['name' => "Programmation",]);
+      DB::table('taskTypes')->insert(['name' => "Système",]);
+      DB::table('taskTypes')->insert(['name' => "Documentation",]);
     }
 
     public function addDefaultStates()
