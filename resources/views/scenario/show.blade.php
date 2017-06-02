@@ -2,11 +2,15 @@
 
 @section('content')
 <div class="scenario container">
-  <a href="{{route('project.show', $projectId)}}" class="btn btn-primary">
-    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Retour au projet
-  </a>
   <div class="row">
-    <form method="POST" action="{{route('scenario.modify', array('projectId' => $projectId, 'scenarioId' => $scenario->id))}}" class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="col-xs-12">
+      <a href="{{route('project.show', $projectId)}}" class="btn btn-primary btn-retour">
+        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Retour au projet
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <form method="POST" action="{{route('scenario.modify', array('projectId' => $projectId, 'scenarioId' => $scenario->id))}}" class="col-xs-12 col-md-6 ">
       {{ csrf_field() }}
       {{ method_field('PUT') }}
       <div class="form-group">
@@ -19,9 +23,8 @@
       </div>
       <div class="form-group">
         <input @if($scenario->actif == 1) checked @endif name="actif" type="checkbox" data-toggle="toggle" data-onstyle="success" data-on="Validé" data-off="Non Validé">
-      </div>
-      <div class="form-group">
-        <button class="btn btn-warning">Modifier</button>
+        <input @if($scenario->test_validated == 1) checked @endif name="test_validated" type="checkbox" data-toggle="toggle" data-onstyle="success" data-on="Testé et Validé" data-off="Pas testé">
+        <button class="btn btn-warning pull-right">Modifier</button>
       </div>
     </form>
   </div>
