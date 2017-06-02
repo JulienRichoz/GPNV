@@ -15,6 +15,7 @@ class Tasktypes extends Migration
       Schema::create('taskTypes', function (Blueprint $table) {
         $table->increments('id')->index();
         $table->string('name', 30);
+        $table->timestamps();
       });
     }
 
