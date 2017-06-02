@@ -34,6 +34,12 @@ class ScenarioController extends Controller
       $scenario->actif = 1;
     else
       $scenario->actif = 0;
+
+    if($requete->test_validated && $requete->test_validated =='on')
+      $scenario->test_validated = 1;
+    else
+      $scenario->test_validated = 0;
+      
     $scenario->save();
 
     return redirect()->back();
