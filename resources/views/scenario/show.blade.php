@@ -48,13 +48,12 @@
             <input type="hidden" name="order" value="{{ $step->order }}">
             <input type="hidden" name="mockup" value="@if(isset($step->mockup)) {{$step->mockup->id}} @endif">
             <input type="hidden" name="mockupUrl" value="@if(isset($step->mockup)) {{ URL::asset('mockups/'.$projectId.'/'.$step->mockup->url)}} @endif">
+            <input type="hidden" name="oldAction" value="{{ $step->action }}">
+            <input type="hidden" name="oldReponse" value="{{ $step->result }}">
             <div class="cell" name="order">{{ $order }}</div>
-            <div class="cell"><textarea name="action" class="form-control">{{ $step->action }}</textarea></div>
-            <div class="cell"><textarea name="reponse" class="form-control">{{ $step->result }}</textarea></div>
+            <div class="cell"><textarea onclick="resetStepColor(this)" onblur="updateStep(this.form, this)" name="action" class="form-control">{{ $step->action }}</textarea></div>
+            <div class="cell"><textarea onclick="resetStepColor(this)" onblur="updateStep(this.form, this)" name="reponse" class="form-control">{{ $step->result }}</textarea></div>
             <div class="cell">
-              <button type="submit" class="btn btn-warning">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-              </button>
               <a href="{{route('scenario.del.item', array('projectId'=>$projectId, 'stepId'=>$step->id))}}" name="submit" class="btn btn-danger">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
               </a>

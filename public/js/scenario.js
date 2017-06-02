@@ -60,3 +60,23 @@ $('.scenario .tableRow').click(function(){
 
   $('.maquette img').attr('src', mockupUrl);
 });
+
+function resetStepColor(element){
+  $(element).css('border-width','1px');
+  $(element).css('border-color', '#ccc');
+}
+function updateStep(form, element){
+  if(form.oldReponse.value != form.reponse.value || form.oldAction.value != form.action.value){
+    $.ajax({
+      url : $(form).attr('action'),
+      type : $(form).attr('method'),
+      data : $(form).serialize(),
+      success : function(){
+        form.oldReponse.value = form.reponse.value;
+        form.oldAction.value = form.action.value;
+        $(element).css('border-width','2px');
+        $(element).css('border-color', 'green');
+      }
+    })
+  }
+}
