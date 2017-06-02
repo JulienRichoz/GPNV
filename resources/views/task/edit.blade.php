@@ -9,7 +9,7 @@
                 type: 'POST',
                 data: form.serializeArray(),
                 success: function (data) {
-                    console.log("Task successfully edited!");
+                    // console.log("Task successfully edited!");
                     refreshDisplayedTasks(); // refresh the task list
 
                     // Display a confirmation message to the user
@@ -48,7 +48,15 @@
         <label class="col-md-4 control-label">Statut</label>
 
         <div class="col-md-6">
-            <input type="text" class="form-control" name="status" value="{{ $task->status }}">
+            <button class="btn btn-default dropdown-toggle" type="button" id="changeMe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span id="statusDropdown">{{$task->status->name}}</span>
+            <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu objective" aria-labelledby="changeMe" >
+                @foreach($statuses as $status)
+                    <li><a data-status-id="{{$status->id}}">{{$status->name}}</a></li>
+                @endforeach
+            </ul>
         </div>
     </div>
 

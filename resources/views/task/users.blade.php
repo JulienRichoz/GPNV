@@ -9,8 +9,8 @@
                 type: 'POST',
                 data: form.serializeArray(),
                 success: function (data) {
-                    console.log("Task successfully delegated!");
-                    console.log(data);
+                    // console.log("Task successfully delegated!");
+                    // console.log(data);
                     refreshDisplayedTasks(); // refresh the task list
 
                     // Display a confirmation message to the user

@@ -11,6 +11,7 @@ use DateTime;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\AcknowledgedEvent;
+use App\Models\Status;
 
 
 use App\Http\Requests;
@@ -74,7 +75,7 @@ class TaskController extends Controller
     // Return the view about the edition
     function edit(Task $task, Request $request)
     {
-        return view('task.edit', ['task' => $task]);
+        return view('task.edit', ['task' => $task, 'statuses' => Status::all()]);
     }
 
     //

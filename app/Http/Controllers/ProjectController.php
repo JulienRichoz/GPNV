@@ -179,7 +179,7 @@ class ProjectController extends Controller
                     ->select('tasks.*')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
-                        return $query->whereIn("tasks.status", $status);
+                        return $query->whereIn("tasks.status_id", $status);
                     })
                     ->distinct()
                     ->whereNull('tasks.parent_id');
@@ -192,7 +192,7 @@ class ProjectController extends Controller
                 $query = Task::doesntHave('usersTasks')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
-                        return $query->whereIn("tasks.status", $status);
+                        return $query->whereIn("tasks.status_id", $status);
                     })
                     ->whereNull('tasks.parent_id');
 
@@ -208,7 +208,7 @@ class ProjectController extends Controller
                     ->where('users_tasks.user_id', "=", $taskOwner)
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
-                        return $query->whereIn("tasks.status", $status);
+                        return $query->whereIn("tasks.status_id", $status);
                     })
                     ->whereNull('tasks.parent_id');
 
@@ -219,7 +219,7 @@ class ProjectController extends Controller
                 break;
         }
 
-        // Making sure there are tasks to display / display an information message otherwise
+        // Making sure there are tasks to display / show a message otherwise
 
         if (count($tasks) > 0) {
             foreach ($tasks as $task) {

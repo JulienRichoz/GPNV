@@ -12,7 +12,7 @@ $(document).ready(function () {
     var checkbox = $(this);
     var cookieName = "#" + checkbox.attr("id")
     setCookie(cookieName, checkbox.is(":checked"), document.location.pathname);
-    console.log("saving:\n" + cookieName + " " + checkbox.is(":checked") + " @ " + document.location.pathname);
+    // console.log("saving:\n" + cookieName + " " + checkbox.is(":checked") + " @ " + document.location.pathname);
 
     // UI management
     refreshDisplayedTasks();
@@ -40,7 +40,7 @@ $(document).ready(function () {
     var dropdownValue = $(this);
     var cookieName = "#" + $(this).parent("li").parent("ul").prev("button").attr("id");
     setCookie(cookieName, listItemIndex, document.location.pathname);
-    console.log("saving:\n" + cookieName + " " + listItemIndex + " @ " + document.location.pathname);
+    // console.log("saving:\n" + cookieName + " " + listItemIndex + " @ " + document.location.pathname);
 
     // UI management
     refreshDisplayedTasks();
@@ -65,7 +65,7 @@ $(document).ready(function () {
     var dropdownValue = $(this);
     var cookieName = "#" + $(this).parent("li").parent("ul").prev("button").attr("id");
     setCookie(cookieName, listItemIndex, document.location.pathname);
-    console.log("saving:\n" + cookieName + " " + listItemIndex + " @ " + document.location.pathname);
+    // console.log("saving:\n" + cookieName + " " + listItemIndex + " @ " + document.location.pathname);
 
     refreshDisplayedTasks();
   });

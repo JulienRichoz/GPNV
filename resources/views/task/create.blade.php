@@ -9,7 +9,7 @@
                 type: 'POST',
                 data: form.serializeArray(),
                 success: function (data) {
-                    console.log("Task successfully added!");
+                    // console.log("Task successfully added!");
                     refreshDisplayedTasks(); // refresh the task list
 
                     // Display a confirmation message to the user

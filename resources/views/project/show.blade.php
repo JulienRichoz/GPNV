@@ -20,19 +20,19 @@
               <div id="filters" class="col-md-12">
                   <div class="awesomeCheckbox awesomeCheckbox-primary filterCheckboxes">
                       <span class="instruction">Afficher les tâches</span>
-                      <input data-status="wip" type="checkbox" checked="checked" id="checkWip" class="styled checkboxFilter">
+                      <input data-status-id="1" type="checkbox" checked="checked" id="checkWip" class="styled checkboxFilter">
                       <label for="checkWip" class="checkboxFilterLabel">
                           <span class="taskStatus glyphicon glyphicon-time"></span>
                           En cours
                       </label>
 
-                      <input data-status="todo" type="checkbox" id="checkTodo" class="styled checkboxFilter">
+                      <input data-status-id="2" type="checkbox" id="checkTodo" class="styled checkboxFilter">
                       <label for="checkTodo" class="checkboxFilterLabel">
                           <span class="taskStatus glyphicon glyphicon-pushpin"></span>
                           A faire
                       </label>
 
-                      <input data-status="done" type="checkbox" id="checkDone" class="styled checkboxFilter">
+                      <input data-status-id="3" type="checkbox" id="checkDone" class="styled checkboxFilter">
                       <label for="checkDone" class="checkboxFilterLabel">
                           <span class="taskStatus glyphicon glyphicon-ok"></span>
                           Terminée

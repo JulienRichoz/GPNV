@@ -131,14 +131,14 @@ $(document).ready(function() {
     var status = [];
     $(".checkboxFilter").each(function(checkbox) {
       if (this.checked) {
-        status.push($(this).attr('data-status'));
+        status.push($(this).attr('data-status-id'));
       }
     });
 
     var taskOwner = $(".dropTaskFilter .owner li a.activeOwner").attr("data-taskOwner");
     var taskObjective = $(".dropTaskFilter .objective li a.activeOwner").attr("data-objective");
 
-    //console.log(status);
+    // console.log(status);
 
     $.ajax({
       url: projectId + "/getTasks",
@@ -149,7 +149,7 @@ $(document).ready(function() {
         $("#tree-menu ul").html(tasks);
       },
       error: function() {
-        console.log("failed to load project tasks");
+        // console.log("failed to load project tasks");
       }
     });
   }
@@ -163,7 +163,7 @@ $(document).ready(function() {
         var checkStatus = (cookie == 'true');
 
         $(theCookies[i]).prop('checked', checkStatus);
-        console.log(theCookies[i] + " set to true");
+        // console.log(theCookies[i] + " set to true");
       }
     }
   });

@@ -1,11 +1,11 @@
 <li class="taskContainer">
-    @if ($task->status == "wip")
+    @if ($task->status->id == "1") <!-- id #1 = En cours -->
       <a class="bg-info">
         <span class="taskStatus glyphicon glyphicon-time"></span>
-    @elseif ($task->status == "todo")
+    @elseif ($task->status->id == "2")  <!-- id #2 = A faire -->
         <a class="bg-warning">
         <span class="taskStatus glyphicon glyphicon-pushpin"></span>
-    @else
+    @else  <!-- id #3 = Terminée -->
         <a class="bg-success">
         <span class="taskStatus glyphicon glyphicon-ok"></span>
     @endif
