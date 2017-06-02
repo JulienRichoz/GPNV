@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mockup extends Model
 {
   public $timestamps = false;
-  public function scenario(){
-    return $this->belongsTo('App\Models\Scenario');
+  public function project(){
+    return $this->belongsTo('App\Models\Project');
   }
 }
