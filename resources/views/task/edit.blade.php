@@ -70,6 +70,7 @@
         </div>
     </div>
 
+    <input type="hidden" class="form-control" name="parent_id" value="{{ $task->parent_id }}">
 
     <!-- <div class="form-group">
         <label class="col-md-4 control-label">Parent id</label>

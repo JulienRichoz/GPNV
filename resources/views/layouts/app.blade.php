@@ -796,6 +796,21 @@
           });
         });
 
+        $("#addTaskType").submit(function(event) {
+          event.preventDefault();
+          var form = $( this ), url = form.attr( 'action' );
+
+          $.ajax({
+              url: url,
+              type: 'POST',
+              data: form.serializeArray(),
+              success: function (data) {
+                  var result = $('<div />').append(data).find('#data-tasktypes').html();
+                  $("#data-tasktypes").html(result);
+              }
+          });
+        });
+
         // Delete objective of project
         $(document).on("click", 'a.removeObjective', function(event) {
             var id = this.getAttribute('data-id');
