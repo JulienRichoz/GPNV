@@ -14,14 +14,18 @@
             <!-- Display all yourCheckList -->
             @if($objectifs->showToDo())
               @foreach($objectifs->showToDo() as $checkListItem)
-                @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id))
+                @unless($checkListItem->title == "Intérêt Général")
+                  @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id))
+                @endunless
               @endforeach
             @endif
         </div>
         <div class="completed hidden">
           @if($objectifs->showCompleted())
             @foreach($objectifs->showCompleted() as $checkListItem)
-              @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id))
+              @unless($checkListItem->title == "Intérêt Général")
+                @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id))
+              @endunless
             @endforeach
           @endif
         </div>
