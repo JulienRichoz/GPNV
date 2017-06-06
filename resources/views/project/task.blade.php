@@ -11,8 +11,10 @@
     @endif
     <span class="taskshow" data-id="{{$task->id}}">
       <p>{{$task->name}}
-        @if(isset($taskType) && $taskType!="")
-          ({{$taskType->name}})
+        @if($task->isChildrenDifferentTypes())
+          (Mixte)
+        @elseif(null !== $task->getTaskType())
+          ({{$task->getTaskType()->name}})
         @endif
       </p>
     </span>

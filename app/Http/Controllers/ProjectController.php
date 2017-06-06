@@ -223,9 +223,7 @@ class ProjectController extends Controller
 
         if (count($tasks) > 0) {
             foreach ($tasks as $task) {
-
-                $taskType = DB::table('taskTypes')->where('id',$task->type_id)->first();
-                $taskView = view('project/task', ['task' => $task, 'taskType'=>$taskType]);
+                $taskView = view('project/task', ['task' => $task]);
                 $viewStack .= $taskView;
             }
             return $viewStack;

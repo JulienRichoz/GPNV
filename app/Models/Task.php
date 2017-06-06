@@ -47,6 +47,24 @@ class Task extends Model
       return DB::table('checkList_Items')->where('id', $this->objective_id)->first();
     }
 
+    public function getTaskType(){
+      if($this->type_id!=null)
+        return DB::table('taskTypes')->where('id', $this->type_id)->first();
+      else
+        return null;
+    }
+
+    // Check if task have children of multiple types
+    public function isChildrenDifferentTypes(){
+      if($this->children->isEmpty())
+        return false;
+      else{
+        $taskTypes = array_unique(DB::table('tasks')->where('parent_id', $this->id)->pluck('type_id'));
+        if(count($taskTypes)!=1) return true;
+        else return false;
+      }
+    }
+
     //modified By :Fabio Marques
     public function getElapsedDuration()
     {
