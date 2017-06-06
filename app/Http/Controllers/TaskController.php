@@ -84,7 +84,6 @@ class TaskController extends Controller
     //
     function store(Task $task, Request $request)
     {
-        var_dump($task);
         $transactionResult = $task->update([
             'name' => $request->input('name'),
             'duration' => $request->input('duration'),
@@ -92,7 +91,6 @@ class TaskController extends Controller
             'status' => $request->input('status'),
             'type_id' => $request->input('taskTypes'),
         ]);
-        var_dump($task);
 
         //(new EventController())->store($request->input('project_id'), "Créer une tâche enfant"); // Create an event
 
