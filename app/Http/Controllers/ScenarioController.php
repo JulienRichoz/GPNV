@@ -39,7 +39,7 @@ class ScenarioController extends Controller
       $scenario->test_validated = 1;
     else
       $scenario->test_validated = 0;
-      
+
     $scenario->save();
 
     return redirect()->back();
@@ -72,15 +72,12 @@ class ScenarioController extends Controller
   //Delete a scenario
   function delete($projectId, $scenarioId)
   {
-    $scenarioName = Scenario::find($scenarioId)->name;
-
-    Scenario::destroy($scenarioId);
-
+    $scenario = Scenario::find($scenarioId);
     // Logging the scenario removal in the logbook
     $event = new Event;
     $event->user_id = Auth::user()->id;
     $event->project_id = $projectId;
-    $event->description = "Suppression du scénario \"" . $scenarioName . "\"";
+    $event->description = "Suppression du scénario \"$scenario->name\"";
     $event->save();
 
     $acknowledgement = new AcknowledgedEvent;
@@ -88,6 +85,7 @@ class ScenarioController extends Controller
     $acknowledgement->event_id = $event->id;
     $acknowledgement->save();
 
+    $scenario->delete();
     return redirect()->back();
   }
 
