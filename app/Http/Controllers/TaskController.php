@@ -85,7 +85,7 @@ class TaskController extends Controller
             'name' => $request->input('name'),
             'duration' => $request->input('duration'),
             'parent_id' => $request->input('parent_id') == '' ? null : $request->input('parent_id'),
-            'status' => $request->input('status'),
+            'status_id' => $request->input('status')
         ]);
 
         //(new EventController())->store($request->input('project_id'), "Créer une tâche enfant"); // Create an event

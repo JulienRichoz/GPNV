@@ -9,7 +9,7 @@
                 type: 'POST',
                 data: form.serializeArray(),
                 success: function (data) {
-                    // console.log("Task successfully edited!");
+                    // console.log(data);
                     refreshDisplayedTasks(); // refresh the task list
 
                     // Display a confirmation message to the user
@@ -21,6 +21,14 @@
             jQuery.each( fields, function( i, field ) {
                 console.log(field);
             });*/
+        });
+
+        $(".statusContainer .statusList li a").click(function(event) {
+          event.preventDefault();
+          var currentStatus = $(this).text();
+
+          $('#statusButtonValue').html(currentStatus);
+          $("#statusInput").val($(this).attr("data-status-id"));
         });
     });
 </script>
@@ -47,16 +55,17 @@
     <div class="form-group">
         <label class="col-md-4 control-label">Statut</label>
 
-        <div class="col-md-6">
-            <button class="btn btn-default dropdown-toggle" type="button" id="changeMe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span id="statusDropdown">{{$task->status->name}}</span>
+        <div class="col-md-6 statusContainer">
+            <button class="btn btn-default dropdown-toggle" type="button" id="statusButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span id="statusButtonValue">{{$task->status->name}}</span>
             <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu objective" aria-labelledby="changeMe" >
+            <ul class="dropdown-menu statusList" aria-labelledby="statusButton" >
                 @foreach($statuses as $status)
                     <li><a data-status-id="{{$status->id}}">{{$status->name}}</a></li>
                 @endforeach
             </ul>
+            <input id="statusInput" type="hidden" class="form-control" name="status"> <!-- holds the status id passed via the form -->
         </div>
     </div>
 

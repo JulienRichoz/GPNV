@@ -201,7 +201,7 @@ $(document).ready(function() {
             break;
 
           default:
-            console.log('No');
+            // console.log('No');
         }
       }
     }

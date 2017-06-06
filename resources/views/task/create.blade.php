@@ -21,6 +21,7 @@
             jQuery.each( fields, function( i, field ) {
                 console.log(field);
             });*/
+            
         });
     });
 </script>
@@ -59,6 +60,26 @@
                 @endforeach
               @endif
             </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label">Statut</label>
+        
+        <div class="col-md-6 statusContainer">
+            <button class="btn btn-default dropdown-toggle" type="button" id="statusButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <?php
+                use App\Models\Status;
+                $statuses = Status::get();
+            ?>
+            <span id="statusButtonValue">{{$statuses->first()->name}}</span>
+            <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu statusList" aria-labelledby="statusButton" >
+                @foreach($statuses as $status)
+                    <li><a data-status-id="{{$status->id}}">{{$status->name}}</a></li>
+                @endforeach
+            </ul>
+            <input id="statusInput" type="hidden" class="form-control" name="status"> <!-- holds the status id passed via the form -->
         </div>
     </div>
 
