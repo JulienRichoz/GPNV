@@ -32,7 +32,10 @@ class ProjectController extends Controller
         ]]);
     }
 
-
+    /**
+    * Define if user can access the project, redirect to projects list if not
+    * @return view to all projects
+    */
     public function index()
     {
         // If the user has a role like "Eleve", he can access student view and he only can see his projects
@@ -53,9 +56,12 @@ class ProjectController extends Controller
         }
     }
 
-    // Display all informations like the user's tasks connected, all project tasks, and so on
-    public function show($id)
-    {
+    /**
+    * Display all informations like the user's tasks connected, all project tasks, and so on
+    * @param $projectID The project id
+    * @return view to see whole project
+    */
+    public function show($id){
         $project = Project::find($id);
         $currentUser = Auth::user();
         $userTasks = UsersTask::where("user_id", "=", $currentUser->id)->get();
@@ -129,36 +135,51 @@ class ProjectController extends Controller
         ]);
     }
 
+    /**
+    * Return the view to see deliveries
+    * @param $projectID The project id
+    * @return view to see deliveries
+    */
     public function showDeliveries($projectID){
       $project = Project::find($projectID);
       $deliveries = new CheckList('Project', $projectID, 'Livrables');
       return view('project/delivery',['project' => $project, 'livrables'=>$deliveries]);
     }
 
+    /**
+    * Return the view to see objectives
+    * @param $projectID The project id
+    * @return view to see objectives
+    */
     public function showObjectives($projectID){
       $project = Project::find($projectID);
       $objectives = new CheckList('Project', $projectID, 'Objectifs');
       return view('project/objective',['project' => $project, 'objectifs'=>$objectives]);
     }
 
-    public function files($id)
-    {
+    /**
+    * Return the view to see files
+    * @param $id The project id
+    * @return view to see files
+    */
+    public function files($id){
       $project = Project::find($id);
       return view('project/file', ['project' => $project]);
     }
 
-    // Return the view to editing projects
-    public function edit()
-    {
+    /**
+    * Return the view to editing projects
+    * @return view to editing projects
+    */
+    public function edit(){
         return view('project/edit');
     }
-    
+
     /**
     * Return the view about tasks
     * @return view of task
     */
-    public function task()
-    {
+    public function task(){
         return view('project/task');
     }
 
@@ -243,8 +264,7 @@ class ProjectController extends Controller
     * Return the view to creating projects
     * @return view of project creation
     */
-    public function create()
-    {
+    public function create(){
         return view('project/edition/create');
     }
 
@@ -253,8 +273,7 @@ class ProjectController extends Controller
     * @param $request Define the request data send by POST
     * @return view of project
     */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $Date = explode("/", $request->input('date'));
         $Date = $Date[2]."/".$Date[1]."/".$Date[0];
         $DateTime = $Date." ".$request->input('hour');
@@ -292,8 +311,7 @@ class ProjectController extends Controller
     * @param $id The project id
     * @return view of task creation
     */
-    public function createTask($id)
-    {
+    public function createTask($id){
         $taskTypes = DB::table('taskTypes')->get();
         return view('task.create', ['project' => $id, 'taskTypes' => $taskTypes]);
     }
@@ -302,8 +320,7 @@ class ProjectController extends Controller
     * Edit a task
     * @param $request Define the request data send by POST
     */
-    public function storeTask(Request $request)
-    {
+    public function storeTask(Request $request){
         $project_id = $request->input('project_id');
 
         $newTask = new Task;
@@ -379,8 +396,7 @@ class ProjectController extends Controller
     * @param $id The project id where to add users
     * @return view of checklist creation
     */
-    public function createCheckListItem($id, $checkListId)
-    {
+    public function createCheckListItem($id, $checkListId){
       return view('checkList.create', ['checkListId'=>$checkListId, 'projectId' =>$id]);//view('checkList.create', ['checkListId' => $id]);
     }
 
