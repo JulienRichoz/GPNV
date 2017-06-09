@@ -291,7 +291,7 @@ class ProjectController extends Controller
         $newTask->Objective_id = $request->input('root_task');
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
-        $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
+        $newTask->status_id = $request->input('status');
         $transactionResult = $newTask->save(); // Indicates whether or not the save was successfull
 
         // Adding the event description into the request object

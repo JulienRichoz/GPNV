@@ -22,14 +22,6 @@
                 console.log(field);
             });*/
         });
-
-        $(".statusContainer .statusList li a").click(function(event) {
-          event.preventDefault();
-          var currentStatus = $(this).text();
-
-          $('#statusButtonValue').html(currentStatus);
-          $("#statusInput").val($(this).attr("data-status-id"));
-        });
     });
 </script>
 
@@ -56,16 +48,15 @@
         <label class="col-md-4 control-label">Statut</label>
 
         <div class="col-md-6 statusContainer">
-            <button class="btn btn-default dropdown-toggle" type="button" id="statusButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span id="statusButtonValue">{{$task->status->name}}</span>
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu statusList" aria-labelledby="statusButton" >
+            <select class="form-control" name="status" required>
                 @foreach($statuses as $status)
-                    <li><a data-status-id="{{$status->id}}">{{$status->name}}</a></li>
+                    @if($status->id == $task->status_id)
+                        <option selected="selected" name="" value="{{$status->id}}">{{$status->name}}</option>
+                    @else
+                        <option name="" value="{{$status->id}}">{{$status->name}}</option>
+                    @endif
                 @endforeach
-            </ul>
-            <input id="statusInput" type="hidden" class="form-control" name="status"> <!-- holds the status id passed via the form -->
+            </select>
         </div>
     </div>
 
