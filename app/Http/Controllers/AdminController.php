@@ -1,8 +1,8 @@
 <?php
 
 /*
-  Last update : 2017.01.24
-  Last Update by : Thomas Marcoup
+  Use to manage the admin page of the site.
+  Get user from intranet.cpnv.ch
 */
 
 namespace App\Http\Controllers;
@@ -25,7 +25,14 @@ class AdminController extends Controller
   // Synchronise intranet.cpnv.ch and gpnv
   function synchro()
   {
-    // Use to get xml from intranet.cpnv.ch
+
+    /**
+     * Use to get xml from intranet.cpnv.ch
+     *
+     * @param $BaseUrl The xml url
+     * @param $AlterStudents use to know if we want student from BaseUrl
+     * @return xml return as array
+     */
     function GetXML($BaseUrl, $AlterStudents=false){
       $requestString = "api_key".env('CPNV_KEY');
       if($AlterStudents){
@@ -35,12 +42,7 @@ class AdminController extends Controller
       $secret = env('CPNV_SECRET');
       $signature = md5($requestString.$secret);
       $URL = "api_key=".env('CPNV_KEY')."&signature=".$signature;
-      if($AlterStudents){
-        $URL = $BaseUrl."&api_key=".env('CPNV_KEY')."&signature=".$signature;
-      }
-      else{
-        $URL = $BaseUrl."?api_key=".env('CPNV_KEY')."&signature=".$signature;
-      }
+      $URL = $BaseUrl."&api_key=".env('CPNV_KEY')."&signature=".$signature;
 
       $ch = curl_init($URL);
       curl_setopt($ch, CURLOPT_URL, $URL);
@@ -60,6 +62,7 @@ class AdminController extends Controller
     $UpdateStudents = [];
     $UsersID = [];
 
+    // Get teacher
     $TeacherXML = GetXML("http://intranet.cpnv.ch/info/teachers.xml");
 
     foreach ($TeacherXML as $TeacherXML) {
@@ -104,6 +107,7 @@ class AdminController extends Controller
 
     }
 
+    // Get class and student by class
     // Get all classes from info section
     $MainXML = GetXML("http://intranet.cpnv.ch/info/classes.xml?alter[extra]=students",true);
 
@@ -166,6 +170,7 @@ class AdminController extends Controller
 
     $DisabledUsers = [];
 
+    // Save user to db if not exist or has benn edited
     $Users = User::all();
     foreach($Users as $User) {
       if(!in_array($User->id, $UsersID) && $User->state_id!=2){
@@ -175,6 +180,7 @@ class AdminController extends Controller
       }
     }
 
+    // indicate if update was done
     if(count($NewStudents)==0 && count($UpdateTeachers)==0 && count($UpdateStudents)==0 && count($DisabledUsers)==0){
       $Update = false;
     }

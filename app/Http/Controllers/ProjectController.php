@@ -152,15 +152,22 @@ class ProjectController extends Controller
     {
         return view('project/edit');
     }
-
-    // Return the view about tasks
+    
+    /**
+    * Return the view about tasks
+    * @return view of task
+    */
     public function task()
     {
         return view('project/task');
     }
 
-    // Returns the html representation of all views mathing a set of filter
-    // specified in the request parameter
+    /**
+    * Returns the html representation of all views mathing a set of filter
+    * specified in the request parameter
+    * @param $request Define the request data send by POST
+    * @return tasks
+    */
     public function getTasks(Request $request) {
         $projectId = $request->id;
         $status = $request->status;
@@ -232,13 +239,20 @@ class ProjectController extends Controller
         }
     }
 
-    // Return the view to creating projects
+    /**
+    * Return the view to creating projects
+    * @return view of project creation
+    */
     public function create()
     {
         return view('project/edition/create');
     }
 
-    // Create a task
+    /**
+    * Create a task
+    * @param $request Define the request data send by POST
+    * @return view of project
+    */
     public function store(Request $request)
     {
         $Date = explode("/", $request->input('date'));
@@ -273,14 +287,21 @@ class ProjectController extends Controller
         return redirect()->route('project.index');
     }
 
-    // Return te view to creating tasks
+    /**
+    * Return te view to creating tasks
+    * @param $id The project id
+    * @return view of task creation
+    */
     public function createTask($id)
     {
         $taskTypes = DB::table('taskTypes')->get();
         return view('task.create', ['project' => $id, 'taskTypes' => $taskTypes]);
     }
 
-    // Edit a task
+    /**
+    * Edit a task
+    * @param $request Define the request data send by POST
+    */
     public function storeTask(Request $request)
     {
         $project_id = $request->input('project_id');
@@ -305,13 +326,21 @@ class ProjectController extends Controller
         // return json_encode($transactionResult);
     }
 
-    // Delete one or more users for a project
+    /**
+    * Delete one or more users for a project
+    * @param $request Define the request data send by POST
+    */
     public function destroyUser(Request $request){
         $destroyUser = Memberships::where("project_id", "=", $request->id)->where("user_id", "=", $request->user)->get();
         $destroyUser->delete();
     }
 
-    // Create a target
+    /**
+    * Create a target
+    * @param $request Define the request data send by POST
+    * @param $id The project id
+    * @return view of project
+    */
     public function storeTarget(Request $request, $id){
 
         $target = new Target;
@@ -323,7 +352,11 @@ class ProjectController extends Controller
         return redirect()->route("project.show", ['id'=>$id]);
     }
 
-   // Validate a target
+   /**
+   * Validate a target
+   * @param $id The project id
+   * @return view of checklist creation
+   */
     public function valideTarget(Request $request, Target $target){
 
         $target->update([
@@ -332,16 +365,30 @@ class ProjectController extends Controller
 
     }
 
-    // Return the target view
+    /**
+    * Return the target view
+    * @param $request Define the request data send by POST
+    * @param $id The current project id
+    */
     public function getTarget(Request $request, $id){
         return view('target.store', ['project' => $id]);
     }
 
+    /**
+    * Create a new checklist item
+    * @param $id The project id where to add users
+    * @return view of checklist creation
+    */
     public function createCheckListItem($id, $checkListId)
     {
       return view('checkList.create', ['checkListId'=>$checkListId, 'projectId' =>$id]);//view('checkList.create', ['checkListId' => $id]);
     }
 
+    /**
+    * Get list of student from class who can be added to the project
+    * @param $id The project id where to add users
+    * @return view of users to add
+    */
     public function getStudents($id){
 
       // Recover users in the current porject
@@ -409,6 +456,11 @@ class ProjectController extends Controller
       return view('project.addUsers', ['project' => $Project, 'users' => $users]);
     }
 
+    /**
+    * Get teacher to add and remove the one hardly in the project
+    * @param $id The project id where to add users
+    * @return view of teacher to add
+    */
     public function getTeachers($id){
       // Recover users in the current porject
       $Project = Project::find($id);
@@ -429,6 +481,12 @@ class ProjectController extends Controller
       return view('project.addUsers', ['project' => $Project, 'users' => $users]);
     }
 
+    /**
+    * Add users to project
+    * @param $request Define the request data send by POST
+    * @param $ProjectId The current project id
+    * @return view of users in project
+    */
     public function addUsers(Request $request, $ProjectID){
       if($request->input('user')) {
           foreach ($request->input('user') as $key => $value) {
@@ -448,6 +506,12 @@ class ProjectController extends Controller
       return view('project.membership', ['project' => $Project]);
     }
 
+    /**
+    * Remove user from the project, also remove task attribution
+    * @param $UserID User to remove from project
+    * @param $ProjectId Define the actual project id
+    * @return view of project
+    */
     public function removeUserFromProject($ProjectId, $UserID=null){
       if($UserID!=null)
         $currentUser = User::find($UserID);
@@ -497,6 +561,12 @@ class ProjectController extends Controller
       return view('project.membership', ['project' => $Project]);
     }
 
+    /**
+    * Edit the description
+    * @param $request Define the request data send by POST
+    * @param $ProjectID The project id where the description will be edit
+    * @return view of project
+    */
     public function editDescription(Request $request, $ProjectID){
       $Project = Project::find($ProjectID);
       $Project->description = $request->input('description');
@@ -516,6 +586,11 @@ class ProjectController extends Controller
       return redirect()->route("project.show", ['id'=>$ProjectID]);
     }
 
+    /**
+    * Get the task from request
+    * @param $request Define the request data send by POST
+    * @return view of task
+    */
     public function getTask(Request $request){
 
         if($request->ajax())
@@ -531,6 +606,11 @@ class ProjectController extends Controller
         }
     }
 
+    /**
+    * Get files to link and view
+    * @param $ProjectId The current project id
+    * @return view of files or url to link
+    */
     public function getToLink($projectID, $check){
       $Project = Project::find($projectID);
 
@@ -541,10 +621,10 @@ class ProjectController extends Controller
     }
 
 
-    /*
-    Link a file or link to the selected delivery (Note: the delivery id is in the request parameter)
-    @param $projectID Define the actual project id
-    @param $request Define the request data send by POST
+    /**
+    * Link a file or link to the selected delivery (Note: the delivery id is in the request parameter)
+    * @param $projectID Define the actual project id
+    * @param $request Define the request data send by POST
     */
     public function LinkToDelivery(Request $request, $ProjectID){
       if( $request->input('check')==null || $request->input('type')==null || $request->input('data')==null) return redirect('project/' . $ProjectID);
@@ -565,10 +645,10 @@ class ProjectController extends Controller
     }
 
 
-    /*
-    Delete selected objective (also delete scenarios and scenario tests related to it)
-    @param $projectID Define the actual project id
-    @param $objectiveID Define the id of the 'checkList_Items' to delete
+    /**
+    * Delete selected objective (also delete scenarios and scenario tests related to it)
+    * @param $projectID Define the actual project id
+    * @param $objectiveID Define the id of the 'checkList_Items' to delete
     */
     public function deleteObjective($projectID, $objectiveID){
       $project = Project::find($projectID);
@@ -579,10 +659,10 @@ class ProjectController extends Controller
 
     }
 
-    /*
-    Delete selected delivery
-    @param $projectID Define the actual project id
-    @param $deliveryID Define the id of the 'checkList_Items' to delete
+    /**
+    * Delete selected delivery
+    * @param $projectID Define the actual project id
+    * @param $deliveryID Define the id of the 'checkList_Items' to delete
     */
     public function deleteDelivery($projectID, $deliveryID){
       DB::table('checkList_Items')->where('id', '=', $deliveryID)->delete();
