@@ -22,7 +22,10 @@ class AdminController extends Controller
       return view('admin');
   }
 
-  // Synchronise intranet.cpnv.ch and gpnv
+  /**
+   * Synchronise intranet.cpnv.ch and gpnv
+   * @return view admin
+   */
   function synchro()
   {
 

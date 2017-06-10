@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
           'id' => '3',
           'firstname' => "Anno",
           'lastname' => "Nimme",
-          'mail' => "utilisateur@mail.com",
+          'mail' => "anno@nimme.com",
           'friendlyid' => "3",
           'role_id' => "1",
           'class_id' => "1",
