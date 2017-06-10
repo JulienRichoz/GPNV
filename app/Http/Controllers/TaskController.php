@@ -18,28 +18,40 @@ use App\Http\Requests;
 
 class TaskController extends Controller
 {
-    // Return the view task
-    function show(Task $task)
-    {
+    /**
+    * Return the view task
+    * @param $task The task object
+    * @return view to see whole project
+    */
+    function show(Task $task){
         $actualTaskType = DB::table('taskTypes')->where('id',$task->type_id)->first();
         return view('task.show', ['task' => $task, "actualTaskType" => $actualTaskType]);
     }
 
-    // Return the view about the creation a children task
-    function createChildren(Task $task)
-    {
+    /**
+    * Return the view about the creation a children task
+    * @param $task The task object
+    * @return view to create a children task
+    */
+    function createChildren(Task $task){
         return view('task.createChildren', ['task' => $task]);
     }
 
-    // Return the view about the creation a root task
-    function create(Task $task, Request $request)
-    {
+    /**
+    * Return the view about the creation a root task
+    * @param $task The task object
+    * @return view to create a root task
+    */
+    function create(Task $task, Request $request)  {
         return view('task.create', ['task' => $task]);
     }
 
-    // Create a new task
-    function storeChildren(Task $task, Request $request)
-    {
+    /**
+    * Create a new task
+    * @param $task The task object
+    * @param $request Define the request data send by POST
+    */
+    function storeChildren(Task $task, Request $request){
         $newTask = new Task;
         $newTask->name = $request->input('name');
         $newTask->duration = $request->input('duration');
@@ -58,9 +70,11 @@ class TaskController extends Controller
         // return json_encode($transactionResult);
     }
 
-    // Delete a task
-    function destroy(Task $task)
-    {
+    /**
+    * Delete a task
+    * @param $task The task object
+    */
+    function destroy(Task $task){
         //Modified By: Fabio Marques
         foreach ($task->usersTasks as  $usertask) {
           $usertask->delete();
@@ -73,17 +87,23 @@ class TaskController extends Controller
         //return json_encode($transactionResult);
     }
 
-    // Return the view about the edition
-    function edit(Task $task, Request $request)
-    {
+    /**
+    * Return the view about the edition
+    * @param $task The task object
+    * @return view to edit a task
+    */
+    function edit(Task $task, Request $request){
         $taskType = DB::table('taskTypes')->orderBy('name')->get();
         $actualTaskType = DB::table('taskTypes')->where('id',$task->type_id)->first();
         return view('task.edit', ['task' => $task, "taskTypes" => $taskType, "actualTaskType" => $actualTaskType]);
     }
 
-    //
-    function store(Task $task, Request $request)
-    {
+    /**
+    * Use to update or store a task
+    * @param $task The task object
+    * @param $request Define the request data send by POST
+    */
+    function store(Task $task, Request $request){
         $transactionResult = $task->update([
             'name' => $request->input('name'),
             'duration' => $request->input('duration'),
@@ -98,9 +118,12 @@ class TaskController extends Controller
         // return json_encode($transactionResult);
     }
 
-    // Start a task
-    public function play(Request $request)
-    {
+    /**
+    * Start a task
+    * @param $request Define the request data send by POST
+    * @return duration item id
+    */
+    public function play(Request $request){
         $durationTask = new DurationsTask;
         $durationTask->user_task_id = $request->task;
 
@@ -113,9 +136,11 @@ class TaskController extends Controller
         return $durationTask->id;
     }
 
-    // Stop a task
-    public function stop(DurationsTask $durationsTask)
-    {
+    /**
+    * Stop a task
+    * @param $durationsTask DurationTask Item
+    */
+    public function stop(DurationsTask $durationsTask){
         $now = new DateTime(); // Add the current time in a variable $now
 
         // Update the duration with the current time
@@ -124,7 +149,12 @@ class TaskController extends Controller
         ]);
     }
 
-    // Display the users with a common task
+    /**
+    * Display the users with a common task
+    * @param $task The task object
+    * @param $request Define the request data send by POST
+    * @return return view with users
+    */
     public function users(Task $task, Request $request){
 
         $usersTasks = $task->usersTasks;
@@ -141,7 +171,12 @@ class TaskController extends Controller
         return view('task.users', ['task' => $task,'userstask' => $usersTasks, 'project' => $task->project, 'refuse' => $refuse]);
     }
 
-    // Add one or more users for a task
+    /**
+    * Add one or more users for a task
+    * @param $task The task object
+    * @param $request Define the request data send by POST
+    * @return return task
+    */
     public function storeUsers(Task $task, Request $request){
 
         foreach($request->input('user') as $key => $value){
@@ -155,7 +190,11 @@ class TaskController extends Controller
         return json_encode($transactionResult);
     }
 
-    // Delete a user of task
+    /**
+    * Delete a user of task
+    * @param $usersTask user of a task
+    * @param $request Define the request data send by POST
+    */
     public function userTaskDelete(UsersTask $usersTask, Request $request){
         $taskName = $usersTask->task->name;
         $taskUser = $usersTask->user->firstname . " " . $usersTask->user->lastname;
@@ -175,7 +214,11 @@ class TaskController extends Controller
     }
 
 
-    // Verify the validity of task
+    /**
+    * Verify the validity of task
+    * @param $task The task object
+    * @param $request Define the request data send by POST
+    */
     public function status(Task $task, Request $request){
 
         if(!$task->ifChildTaskNoValidate()){ // Return a error message
