@@ -137,10 +137,10 @@ class CheckList extends Model
     DB::table('checkList_Items')->where('id',$id)->update(array('title'=>$request->get('title'),'description'=>$request->get('description')));
   }
 
-  //add new item to the checkList
+  //add new item to the checkList, returns its id
   public static function newItem($checkListId, $title, $description=null)
   {
-    DB::table('checkList_Items')->insert(array('title' => $title, 'description' => $description, 'done' => 0, 'checkList_id' => $checkListId));
+    return DB::table('checkList_Items')->insertGetId(array('title' => $title, 'description' => $description, 'done' => 0, 'checkList_id' => $checkListId));
   }
 
   //create a new checkList

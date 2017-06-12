@@ -70,28 +70,21 @@ class CheckListController extends Controller
   * @return to previous page
   */
   function store(Request $requete, $id, $checkListId){
-    CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
+    $newChecklistItem = CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
     // Getting the checklist type to display in the logs
-    $checkList = DB::table('checkList_Types')->where('id', $checkListId)->first();
-    var_dump($checkListId);
+    $checklistItem = DB::table('checklist_items')->where('id', $newChecklistItem)->first()->checkList_id;
+    $checklistType = DB::table('checklists')->where('id', $checklistItem)->first()->checkListType_id;
+    $checkList = DB::table('checkList_Types')->where('id', $checklistType)->first();
     $type = $checkList->name;
+
     $singularType = substr($type, 0, strlen($type) - 1);
     $formattedType = strtolower($singularType);
-
+    
     // Defining the preposition that will be used in the log entry according to the checklist type
     $preposition = ($type == "Livrables") ? 'du ' : 'de l\'';
 
     // Logging the objective creation in the logbook
-    $event = new Event;
-    $event->user_id = Auth::user()->id;
-    $event->project_id = $id;
-    $event->description = "Création " . $preposition . $formattedType . " \"" . $requete->get('name') . "\"";
-    $event->save();
-
-    $acknowledgement = new AcknowledgedEvent;
-    $acknowledgement->user_id = Auth::user()->id;
-    $acknowledgement->event_id = $event->id;
-    $acknowledgement->save();
+    (new EventController())->store($id, "Création " . $preposition . $formattedType . " \"" . $requete->get('name') . "\"");
 
     return redirect()->back();
   }

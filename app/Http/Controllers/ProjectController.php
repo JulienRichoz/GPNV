@@ -667,8 +667,28 @@ class ProjectController extends Controller
       $scenarios = DB::table('scenarios')->where('checkList_Item_id', $objectiveID)->get();
 
       DB::table('scenarios')->where('checkList_Item_id', '=', $objectiveID)->delete();
-      DB::table('checkList_Items')->where('id', '=', $objectiveID)->delete();
 
+      $objective = DB::table('checkList_Items')->where('id', '=', $objectiveID);
+      $objectiveName = $objective->first()->title;
+      $objective->delete();
+
+      // Loggin the objective removal 
+      (new EventController())->store($projectID, "Suppression de l'objectif \"" . $objectiveName . "\"");
+
+      
+      // Counting scenarios before loggin anything in relation
+      $scenarioSummary = 'Suppression du/des scenario(s): ';
+
+      if (count($scenarios) > 0) {
+        foreach ($scenarios as $scenario) { 
+          $scenarioSummary.= $scenario->name . ", ";
+        }
+
+        $finalSummary = substr($scenarioSummary, 0, -2);
+
+        // Loggin the scenarios removal
+        (new EventController())->store($projectID, $finalSummary);
+      }
     }
 
     /**
