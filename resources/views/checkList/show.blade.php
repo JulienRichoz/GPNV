@@ -11,6 +11,7 @@
           <form method="post" id="updateState" action="{{$projectId}}/id/{{$checkListItem->id}}">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
+
             @if(isset($modalBox) && $modalBox)
               <a class="showObjectif" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">
 
@@ -19,6 +20,15 @@
             @endif
 
               <label>{{$checkListItem->title}}</label>
+              @if(isset($scenarios))
+                <label class="pull-right">
+                @if($scenarios['nbScenarios']!=0)
+                  {{$scenarios['nbScenarios']}}/{{$scenarios['nbValidateScenatios']}}/
+                @else
+                  ?
+                @endif
+                </label>
+              @endif
             </a>
 
             @if(isset($modalBox))

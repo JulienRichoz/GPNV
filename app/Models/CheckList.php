@@ -101,6 +101,15 @@ class CheckList extends Model
     return $tmp;
   }
 
+  public static function getScenariosState($checkListItemID){
+    $scenarios = DB::table('scenarios')->where('checkList_Item_id', $checkListItemID)->get();
+    $validateScenarios = DB::table('scenarios')->where('actif', "1")->get();
+
+    $answer = $arrayName = array('nbScenarios' => count($scenarios), 'nbValidateScenatios' => count($validateScenarios));
+
+    return $answer;
+  }
+
   //validate an item
   public static function validate($id, $done)
   {

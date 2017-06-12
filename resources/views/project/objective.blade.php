@@ -17,25 +17,18 @@
                 @unless($checkListItem->title == "Intérêt Général")
                   @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id))
                 @endunless
+                @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id, 'scenarios' => $objectifs->getScenariosState($checkListItem->id) ))
+            @endif
+
+            @if($objectifs->showCompleted())
+              @foreach($objectifs->showCompleted() as $checkListItem)
+                @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id))
               @endforeach
             @endif
-        </div>
-        <div class="completed hidden">
-          @if($objectifs->showCompleted())
-            @foreach($objectifs->showCompleted() as $checkListItem)
-              @unless($checkListItem->title == "Intérêt Général")
-                @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id))
-              @endunless
-            @endforeach
-          @endif
         </div>
       </div>
       @if(Auth::user()->projects()->find($project->id))
         <a class="btn btn-primary addCheckList" data-id="{{$objectifs->getId()}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">Ajouter</a>
-      @endif
-      @if($objectifs->getNbItemsDone())
-        <a class="btn btn-primary changeView">Voir les objectifs validés</a>
-        <a class="btn btn-primary changeView hidden">Cacher les objectifs validés</a>
       @endif
       <button class="btn btn-primary reloadobjectives pull-right" data-projectid="{{$project->id}}">
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
