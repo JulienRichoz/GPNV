@@ -12,7 +12,8 @@ class Scenario extends Model
   {
     return $this->hasMany('App\Models\ScenarioStep');
   }
-  public function mockups(){
-    return $this->hasMany('App\Models\Mockup');
+  public function delete(){
+    $this->steps()->delete();
+    parent::delete();
   }
 }

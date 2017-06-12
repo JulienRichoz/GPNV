@@ -43,4 +43,8 @@ class Project extends Model {
     public function targets(){
         return $this->hasMany(\App\Models\Target::class, 'project_id','id');
     }
+
+    public function mockups(){
+      return $this->hasMany('App\Models\Mockup');
+    } 
 }

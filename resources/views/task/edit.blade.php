@@ -60,6 +60,25 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label class="col-md-4 control-label">Type</label>
+
+        <div class="col-md-6">
+          <select class="form-control" name="taskTypes" required>
+            @foreach($taskTypes as $taskType)
+              <option name="" value="{{ $taskType->id }}"
+                @if(isset($actualTaskType) && $taskType->id==$actualTaskType->id)
+                  selected="selected"
+                @endif
+                >
+                {{ $taskType->name }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+    </div>
+
+    <input type="hidden" class="form-control" name="parent_id" value="{{ $task->parent_id }}">
 
     <!-- <div class="form-group">
         <label class="col-md-4 control-label">Parent id</label>

@@ -29,6 +29,23 @@ function drop(ev) {
       data : data
     })
 }
+function remove(id) {
+    var elem = document.getElementById(id);
+    return elem.parentNode.removeChild(elem);
+}
+function delPicture(ev){
+  ev.preventDefault();
+  var id = ev.dataTransfer.getData("id");
+  remove(id);
+  var token = $("#uploadMockup input[name='_token']");
+
+  var data = "_method=DELETE&_token="+token.val()+"&mockupId="+id;
+  $.ajax({
+    url : del_image_route,
+    type : 'POST',
+    data : data
+  })
+}
 
 $('.scenario .tableRow').click(function(){
   $('.scenario .tableRow.active').removeClass('active');
@@ -43,3 +60,23 @@ $('.scenario .tableRow').click(function(){
 
   $('.maquette img').attr('src', mockupUrl);
 });
+
+function resetStepColor(element){
+  $(element).css('border-width','1px');
+  $(element).css('border-color', '#ccc');
+}
+function updateStep(form, element){
+  if(form.oldReponse.value != form.reponse.value || form.oldAction.value != form.action.value){
+    $.ajax({
+      url : $(form).attr('action'),
+      type : $(form).attr('method'),
+      data : $(form).serialize(),
+      success : function(){
+        form.oldReponse.value = form.reponse.value;
+        form.oldAction.value = form.action.value;
+        $(element).css('border-width','2px');
+        $(element).css('border-color', 'green');
+      }
+    })
+  }
+}

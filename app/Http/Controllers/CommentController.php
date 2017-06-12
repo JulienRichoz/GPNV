@@ -11,15 +11,21 @@ use App\Http\Requests;
 
 class CommentController extends Controller
 {
-    // Return the view comments
-    function show(Comment $comment)
-    {
+    /**
+    * Return the view comments
+    * @param $comment The comment item
+    * @return view to see comments
+    */
+    function show(Comment $comment){
         return view('comment.show', ['comment' => $comment]);
     }
 
-    // Create a new comment for a task
-    function store(Request $request, Task $task)
-    {
+    /**
+    * Create a new comment for a task
+    * @param $request Define the request data send by POST
+    * @return view to project
+    */
+    function store(Request $request, Task $task){
         $newComment = new Comment;
         $newComment->comment = $request->input('comment');
         $newComment->user_id = Auth::user()->id;

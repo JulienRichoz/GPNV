@@ -89,6 +89,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('project/{id}/scenario/{stepId}/delete',['as'=>'scenario.del.item', 'uses' => 'ScenarioController@delStep']);
         Route::post('project/{id}/scenario/{scenarioId}/uploadMaquete', ['as' => 'scenario.uploadMaquete', 'uses' => 'ScenarioController@uploadMaquete']);
         Route::put('project/{id}/scenario/{scenarioId}/changeMaquete', ['as' => 'scenario.changeMaquete', 'uses' => 'ScenarioController@changeMaquete']);
+        Route::delete('project/{id}/scenario/{scenarioId}/delMaquete', ['as' => 'scenario.delMaquete', 'uses' => 'ScenarioController@delMaquete']);
         /*--------------------- Routes objectifs -----------------------------*/
 
         /* FILES */
@@ -135,5 +136,11 @@ Route::group(['middleware' => 'web'], function () {
         /* RELOAD ROUTES */
         Route::get('project/{id}/deliveries', ['as' => 'project.showDeliveries', 'uses' => 'ProjectController@showDeliveries']);
         Route::get('project/{id}/objectives', ['as' => 'project.showObjectives', 'uses' => 'ProjectController@showObjectives']);
+
+        /* DELETE ROUTE*/
+        Route::delete('project/{id}/delivery/{deliveryId}', ['as' => 'project.deleteDelivery', 'uses' => 'ProjectController@deleteDelivery']);
+        Route::delete('project/{id}/objective/{objectiveId}', ['as' => 'project.deleteObjective', 'uses' => 'ProjectController@deleteObjective']);
+
+        Route::post('tasktype', ['as' => 'taskType.store', 'uses' => 'TaskTypesController@store']);
     });
 });

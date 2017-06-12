@@ -81,6 +81,18 @@
     </div>
 
     <div class="form-group">
+      <label class="col-md-4 control-label">Type</label>
+
+      <div class="col-md-6">
+        <select class="form-control" name="taskTypes" required>
+          @foreach($taskTypes as $taskType)
+            <option name="" value="{{ $taskType->id }}">{{ $taskType->name }}</option>
+          @endforeach
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
         <div class="col-md-6">
             <input type="hidden" class="form-control" name="project_id" value="{{$project}}" required>
         </div>
