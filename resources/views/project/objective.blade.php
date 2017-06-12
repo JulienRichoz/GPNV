@@ -15,9 +15,9 @@
             @if($objectifs->showToDo())
               @foreach($objectifs->showToDo() as $checkListItem)
                 @unless($checkListItem->title == "Intérêt Général")
-                  @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id))
+                  @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id, 'scenarios' => $objectifs->getScenariosState($checkListItem->id) ))
                 @endunless
-                @include('checkList.show', array('checkListItem'=>$checkListItem, 'modalBox' => true, 'projectId'=>$project->id, 'scenarios' => $objectifs->getScenariosState($checkListItem->id) ))
+              @endforeach  
             @endif
 
             @if($objectifs->showCompleted())
