@@ -11,6 +11,13 @@
           <form method="post" id="updateState" action="{{$projectId}}/id/{{$checkListItem->id}}">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
+
+            @if(isset($modalBox))
+              <a class="btn removeObjective pull-right" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" style="position: relative;top: -8px;background-color: unset;">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </a>
+            @endif
+
             @if(isset($modalBox) && $modalBox)
               <a class="showObjectif" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" data-URL="{{ URL('project') }}">
 
@@ -19,13 +26,18 @@
             @endif
 
               <label>{{$checkListItem->title}}</label>
+              @if(isset($scenarios))
+                <label class="pull-right">
+                @if($scenarios['allComplete'])
+                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                @elseif($scenarios['nbScenarios']!=0)
+                  {{$scenarios['nbScenarios']}}/{{$scenarios['nbValidateScenarios']}}/{{$scenarios['nbCompletedScenarios']}}
+                @else
+                  ?
+                @endif
+                </label>
+              @endif
             </a>
-
-            @if(isset($modalBox))
-              <a class="btn removeObjective pull-right" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" style="position: relative;top: -8px;background-color: unset;">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-              </a>
-            @endif
 
             @if(isset($file))
               <a class="btn removeDelivery pull-right" data-id="{{$checkListItem->id}}" data-projectid="{{$project->id}}" style="position: relative;top: -8px;background-color: unset;">
