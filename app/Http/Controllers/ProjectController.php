@@ -510,11 +510,8 @@ class ProjectController extends Controller
               $member = User::find($key);
               $memberFullName = $member->getFullNameAttribute();
 
-              $Event = new Event;
-              $Event->user_id = Auth::user()->id;
-              $Event->project_id = $ProjectID;
-              $Event->description = $memberFullName . " a été ajouté au projet";
-              $Event->save();
+              // Add a new entry to the logbook
+              (new EventController())->store($ProjectID, "Ajout de " . $memberFullName . " au projet ");
           }
       }
       $Project = Project::find($ProjectID);

@@ -425,7 +425,7 @@
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var currentUserId = data.currentUser.id;
                     var members = data.members;
                     var validations = data.validations;
@@ -493,7 +493,7 @@
                     });
 
                     content += ("</table>");
-                    console.log(content);
+                    // console.log(content);
                     $('#logBook').html(content);
 
                     // enabling bootstrap tooltips
@@ -726,7 +726,7 @@
                 type: 'post',
                 data: { userId: userId, eventId: eventId },
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     // updating the event list
                     callEvents(projectId);
                 },
