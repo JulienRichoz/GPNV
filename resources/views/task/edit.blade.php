@@ -9,7 +9,7 @@
                 type: 'POST',
                 data: form.serializeArray(),
                 success: function (data) {
-                    console.log("Task successfully edited!");
+                    // console.log(data);
                     refreshDisplayedTasks(); // refresh the task list
 
                     // Display a confirmation message to the user
@@ -47,24 +47,51 @@
     <div class="form-group">
         <label class="col-md-4 control-label">Statut</label>
 
-        <div class="col-md-6">
-            <input type="text" class="form-control" name="status" value="{{ $task->status }}">
+        <div class="col-md-6 statusContainer">
+            <select class="form-control" name="status" required>
+                @foreach($statuses as $status)
+                    @if($status->id == $task->status_id)
+                        <option selected="selected" name="" value="{{$status->id}}">{{$status->name}}</option>
+                    @else
+                        <option name="" value="{{$status->id}}">{{$status->name}}</option>
+                    @endif
+                @endforeach
+            </select>
         </div>
     </div>
 
-
     <div class="form-group">
+        <label class="col-md-4 control-label">Type</label>
+
+        <div class="col-md-6">
+          <select class="form-control" name="taskTypes" required>
+            @foreach($taskTypes as $taskType)
+              <option name="" value="{{ $taskType->id }}"
+                @if(isset($actualTaskType) && $taskType->id==$actualTaskType->id)
+                  selected="selected"
+                @endif
+                >
+                {{ $taskType->name }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+    </div>
+
+    <input type="hidden" class="form-control" name="parent_id" value="{{ $task->parent_id }}">
+
+    <!-- <div class="form-group">
         <label class="col-md-4 control-label">Parent id</label>
 
         <div class="col-md-6">
             <input type="text" class="form-control" name="parent_id" value="{{ $task->parent_id }}">
         </div>
-    </div>
+    </div> -->
 
     <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
             <button type="submit" class="btn btn-primary" id="editTaskButton">
-                <i class="fa fa-btn fa-sign-in"></i>Editer
+                <i class="fa fa-btn fa-sign-in"></i>Enregistrer
             </button>
 
 

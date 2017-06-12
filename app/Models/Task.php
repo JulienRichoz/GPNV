@@ -12,7 +12,7 @@ class Task extends Model
      */
 
     protected $table = 'tasks';
-    protected $fillable = ['id', 'name', 'duration', 'status', 'priority', 'objective_id', 'project_id', 'parent_id', 'created_at'];
+    protected $fillable = ['id', 'name', 'duration', 'status_id', 'priority', 'objective_id', 'project_id', 'parent_id', 'created_at', 'type_id'];
 
     public function project()
     {
@@ -45,6 +45,24 @@ class Task extends Model
 
     public function getObjective(){
       return DB::table('checkList_Items')->where('id', $this->objective_id)->first();
+    }
+
+    public function getTaskType(){
+      if($this->type_id!=null)
+        return DB::table('taskTypes')->where('id', $this->type_id)->first();
+      else
+        return null;
+    }
+
+    // Check if task have children of multiple types
+    public function isChildrenDifferentTypes(){
+      if($this->children->isEmpty())
+        return false;
+      else{
+        $taskTypes = array_unique(DB::table('tasks')->where('parent_id', $this->id)->pluck('type_id'));
+        if(count($taskTypes)!=1) return true;
+        else return false;
+      }
     }
 
     //modified By :Fabio Marques
@@ -104,6 +122,10 @@ class Task extends Model
     public function comments()
     {
         return $this->hasMany(\App\Models\Comment::class, 'task_id');
+    }
+
+    public function status() {
+        return $this->belongsTo('App\Models\Status');
     }
 
     // he task if like the entry of the input q with a value before or after

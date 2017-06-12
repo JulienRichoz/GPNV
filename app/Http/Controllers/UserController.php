@@ -15,7 +15,12 @@ use App\Http\Requests;
 
 class UserController extends Controller
 {
-    // Return the view user information
+    /**
+    * Return the user
+    * @param $user The user item
+    * @param $request Define the request data send by POST
+    * @return view to see user
+    */
     public function show(User $user, Request $request)
     {
         return view('user.show', ['user' => $user]);

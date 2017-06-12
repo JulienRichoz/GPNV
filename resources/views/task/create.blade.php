@@ -9,7 +9,7 @@
                 type: 'POST',
                 data: form.serializeArray(),
                 success: function (data) {
-                    console.log("Task successfully added!");
+                    // console.log(data);
                     refreshDisplayedTasks(); // refresh the task list
 
                     // Display a confirmation message to the user
@@ -21,6 +21,9 @@
             jQuery.each( fields, function( i, field ) {
                 console.log(field);
             });*/
+            $(".createStatusContainer .statusList li a").click(function(event) {
+                console.log('plz');
+            });
         });
     });
 </script>
@@ -49,7 +52,7 @@
     </div>
 
     <div class="form-group">
-        <label class="col-md-4 control-label">Tache Racine</label>
+        <label class="col-md-4 control-label">Liée à l'objectif</label>
 
         <div class="col-md-6">
             <select class="form-control" name="root_task" required>
@@ -60,6 +63,33 @@
               @endif
             </select>
         </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label">Statut</label>
+        
+        <div class="col-md-6 statusContainer">
+            <?php
+                use App\Models\Status;
+                $statuses = Status::get();
+            ?>
+            <select class="form-control" name="status" required>
+                @foreach($statuses as $status)
+                  <option name="" value="{{$status->id}}">{{$status->name}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label">Type</label>
+
+      <div class="col-md-6">
+        <select class="form-control" name="taskTypes" required>
+          @foreach($taskTypes as $taskType)
+            <option name="" value="{{ $taskType->id }}">{{ $taskType->name }}</option>
+          @endforeach
+        </select>
+      </div>
     </div>
 
     <div class="form-group">

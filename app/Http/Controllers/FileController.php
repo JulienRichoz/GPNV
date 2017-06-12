@@ -15,14 +15,19 @@ use App\Http\Requests;
 
 class FileController extends Controller
 {
-    public function show(){
+    /**
+    * Show file
+    */
+    public function show(){}
 
-    }
-
-    public function store(Project $project, Request $request, $id)
-    {
-
-
+    /**
+    * Save file
+    * @param $project The project item
+    * @param $id The file item id
+    * @param $request Define the request data send by POST
+    * @return view project
+    */
+    public function store(Project $project, Request $request, $id){
         $file = Input::file('file');
 
         $destinationPath = 'files/'.$id.'/';
@@ -57,10 +62,12 @@ class FileController extends Controller
 
     }
 
+    /**
+    * Remove file
+    * @param $id The project id
+    * @param $file The file item
+    */
     public function destroy($id,File $file){
-        //dd($file->id);
-
-
         if(Storage::disk('local')->exists('public/files/'.$id.'/'.$file->url)){
             Storage::delete('public/files/'.$id.'/'.$file->url);
         }else{
@@ -68,9 +75,13 @@ class FileController extends Controller
         }
 
         File::where('id','=',$file->id)->delete();
-
     }
 
+    /**
+    * Remove file
+    * @param $id The project id
+    * @param $file The file item
+    */
     public function LinkToDelivery($id,File $file, $checklistID){
       $file->checkListItem_id = $checklistID;
       $file->save();

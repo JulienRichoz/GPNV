@@ -16,10 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->addDefaultTypes();
+
         $this->addDefaultClasses();
         $this->addDefaultStates();
         $this->addDefaultRoles();
         $this->addDefaultUsers();
+        $this->addDefaultStatuses();
 
         $this->addProjects();
 
@@ -30,6 +33,12 @@ class DatabaseSeeder extends Seeder
         'name' => "DefaultClass",
         'friendlyId' => "1"
       ]);
+    }
+
+    public function addDefaultTypes(){
+      DB::table('taskTypes')->insert(['name' => "Programmation",]);
+      DB::table('taskTypes')->insert(['name' => "Système",]);
+      DB::table('taskTypes')->insert(['name' => "Documentation",]);
     }
 
     public function addDefaultStates()
@@ -78,13 +87,35 @@ class DatabaseSeeder extends Seeder
           'id' => '3',
           'firstname' => "Anno",
           'lastname' => "Nimme",
-          'mail' => "utilisateur@mail.com",
+          'mail' => "anno@nimme.com",
           'friendlyid' => "3",
           'role_id' => "1",
           'class_id' => "1",
           'state_id' => "1",
           'password' => bcrypt('secret'),
           'avatar'=> 'default.png',
+      ]);
+    }
+
+    public function addDefaultStatuses()
+    {
+      // Task statuses
+      DB::table('statuses')->insert([
+          'id' => "1",
+          'name' => "En cours",
+          'description' => "En cours de traitement",
+      ]);
+
+      DB::table('statuses')->insert([
+          'id' => "2",
+          'name' => "A faire",
+          'description' => "A traiter dans le futur",
+      ]);
+
+      DB::table('statuses')->insert([
+          'id' => "3",
+          'name' => "Terminée",
+          'description' => "Tâche traitée",
       ]);
     }
 
@@ -170,7 +201,7 @@ class DatabaseSeeder extends Seeder
           'id' => "1",
           'name' => "Documentation",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "1",
           'priority' => "0",
           'project_id' => "1",
           'objective_id' => '3',
@@ -180,7 +211,7 @@ class DatabaseSeeder extends Seeder
           'id' => "2",
           'name' => "Design",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "2",
           'priority' => "0",
           'project_id' => "1",
           'objective_id' => '1',
@@ -190,7 +221,7 @@ class DatabaseSeeder extends Seeder
           'id' => "3",
           'name' => "Test",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "3",
           'priority' => "0",
           'project_id' => "1",
           'objective_id' => '3',
@@ -200,7 +231,7 @@ class DatabaseSeeder extends Seeder
           'id' => "4",
           'name' => "Analyse",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "1",
           'priority' => "0",
           'project_id' => "1",
           'parent_id' => "1",
@@ -274,7 +305,7 @@ class DatabaseSeeder extends Seeder
           'id' => "5",
           'name' => "Documentation",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "2",
           'priority' => "0",
           'project_id' => "2",
           'objective_id' => '9',
@@ -284,7 +315,7 @@ class DatabaseSeeder extends Seeder
           'id' => "6",
           'name' => "Design",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "3",
           'priority' => "0",
           'project_id' => "2",
           'objective_id' => '7',
@@ -294,7 +325,7 @@ class DatabaseSeeder extends Seeder
           'id' => "7",
           'name' => "Test",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "1",
           'priority' => "0",
           'project_id' => "2",
           'objective_id' => '7',
@@ -304,7 +335,7 @@ class DatabaseSeeder extends Seeder
           'id' => "8",
           'name' => "Analyse",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "2",
           'priority' => "0",
           'project_id' => "2",
       ]);
@@ -313,7 +344,7 @@ class DatabaseSeeder extends Seeder
           'id' => "9",
           'name' => "Analyse AD",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "3",
           'priority' => "0",
           'project_id' => "2",
           'parent_id' => "8",
@@ -323,7 +354,7 @@ class DatabaseSeeder extends Seeder
           'id' => "10",
           'name' => "Analyse OpenLDAP",
           'duration' => "1",
-          'status' => "wip",
+          'status_id' => "1",
           'priority' => "0",
           'project_id' => "2",
           'parent_id' => "8",
@@ -367,7 +398,7 @@ class DatabaseSeeder extends Seeder
             'id' => "",
             'name' => "",
             'duration' => "",
-            'status' => "",
+            'status_id' => "",
             'priority' => "",
             'project_id' => "",
             'parent_id' => "",

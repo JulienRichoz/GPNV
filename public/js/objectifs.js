@@ -1,4 +1,4 @@
-$('.showObjectif').click(function () {
+$(document).on("click", '.showObjectif', function(event) {
     var id = this.getAttribute('data-id');
     var projectId = this.getAttribute('data-projectid');
     var baseUrl = this.getAttribute('data-URL');

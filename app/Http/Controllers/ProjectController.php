@@ -32,7 +32,10 @@ class ProjectController extends Controller
         ]]);
     }
 
-
+    /**
+    * Define if user can access the project, redirect to projects list if not
+    * @return view to all projects
+    */
     public function index()
     {
         // If the user has a role like "Eleve", he can access student view and he only can see his projects
@@ -53,9 +56,12 @@ class ProjectController extends Controller
         }
     }
 
-    // Display all informations like the user's tasks connected, all project tasks, and so on
-    public function show($id)
-    {
+    /**
+    * Display all informations like the user's tasks connected, all project tasks, and so on
+    * @param $projectID The project id
+    * @return view to see whole project
+    */
+    public function show($id){
         $project = Project::find($id);
         $currentUser = Auth::user();
         $userTasks = UsersTask::where("user_id", "=", $currentUser->id)->get();
@@ -129,38 +135,60 @@ class ProjectController extends Controller
         ]);
     }
 
+    /**
+    * Return the view to see deliveries
+    * @param $projectID The project id
+    * @return view to see deliveries
+    */
     public function showDeliveries($projectID){
       $project = Project::find($projectID);
       $deliveries = new CheckList('Project', $projectID, 'Livrables');
       return view('project/delivery',['project' => $project, 'livrables'=>$deliveries]);
     }
 
+    /**
+    * Return the view to see objectives
+    * @param $projectID The project id
+    * @return view to see objectives
+    */
     public function showObjectives($projectID){
       $project = Project::find($projectID);
       $objectives = new CheckList('Project', $projectID, 'Objectifs');
       return view('project/objective',['project' => $project, 'objectifs'=>$objectives]);
     }
 
-    public function files($id)
-    {
+    /**
+    * Return the view to see files
+    * @param $id The project id
+    * @return view to see files
+    */
+    public function files($id){
       $project = Project::find($id);
       return view('project/file', ['project' => $project]);
     }
 
-    // Return the view to editing projects
-    public function edit()
-    {
+    /**
+    * Return the view to editing projects
+    * @return view to editing projects
+    */
+    public function edit(){
         return view('project/edit');
     }
 
-    // Return the view about tasks
-    public function task()
-    {
+    /**
+    * Return the view about tasks
+    * @return view of task
+    */
+    public function task(){
         return view('project/task');
     }
 
-    // Returns the html representation of all views mathing a set of filter
-    // specified in the request parameter
+    /**
+    * Returns the html representation of all views mathing a set of filter
+    * specified in the request parameter
+    * @param $request Define the request data send by POST
+    * @return tasks
+    */
     public function getTasks(Request $request) {
         $projectId = $request->id;
         $status = $request->status;
@@ -179,7 +207,7 @@ class ProjectController extends Controller
                     ->select('tasks.*')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
-                        return $query->whereIn("tasks.status", $status);
+                        return $query->whereIn("tasks.status_id", $status);
                     })
                     ->distinct()
                     ->whereNull('tasks.parent_id');
@@ -192,7 +220,7 @@ class ProjectController extends Controller
                 $query = Task::doesntHave('usersTasks')
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
-                        return $query->whereIn("tasks.status", $status);
+                        return $query->whereIn("tasks.status_id", $status);
                     })
                     ->whereNull('tasks.parent_id');
 
@@ -208,7 +236,7 @@ class ProjectController extends Controller
                     ->where('users_tasks.user_id', "=", $taskOwner)
                     ->where("tasks.project_id", "=", $projectId)
                     ->when(count($status) > 0, function ($query) use ($status) {
-                        return $query->whereIn("tasks.status", $status);
+                        return $query->whereIn("tasks.status_id", $status);
                     })
                     ->whereNull('tasks.parent_id');
 
@@ -219,7 +247,7 @@ class ProjectController extends Controller
                 break;
         }
 
-        // Making sure there are tasks to display / display an information message otherwise
+        // Making sure there are tasks to display / show a message otherwise
 
         if (count($tasks) > 0) {
             foreach ($tasks as $task) {
@@ -232,15 +260,20 @@ class ProjectController extends Controller
         }
     }
 
-    // Return the view to creating projects
-    public function create()
-    {
+    /**
+    * Return the view to creating projects
+    * @return view of project creation
+    */
+    public function create(){
         return view('project/edition/create');
     }
 
-    // Create a task
-    public function store(Request $request)
-    {
+    /**
+    * Create a task
+    * @param $request Define the request data send by POST
+    * @return view of project
+    */
+    public function store(Request $request){
         $Date = explode("/", $request->input('date'));
         $Date = $Date[2]."/".$Date[1]."/".$Date[0];
         $DateTime = $Date." ".$request->input('hour');
@@ -273,25 +306,31 @@ class ProjectController extends Controller
         return redirect()->route('project.index');
     }
 
-    // Return te view to creating tasks
-    public function createTask($id)
-    {
-        return view('task.create', ['project' => $id]);
+    /**
+    * Return te view to creating tasks
+    * @param $id The project id
+    * @return view of task creation
+    */
+    public function createTask($id){
+        $taskTypes = DB::table('taskTypes')->get();
+        return view('task.create', ['project' => $id, 'taskTypes' => $taskTypes]);
     }
 
-    // Edit a task
-    public function storeTask(Request $request)
-    {
-
+    /**
+    * Edit a task
+    * @param $request Define the request data send by POST
+    */
+    public function storeTask(Request $request){
         $project_id = $request->input('project_id');
 
         $newTask = new Task;
         $newTask->name = $request->input('name');
         $newTask->duration = $request->input('duration');
         $newTask->Objective_id = $request->input('root_task');
+        $newTask->type_id = $request->input('taskTypes');
         $newTask->project_id = $project_id;
         $newTask->parent_id = NULL;
-        $newTask->status = "todo"; // hardcoded until the UI allows user friendly status changes
+        $newTask->status_id = $request->input('status');
         $transactionResult = $newTask->save(); // Indicates whether or not the save was successfull
 
         // Adding the event description into the request object
@@ -304,13 +343,21 @@ class ProjectController extends Controller
         // return json_encode($transactionResult);
     }
 
-    // Delete one or more users for a project
+    /**
+    * Delete one or more users for a project
+    * @param $request Define the request data send by POST
+    */
     public function destroyUser(Request $request){
         $destroyUser = Memberships::where("project_id", "=", $request->id)->where("user_id", "=", $request->user)->get();
         $destroyUser->delete();
     }
 
-    // Create a target
+    /**
+    * Create a target
+    * @param $request Define the request data send by POST
+    * @param $id The project id
+    * @return view of project
+    */
     public function storeTarget(Request $request, $id){
 
         $target = new Target;
@@ -322,7 +369,11 @@ class ProjectController extends Controller
         return redirect()->route("project.show", ['id'=>$id]);
     }
 
-   // Validate a target
+   /**
+   * Validate a target
+   * @param $id The project id
+   * @return view of checklist creation
+   */
     public function valideTarget(Request $request, Target $target){
 
         $target->update([
@@ -331,16 +382,29 @@ class ProjectController extends Controller
 
     }
 
-    // Return the target view
+    /**
+    * Return the target view
+    * @param $request Define the request data send by POST
+    * @param $id The current project id
+    */
     public function getTarget(Request $request, $id){
         return view('target.store', ['project' => $id]);
     }
 
-    public function createCheckListItem($id, $checkListId)
-    {
+    /**
+    * Create a new checklist item
+    * @param $id The project id where to add users
+    * @return view of checklist creation
+    */
+    public function createCheckListItem($id, $checkListId){
       return view('checkList.create', ['checkListId'=>$checkListId, 'projectId' =>$id]);//view('checkList.create', ['checkListId' => $id]);
     }
 
+    /**
+    * Get list of student from class who can be added to the project
+    * @param $id The project id where to add users
+    * @return view of users to add
+    */
     public function getStudents($id){
 
       // Recover users in the current porject
@@ -408,6 +472,11 @@ class ProjectController extends Controller
       return view('project.addUsers', ['project' => $Project, 'users' => $users]);
     }
 
+    /**
+    * Get teacher to add and remove the one hardly in the project
+    * @param $id The project id where to add users
+    * @return view of teacher to add
+    */
     public function getTeachers($id){
       // Recover users in the current porject
       $Project = Project::find($id);
@@ -428,6 +497,12 @@ class ProjectController extends Controller
       return view('project.addUsers', ['project' => $Project, 'users' => $users]);
     }
 
+    /**
+    * Add users to project
+    * @param $request Define the request data send by POST
+    * @param $ProjectId The current project id
+    * @return view of users in project
+    */
     public function addUsers(Request $request, $ProjectID){
       if($request->input('user')) {
           foreach ($request->input('user') as $key => $value) {
@@ -450,6 +525,12 @@ class ProjectController extends Controller
       return view('project.membership', ['project' => $Project]);
     }
 
+    /**
+    * Remove user from the project, also remove task attribution
+    * @param $UserID User to remove from project
+    * @param $ProjectId Define the actual project id
+    * @return view of project
+    */
     public function removeUserFromProject($ProjectId, $UserID=null){
       if($UserID!=null)
         $currentUser = User::find($UserID);
@@ -499,6 +580,12 @@ class ProjectController extends Controller
       return view('project.membership', ['project' => $Project]);
     }
 
+    /**
+    * Edit the description
+    * @param $request Define the request data send by POST
+    * @param $ProjectID The project id where the description will be edit
+    * @return view of project
+    */
     public function editDescription(Request $request, $ProjectID){
       $Project = Project::find($ProjectID);
       $Project->description = $request->input('description');
@@ -518,6 +605,11 @@ class ProjectController extends Controller
       return redirect()->route("project.show", ['id'=>$ProjectID]);
     }
 
+    /**
+    * Get the task from request
+    * @param $request Define the request data send by POST
+    * @return view of task
+    */
     public function getTask(Request $request){
 
         if($request->ajax())
@@ -533,6 +625,11 @@ class ProjectController extends Controller
         }
     }
 
+    /**
+    * Get files to link and view
+    * @param $ProjectId The current project id
+    * @return view of files or url to link
+    */
     public function getToLink($projectID, $check){
       $Project = Project::find($projectID);
 
@@ -542,6 +639,12 @@ class ProjectController extends Controller
       return view('project.toLink', ['project' => $Project, 'files' => $filesInProject, 'checkID'=> $check]);
     }
 
+
+    /**
+    * Link a file or link to the selected delivery (Note: the delivery id is in the request parameter)
+    * @param $projectID Define the actual project id
+    * @param $request Define the request data send by POST
+    */
     public function LinkToDelivery(Request $request, $ProjectID){
       if( $request->input('check')==null || $request->input('type')==null || $request->input('data')==null) return redirect('project/' . $ProjectID);
 
@@ -556,9 +659,32 @@ class ProjectController extends Controller
 
       DB::table('checkList_Items')->where('id', $checkListID)->update(['link' => $request->input('data')]);
 
-      //return redirect('project/' . $ProjectID);
       return redirect()->route("project.show", ['id'=>$ProjectID]);
 
+    }
+
+
+    /**
+    * Delete selected objective (also delete scenarios and scenario tests related to it)
+    * @param $projectID Define the actual project id
+    * @param $objectiveID Define the id of the 'checkList_Items' to delete
+    */
+    public function deleteObjective($projectID, $objectiveID){
+      $project = Project::find($projectID);
+      $scenarios = DB::table('scenarios')->where('checkList_Item_id', $objectiveID)->get();
+
+      DB::table('scenarios')->where('checkList_Item_id', '=', $objectiveID)->delete();
+      DB::table('checkList_Items')->where('id', '=', $objectiveID)->delete();
+
+    }
+
+    /**
+    * Delete selected delivery
+    * @param $projectID Define the actual project id
+    * @param $deliveryID Define the id of the 'checkList_Items' to delete
+    */
+    public function deleteDelivery($projectID, $deliveryID){
+      DB::table('checkList_Items')->where('id', '=', $deliveryID)->delete();
     }
 
 }

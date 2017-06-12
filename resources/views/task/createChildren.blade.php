@@ -9,12 +9,12 @@
                 type: 'POST',
                 data: form.serializeArray(),
                 success: function (data) {
-                    console.log("Child task successfully added!");
+                    // console.log("Child task successfully added!");
                     refreshDisplayedTasks(); // refresh the task list
 
                     // Display a confirmation message to the user
                     var bootBoxContainer = $('#createChildTaskButton').closest('.bootbox-body');
-                    bootBoxContainer.html('<p>Tâche enfant ajoutée avec succès !</p>');
+                    bootBoxContainer.html('<p>Sous-tâche ajoutée avec succès !</p>');
                 }
             });
             /*var fields = $( this ).serializeArray()

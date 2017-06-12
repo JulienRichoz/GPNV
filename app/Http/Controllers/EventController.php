@@ -18,9 +18,13 @@ use DB;
 
 class EventController extends Controller
 {
-    // Display all project events
-    public function show(Project $project, Request $request)
-    {
+    /**
+    * Display all project events
+    * @param $project The project item
+    * @param $request Define the request data send by POST
+    * @return json events
+    */
+    public function show(Project $project, Request $request){
         $currentUserId = Auth::id();
 
         $eventInfos = DB::table('events')
@@ -69,9 +73,13 @@ class EventController extends Controller
         ));
     }
 
-    // Create an event
-    public function store($projectId, Request $request)
-    {
+    /**
+    * Create an event
+    * @param $projectId The project id
+    * @param $request Define the request data send by POST
+    * @return json events
+    */
+    public function store($projectId, Request $request){
         $event = new Event;
         $event->user_id = Auth::user()->id;
         $event->project_id = $projectId;
@@ -85,6 +93,12 @@ class EventController extends Controller
         $relation->save();
     }
 
+    /**
+    * Create validation
+    * @param $project The project item
+    * @param $request Define the request data send by POST
+    * @return json validation
+    */
     public function storeValidation($project, Request $request) {
         $relation = new AcknowledgedEvent;
         $relation->event_id = $request->eventId;
@@ -94,9 +108,12 @@ class EventController extends Controller
         return json_encode($relation);
     }
 
-    // Return view event form
-    public function formEvent($id)
-    {
+    /**
+    * Return view event form
+    * @param $id event id
+    * @return view event form
+    */
+    public function formEvent($id){
         return view('events.store', ['id' => $id]);
     }
 }

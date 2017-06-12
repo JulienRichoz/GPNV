@@ -1,15 +1,23 @@
 <li class="taskContainer">
-    @if ($task->status == "wip")
+    @if ($task->status->id == "1") <!-- id #1 = En cours -->
       <a class="bg-info">
         <span class="taskStatus glyphicon glyphicon-time"></span>
-    @elseif ($task->status == "todo")
+    @elseif ($task->status->id == "2")  <!-- id #2 = A faire -->
         <a class="bg-warning">
         <span class="taskStatus glyphicon glyphicon-pushpin"></span>
-    @else
+    @else  <!-- id #3 = Terminée -->
         <a class="bg-success">
         <span class="taskStatus glyphicon glyphicon-ok"></span>
     @endif
-    <span class="taskshow" data-id="{{$task->id}}"><p> {{$task->name}}</p></span>
+    <span class="taskshow" data-id="{{$task->id}}">
+      <p>{{$task->name}}
+        @if($task->isChildrenDifferentTypes())
+          (Mixte)
+        @elseif(null !== $task->getTaskType())
+          ({{$task->getTaskType()->name}})
+        @endif
+      </p>
+    </span>
     @if($task->children->isEmpty())
       <button class="right btn taskuser" data-id="{{$task->id}}"> <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> </button>
       <button class="right btn taskdestroy"  data-id="{{$task->id}}"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>
