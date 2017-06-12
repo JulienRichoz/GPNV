@@ -96,8 +96,7 @@ class TaskController extends Controller
     function edit(Task $task, Request $request){
         $taskType = DB::table('taskTypes')->orderBy('name')->get();
         $actualTaskType = DB::table('taskTypes')->where('id',$task->type_id)->first();
-        return view('task.edit', ['task' => $task, "taskTypes" => $taskType, "actualTaskType" => $actualTaskType]);
-        return view('task.edit', ['task' => $task, 'statuses' => Status::all()]);
+        return view('task.edit', ['task' => $task, "taskTypes" => $taskType, "actualTaskType" => $actualTaskType, 'statuses' => Status::all()]);
     }
 
     /**
