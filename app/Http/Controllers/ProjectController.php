@@ -333,11 +333,7 @@ class ProjectController extends Controller
         $newTask->status_id = $request->input('status');
         $transactionResult = $newTask->save(); // Indicates whether or not the save was successfull
 
-        // Adding the event description into the request object
-        $eventDescription = "Création d'une tâche parent";
-        $request->merge([ 'description' => $eventDescription ]);
-
-        (new EventController())->store($project_id, $request); // Create an event
+        (new EventController())->store($project_id, "Création de la tâche parent \"" . $request->input('name') . "\""); // Create an event
 
         // return redirect()->route("project.show", ['id'=>$project_id]);
         // return json_encode($transactionResult);

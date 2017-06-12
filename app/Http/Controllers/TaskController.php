@@ -82,7 +82,9 @@ class TaskController extends Controller
         }
         $transactionResult = $task->delete();
 
-        (new EventController())->store($request->input('project_id'), "Supprimer une tâche"); // Create an event
+        $projectId = $task->project_id;
+
+        (new EventController())->store($projectId, "Suppression de la tâche \"" . $task->name . "\""); // Create an event
 
         // return ("destroy" . $task);
         //return json_encode($transactionResult);

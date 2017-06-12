@@ -79,11 +79,11 @@ class EventController extends Controller
     * @param $request Define the request data send by POST
     * @return json events
     */
-    public function store($projectId, Request $request){
+    public function store($projectId, $description){
         $event = new Event;
         $event->user_id = Auth::user()->id;
         $event->project_id = $projectId;
-        $event->description = $request->description;
+        $event->description = $description;
         $event->save();
 
         // relationship management
