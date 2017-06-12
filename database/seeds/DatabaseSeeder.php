@@ -102,7 +102,7 @@ class DatabaseSeeder extends Seeder
       DB::table('checkList_Tables')->insert(['id' => "1", 'name' => "Project",]);
 
       $this->Project001();
-      //$this->Project002();
+      $this->Project002();
     }
 
     public function Project001()
@@ -260,33 +260,33 @@ class DatabaseSeeder extends Seeder
       ]);
 
       DB::table('checkList_Items')->insert([
-        'id' => "7", 'title' => "Intérêt Général",
+        'id' => "10", 'title' => "Intérêt Général",
         'done' => "0", 'checkList_id' => "4",
       ]);
 
       DB::table('checkList_Items')->insert([
-        'id' => "8", 'title' => "Faire une documentation",
+        'id' => "11", 'title' => "Faire une documentation",
         'done' => "0", 'checkList_id' => "4",
       ]);
 
       DB::table('checkList_Items')->insert([
-        'id' => "9", 'title' => "Documentation",
+        'id' => "12", 'title' => "Documentation",
         'done' => "0", 'checkList_id' => "4",
       ]);
 
       DB::table('checkList_Items')->insert([
-        'id' => "10", 'title' => "Manuel d'installation",
+        'id' => "13", 'title' => "Manuel d'installation",
         'done' => "0", 'checkList_id' => "3",
       ]);
 
       DB::table('checkList_Items')->insert([
-        'id' => "11", 'title' => "Création d'une procédure d'installation",
+        'id' => "14", 'title' => "Création d'une procédure d'installation",
         'done' => "0", 'checkList_id' => "4",
       ]);
 
       // Tasks
       DB::table('tasks')->insert([
-          'id' => "5",
+          'id' => "4",
           'name' => "Documentation",
           'duration' => "1",
           'status' => "wip",
@@ -296,7 +296,7 @@ class DatabaseSeeder extends Seeder
       ]);
 
       DB::table('tasks')->insert([
-          'id' => "6",
+          'id' => "5",
           'name' => "Design",
           'duration' => "1",
           'status' => "wip",
@@ -306,7 +306,7 @@ class DatabaseSeeder extends Seeder
       ]);
 
       DB::table('tasks')->insert([
-          'id' => "7",
+          'id' => "6",
           'name' => "Test",
           'duration' => "1",
           'status' => "wip",
@@ -316,7 +316,7 @@ class DatabaseSeeder extends Seeder
       ]);
 
       DB::table('tasks')->insert([
-          'id' => "8",
+          'id' => "7",
           'name' => "Analyse",
           'duration' => "1",
           'status' => "wip",
@@ -325,7 +325,7 @@ class DatabaseSeeder extends Seeder
       ]);
 
       DB::table('tasks')->insert([
-          'id' => "9",
+          'id' => "8",
           'name' => "Analyse AD",
           'duration' => "1",
           'status' => "wip",
@@ -335,7 +335,7 @@ class DatabaseSeeder extends Seeder
       ]);
 
       DB::table('tasks')->insert([
-          'id' => "10",
+          'id' => "9",
           'name' => "Analyse OpenLDAP",
           'duration' => "1",
           'status' => "wip",
