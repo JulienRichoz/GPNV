@@ -1,12 +1,24 @@
+/**
+* Allow the drag & drop action and preventDefault
+* @param ev the element dragged
+*/
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
+/**
+* transfer data on drag action
+* @param ev the element dragged
+*/
 function drag(ev) {
     ev.dataTransfer.setData("url", ev.target.src);
     ev.dataTransfer.setData("id", ev.target.id);
 }
 
+/**
+* change step image on drop
+* @param ev element dragged
+*/
 function drop(ev) {
     ev.preventDefault();
     var url = ev.dataTransfer.getData("url");
@@ -29,10 +41,19 @@ function drop(ev) {
       data : data
     })
 }
+
+/**
+* Delete the image from HTML
+* @param id Html element id
+*/
 function remove(id) {
     var elem = document.getElementById(id);
     return elem.parentNode.removeChild(elem);
 }
+/**
+* delete the image
+* @param ev Element dragged
+*/
 function delPicture(ev){
   ev.preventDefault();
   var id = ev.dataTransfer.getData("id");
@@ -47,6 +68,9 @@ function delPicture(ev){
   })
 }
 
+/**
+* Change color on focus and load the linked image to the step clicked
+*/
 $('.scenario .tableRow').click(function(){
   $('.scenario .tableRow.active').removeClass('active');
   $(this).addClass('active');
@@ -61,10 +85,17 @@ $('.scenario .tableRow').click(function(){
   $('.maquette img').attr('src', mockupUrl);
 });
 
+/**
+* Reset Step bakground color
+*/
 function resetStepColor(element){
   $(element).css('border-width','1px');
   $(element).css('border-color', '#ccc');
 }
+
+/**
+* Auto save the step on leave if modified
+*/
 function updateStep(form, element){
   if(form.oldReponse.value != form.reponse.value || form.oldAction.value != form.action.value){
     $.ajax({

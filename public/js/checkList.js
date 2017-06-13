@@ -4,11 +4,16 @@
     Description: Functions to handle checkLists
 */
 $(document).ready(function () {
-  // Add a new item on checkList
+  /**
+   * Add a new item on checkList
+   *
+   * @return form to insert a new checklist
+   */
   $('.addCheckList').click(function () {
       var id = this.getAttribute('data-id');
       var productId = this.getAttribute('data-projectid');
       var baseUrl = this.getAttribute('data-URL');
+
       $.get(baseUrl+"/"+productId+"/checklist/"+id+"/create", {}, function (form) {
           bootbox.dialog({
               title: "Insérer un nouvel élément",
@@ -17,7 +22,9 @@ $(document).ready(function () {
       });
   });
 
-  //switch view button hidde or not the completed items
+  /**
+   * switch view button hidde or not the completed items
+   */
   $('.changeView').click(function(){
     var parent = $(this).parent();
     parent.children('.deliveriesData').children('.completed').toggleClass('hidden');

@@ -1,4 +1,11 @@
 $(document).ready(function() {
+
+  /**
+  * setCookies
+  * @param cname Cookie name
+  * @param cvalue Cookie value
+  * @param path base path to the cookie
+  */
   setCookie = function(cname, cvalue, path=null){
     if(!path) path="/";
     var d = new Date();
@@ -6,6 +13,11 @@ $(document).ready(function() {
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path="+path;
   }
+
+  /**
+  * get cookies
+  * @return array with all cookies
+  */
   getCookies = function() {
     var c = document.cookie, v = 0, cookies = {};
     if (document.cookie.match(/^\s*\$Version=(?:"1"|1);\s*(.*)/)) {
@@ -30,10 +42,19 @@ $(document).ready(function() {
     }
     return cookies;
   }
+
+  /**
+  * Get cookie by name
+  * @param name Cookie name
+  * @return value of the asked cookie
+  */
   getCookie = function(name) {
       return getCookies()[name];
   }
 
+  /**
+  * Prepare text editor to edit the description
+  */
   $('a.editDescription').click(function () {
     if($('a.saveDescription').is(':hidden')){
       $('#summernote').summernote();
@@ -50,6 +71,9 @@ $(document).ready(function() {
     }
   });
 
+  /**
+  * Save the description
+  */
   $('a.saveDescription').click(function () {
     var description = $('#summernote').summernote('code');
     var projectid = this.getAttribute('data-projectid');
@@ -68,16 +92,25 @@ $(document).ready(function() {
     });
   });
 
+  /**
+  * Create a new project
+  */
   $('button.createProject').click(function () {
       var description = $('#createDescription').summernote('code');
       $('#createDescription').val(description);
   });
 
+  /**
+  * initialize dataPicker
+  */
   $(function() {
     $("#datepicker").datepicker();
     $('#createDescription').summernote();
   });
 
+  /**
+  * initialize collapsible content
+  */
   $(function() {
     var theCookies = Object.keys(getCookies());
     for (var i = 0; i < theCookies.length; i++) {
@@ -94,6 +127,9 @@ $(document).ready(function() {
     }
   });
 
+  /**
+  * Update collapsible content cookies to project view
+  */
   $('.showPanel').click(function(){
     $(this).children('h1').children('span').toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
     var cookieName = $(this).attr('data-target');
@@ -106,6 +142,9 @@ $(document).ready(function() {
     }
   });
 
+  /**
+  * Update collapsible content cookies to projects view
+  */
   $('.showMembres').click(function(){
     $(this).children('span').toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
     var cookieName = $(this).attr('data-target');
@@ -115,17 +154,20 @@ $(document).ready(function() {
         setCookie(cookieName, 'false');
       else
         setCookie(cookieName, 'true');
-      console.log(cookieValue);
     }
   });
 
+  /**
+  * View File
+  */
   $('button.viewFile').click(function () {
       var fileID = this.getAttribute('data-fileid');
       var deliveryID = this.getAttribute('data-id');
   });
 
-  // ------------------------ Task filter management ------------------------
-  // Displays / hides tasks according to the active filters
+  /**
+  * Displays / hides tasks according to the active filters
+  */
   refreshDisplayedTasks = function() {
     var projectId = $('.projectTasks').attr('data-projectid');
     var status = [];
@@ -138,23 +180,21 @@ $(document).ready(function() {
     var taskOwner = $(".dropTaskFilter .owner li a.activeOwner").attr("data-taskOwner");
     var taskObjective = $(".dropTaskFilter .objective li a.activeOwner").attr("data-objective");
 
-    // console.log(status);
-
     $.ajax({
       url: projectId + "/getTasks",
       type: 'get',
       data: {status: status, taskOwner: taskOwner, taskObjective: taskObjective},
       success: function (tasks) {
-        //console.log(tasks);
         $("#tree-menu ul").html(tasks);
       },
       error: function() {
-        // console.log("failed to load project tasks");
       }
     });
   }
 
-  // Checkbox filters management
+  /**
+  * Checkbox filters management
+  */
   $(function() {
     var theCookies = Object.keys(getCookies());
     for (var i = 0; i < theCookies.length; i++) {
@@ -163,12 +203,13 @@ $(document).ready(function() {
         var checkStatus = (cookie == 'true');
 
         $(theCookies[i]).prop('checked', checkStatus);
-        // console.log(theCookies[i] + " set to true");
       }
     }
   });
 
-  // Dropdown filters management
+  /**
+  * Dropdown filters management
+  */
   $(function() {
     var theCookies = Object.keys(getCookies());
     var cookieValues = Object.values(getCookies());
@@ -201,7 +242,6 @@ $(document).ready(function() {
             break;
 
           default:
-            // console.log('No');
         }
       }
     }

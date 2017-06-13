@@ -5,22 +5,23 @@
 */
 
 $(document).ready(function () {
-  // ------------------------------ Event handling ------------------------------
-  // Displaying the task list whenever the user clicks a new filter checkbox
+  /**
+  * Displaying the task list whenever the user clicks a new filter checkbox
+  */
   $(".checkboxFilter").change(function() {
     // Cookie management
     var checkbox = $(this);
     var cookieName = "#" + checkbox.attr("id")
     setCookie(cookieName, checkbox.is(":checked"), document.location.pathname);
-    // console.log("saving:\n" + cookieName + " " + checkbox.is(":checked") + " @ " + document.location.pathname);
 
     // UI management
     refreshDisplayedTasks();
   });
 
-
-  // ------------------------------ Dropdown handling ------------------------------
-  // Dropdown links marking
+  /**
+  * Dropdown links marking
+  * @param event Form to send
+  */
   $(".dropTaskFilter .owner li a").click(function(event) {
     event.preventDefault();
 
@@ -40,12 +41,15 @@ $(document).ready(function () {
     var dropdownValue = $(this);
     var cookieName = "#" + $(this).parent("li").parent("ul").prev("button").attr("id");
     setCookie(cookieName, listItemIndex, document.location.pathname);
-    // console.log("saving:\n" + cookieName + " " + listItemIndex + " @ " + document.location.pathname);
 
     // UI management
     refreshDisplayedTasks();
   });
 
+  /**
+  * Task filter
+  * @param event Form to send
+  */
   $(".dropTaskFilter .objective li a").click(function(event) {
     event.preventDefault();
 
@@ -65,13 +69,10 @@ $(document).ready(function () {
     var dropdownValue = $(this);
     var cookieName = "#" + $(this).parent("li").parent("ul").prev("button").attr("id");
     setCookie(cookieName, listItemIndex, document.location.pathname);
-    // console.log("saving:\n" + cookieName + " " + listItemIndex + " @ " + document.location.pathname);
 
     refreshDisplayedTasks();
   });
 
-
-  // ------------------------------ Initialization handling ------------------------------
   // Filling the task list when the browser loads the page
   refreshDisplayedTasks();
 });
