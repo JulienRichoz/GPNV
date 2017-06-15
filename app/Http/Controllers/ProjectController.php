@@ -333,7 +333,7 @@ class ProjectController extends Controller
         $newTask->status_id = $request->input('status');
         $transactionResult = $newTask->save(); // Indicates whether or not the save was successfull
 
-        (new EventController())->store($project_id, "Création de la tâche parent \"" . $request->input('name') . "\""); // Create an event
+        (new EventController())->logEvent($project_id, "Création de la tâche parent \"" . $request->input('name') . "\""); // Create an event
 
         // return redirect()->route("project.show", ['id'=>$project_id]);
         // return json_encode($transactionResult);
@@ -511,7 +511,7 @@ class ProjectController extends Controller
               $memberFullName = $member->getFullNameAttribute();
 
               // Add a new entry to the logbook
-              (new EventController())->store($ProjectID, "Ajout de " . $memberFullName . " au projet ");
+              (new EventController())->logEvent($ProjectID, "Ajout de " . $memberFullName . " au projet ");
           }
       }
       $Project = Project::find($ProjectID);
@@ -672,11 +672,11 @@ class ProjectController extends Controller
       $objectiveName = $objective->first()->title;
       $objective->delete();
 
-      // Loggin the objective removal 
-      (new EventController())->store($projectID, "Suppression de l'objectif \"" . $objectiveName . "\"");
+      // Log the objective removal 
+      (new EventController())->logEvent($projectID, "Suppression de l'objectif \"" . $objectiveName . "\"");
 
       
-      // Counting scenarios before loggin anything in relation
+      // Counting scenarios before logging anything in relation
       $scenarioSummary = 'Suppression du/des scenario(s): ';
 
       if (count($scenarios) > 0) {
@@ -686,8 +686,8 @@ class ProjectController extends Controller
 
         $finalSummary = substr($scenarioSummary, 0, -2);
 
-        // Loggin the scenarios removal
-        (new EventController())->store($projectID, $finalSummary);
+        // Log the scenarios removal
+        (new EventController())->logEvent($projectID, $finalSummary);
       }
     }
 

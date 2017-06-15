@@ -20,10 +20,7 @@
             /*var fields = $( this ).serializeArray()
             jQuery.each( fields, function( i, field ) {
                 console.log(field);
-            });*/
-            $(".createStatusContainer .statusList li a").click(function(event) {
-                console.log('plz');
-            });
+            });*/   
         });
     });
 </script>
