@@ -112,7 +112,7 @@
             <div class="panel-body">
 
               <div class="row">
-                @include('taskType.showAll')
+                @include('tasktype.showAll')
 
                 <div class="col-xs-12 col-lg-6">
                   <h4>Créer un type de tâche</h4>

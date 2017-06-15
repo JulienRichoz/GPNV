@@ -77,10 +77,11 @@ $(document).ready(function() {
   $('a.saveDescription').click(function () {
     var description = $('#summernote').summernote('code');
     var projectid = this.getAttribute('data-projectid');
+    var data = "_method=PUT&_token="+token.val()+"&description="+description;
     $.ajax({
         url: projectid + "/editDescription/",
         type: "POST",
-        data: { description: description },
+        data: data,
         success: function (data) {
             bootbox.alert("Description modifiée avec succés.");
             var result = $('<div />').append(data).find('#summernote').html();

@@ -72,14 +72,14 @@ class CheckListController extends Controller
   function store(Request $requete, $id, $checkListId){
     $newChecklistItem = CheckList::newItem($checkListId, $requete->get('name'), $requete->get('description'));
     // Getting the checklist type to display in the logs
-    $checklistItem = DB::table('checklist_items')->where('id', $newChecklistItem)->first()->checkList_id;
-    $checklistType = DB::table('checklists')->where('id', $checklistItem)->first()->checkListType_id;
+    $checklistItem = DB::table('checkList_Items')->where('id', $newChecklistItem)->first()->checkList_id;
+    $checklistType = DB::table('checkLists')->where('id', $checklistItem)->first()->checkListType_id;
     $checkList = DB::table('checkList_Types')->where('id', $checklistType)->first();
     $type = $checkList->name;
 
     $singularType = substr($type, 0, strlen($type) - 1);
     $formattedType = strtolower($singularType);
-    
+
     // Defining the preposition that will be used in the log entry according to the checklist type
     $preposition = ($type == "Livrables") ? 'du ' : 'de l\'';
 

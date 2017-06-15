@@ -45,7 +45,12 @@ class AdminController extends Controller
       $secret = env('CPNV_SECRET');
       $signature = md5($requestString.$secret);
       $URL = "api_key=".env('CPNV_KEY')."&signature=".$signature;
-      $URL = $BaseUrl."&api_key=".env('CPNV_KEY')."&signature=".$signature;
+      if($AlterStudents){
+        $URL = $BaseUrl."&api_key=".env('CPNV_KEY')."&signature=".$signature;
+      }
+      else{
+        $URL = $BaseUrl."?api_key=".env('CPNV_KEY')."&signature=".$signature;
+      }
 
       $ch = curl_init($URL);
       curl_setopt($ch, CURLOPT_URL, $URL);
