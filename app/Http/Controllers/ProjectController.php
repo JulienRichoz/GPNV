@@ -697,7 +697,10 @@ class ProjectController extends Controller
     * @param $deliveryID Define the id of the 'checkList_Items' to delete
     */
     public function deleteDelivery($projectID, $deliveryID){
-      DB::table('checkList_Items')->where('id', '=', $deliveryID)->delete();
+      $delivery = DB::table('checkList_Items')->where('id', '=', $deliveryID);
+      $deliveryItemTitle = $delivery->first()->title;
+      $delivery->delete();
+      (new EventController())->logEvent($projectID, "Suppression du délivrable \"" . $deliveryItemTitle . "\"");
     }
 
 }
