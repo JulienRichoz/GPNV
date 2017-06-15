@@ -57,6 +57,22 @@
     </div>
 
     <div class="form-group">
+        <label class="col-md-4 control-label">Statut</label>
+
+        <div class="col-md-6 statusContainer">
+            <?php
+                use App\Models\Status;
+                $statuses = Status::get();
+            ?>
+            <select class="form-control" name="status" required>
+                @foreach($statuses as $status)
+                  <option name="" value="{{$status->id}}">{{$status->name}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
             <button type="submit" class="btn btn-primary" id="createChildTaskButton">
                 <i class="fa fa-btn fa-sign-in"></i>Créer
