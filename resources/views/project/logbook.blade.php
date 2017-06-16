@@ -25,7 +25,7 @@
             </div>
         </form>
 
-            <table class='table'>
+            <table id='logTable' class='table'>
                 <thead><tr><th>Qui</th><th>Quand</th><th>Quoi</th><th>Vu</th></tr></thead>
                 @foreach($events as $event)
                     {{-- Checking if the current user is the event creator --}}

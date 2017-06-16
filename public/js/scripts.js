@@ -123,7 +123,7 @@ $(document).ready(function() {
           if(theCookies[i].startsWith('#users'))
             $(theCookies[i]).parent().children('h4').children('span').toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
           else
-            $(theCookies[i]).parent().children('.showPanel').children('h1').children('span').toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
+            $(theCookies[i]).parent().children('.showPanel').children('h1').children('span').not($("#logBookBadge")).toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
         }
       }
     }
@@ -133,7 +133,7 @@ $(document).ready(function() {
   * Update collapsible content cookies to project view
   */
   $('.showPanel').click(function(){
-    $(this).children('h1').children('span').toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
+    $(this).children('h1').children('span').not($("#logBookBadge")).toggleClass("glyphicon-chevron-down glyphicon-chevron-up");
     var cookieName = $(this).attr('data-target');
     if(cookieName!=null){
       var cookieValue = getCookie(cookieName);

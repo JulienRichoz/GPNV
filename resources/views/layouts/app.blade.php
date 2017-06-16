@@ -493,7 +493,7 @@
 
                     content += ("</table>");
                     // console.log(content);
-                    $('#logBook').html(content);
+                    $('#logTable').html(content);
 
                     // enabling bootstrap tooltips
                     $('[data-toggle="tooltip"]').tooltip();
