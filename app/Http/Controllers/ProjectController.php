@@ -700,7 +700,7 @@ class ProjectController extends Controller
       $delivery = DB::table('checkList_Items')->where('id', '=', $deliveryID);
       $deliveryItemTitle = $delivery->first()->title;
       $delivery->delete();
-      (new EventController())->logEvent($projectID, "Suppression du délivrable \"" . $deliveryItemTitle . "\"");
+      (new EventController())->logEvent($projectID, "Suppression du livrable \"" . $deliveryItemTitle . "\"");
     }
 
 }
