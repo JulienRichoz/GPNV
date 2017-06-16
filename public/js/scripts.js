@@ -77,10 +77,10 @@ $(document).ready(function() {
   $('a.saveDescription').click(function () {
     var description = $('#summernote').summernote('code');
     var projectid = this.getAttribute('data-projectid');
-    var token = $(".tableRow.active input[name='_token']");
+    var token = $("input[name=_token]");
     var data = "_method=POST&_token="+token.val()+"&description="+description;
     $.ajax({
-        url: projectid + "/editDescription/",
+        url: projectid + "/editDescription",
         type: "POST",
         data: data,
         success: function (data) {

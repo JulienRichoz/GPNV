@@ -11,6 +11,7 @@
           <p>
             Description :<br/>
             <div id="summernote">{!! $project->description !!}</div>
+            {{csrf_field()}}
           </p>
           @if(Auth::user()->projects()->find($project->id))
             <a class="btn btn-primary editDescription">Editer la description</a>
