@@ -539,11 +539,8 @@ class ProjectController extends Controller
         if(isset($UserTask[0])){
             $UserTask[0]->delete();
 
-            $Event = new Event;
-            $Event->user_id = Auth::user()->id;
-            $Event->project_id = $ProjectId;
-            $Event->description = $currentUser->getFullNameAttribute() . " a été retiré de la tâche \"" . $Task->name . "\"";
-            $Event->save();
+            // Log the event
+            (new EventController())->logEvent($ProjectId, $currentUser->getFullNameAttribute() . " a été retiré de la tâche \"" . $Task->name . "\"");
         }
       }
 
@@ -559,14 +556,14 @@ class ProjectController extends Controller
         $AcknowledgedEventU->delete();
       }
 
-      $Event = new Event;
-      $Event->user_id =  Auth::user()->id;
-      $Event->project_id = $ProjectId;
+      $eventDescription = '';
+
       if($UserID!=null)
-        $Event->description = $currentUser->getFullNameAttribute() . " a été retiré du projet";
+        $eventDescription = $currentUser->getFullNameAttribute() . " a été retiré du projet";
       else
-        $Event->description = "Abandon du projet";
-      $Event->save();
+        $eventDescription = "Abandon du projet";
+
+      (new EventController())->logEvent($ProjectId, $eventDescription);
 
       $Memberships->delete();
 
@@ -584,16 +581,7 @@ class ProjectController extends Controller
       $Project->description = $request->input('description');
       $Project->save();
 
-      $Event = new Event;
-      $Event->user_id = Auth::user()->id;
-      $Event->project_id = $ProjectID;
-      $Event->description = "Modification de la description du projet";
-      $Event->save();
-
-      $AcknowledgedEvent = new AcknowledgedEvent;
-      $AcknowledgedEvent->user_id = Auth::user()->id;
-      $AcknowledgedEvent->event_id = $Event->id;
-      $AcknowledgedEvent->save();
+      (new EventController())->logEvent($ProjectID, "Modification de la description du projet");
 
       return redirect()->route("project.show", ['id'=>$ProjectID]);
     }
