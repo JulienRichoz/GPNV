@@ -179,7 +179,7 @@ $(document).ready(function() {
     });
 
     var taskOwner = $(".dropTaskFilter .owner li a.activeOwner").attr("data-taskOwner");
-    var taskObjective = $(".dropTaskFilter .objective li a.activeOwner").attr("data-objective");
+    var taskObjective = $(".dropTaskFilter .objective li a.activeObjective").attr("data-objective");
 
     $.ajax({
       url: projectId + "/getTasks",
