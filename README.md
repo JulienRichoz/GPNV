@@ -36,11 +36,11 @@ for generating the database structure and adding the test data.
 These are the default logins information, you don't need that if you haven't
 use the command : `php artisan db:seed` during the installation.
 
-        Login          | friendlyId |  role
- ----------------------|----------------------
- utilisateur@mail.com  |      1     | student
- tournesol@mail.com    |      2     | teacher
- anno@nimme.com        |      3     | student
+|        Login          | friendlyId |  role   |
+| --------------------- | ---------- | ------- |
+| utilisateur@mail.com  |      1     | student |
+| tournesol@mail.com    |      2     | teacher |
+| anno@nimme.com        |      3     | student |
 
 ## Use app in "Test Mode"
 In order to use the site, an add-on able to modify HTTP Header is needed.
