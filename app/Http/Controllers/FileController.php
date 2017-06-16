@@ -76,15 +76,4 @@ class FileController extends Controller
 
         File::where('id','=',$file->id)->delete();
     }
-
-    /**
-    * Remove file
-    * @param $id The project id
-    * @param $file The file item
-    */
-    public function LinkToDelivery($id,File $file, $checklistID){
-      $file->checkListItem_id = $checklistID;
-      $file->save();
-      return true;
-    }
 }

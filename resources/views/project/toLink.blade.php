@@ -52,7 +52,7 @@
           <button type="button" class="btn btn-secondary change">Choisir un fichier</button>
         @endif
         <button type="submit" class="btn btn-primary pull-right">
-          <i class="fa fa-btn fa-plus"></i>Lier le fichier
+          <i class="fa fa-btn fa-plus"></i>Lier le lien
         </button>
      </div>
   </div>
