@@ -84,7 +84,7 @@ class CheckListController extends Controller
     $preposition = ($type == "Livrables") ? 'du ' : 'de l\'';
 
     // Logging the objective creation in the logbook
-    (new EventController())->store($id, "Création " . $preposition . $formattedType . " \"" . $requete->get('name') . "\"");
+    (new EventController())->logEvent($id, "Création " . $preposition . $formattedType . " \"" . $requete->get('name') . "\"");
 
     return redirect()->back();
   }
