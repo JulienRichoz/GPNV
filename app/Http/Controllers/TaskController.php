@@ -9,8 +9,6 @@ use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 use App\Models\User;
-use App\Models\Event;
-use App\Models\AcknowledgedEvent;
 use DB;
 use App\Models\Status;
 
@@ -204,17 +202,10 @@ class TaskController extends Controller
         $taskUser = $usersTask->user->firstname . " " . $usersTask->user->lastname;
         $usersTask->delete();
 
-        $event = new Event;
-        $event->user_id = Auth::user()->id;
-        $event->project_id = $request->projectId;
-        $event->description = "Abandon de la tâche \"" . $taskName . "\" par: " . $taskUser . ". Raison: " . $request->comment;
-        $event->save();
+        $projectId = $request->projectId;
+        $description = "Abandon de la tâche \"" . $taskName . "\" par: " . $taskUser . ". Raison: " . $request->comment;
 
-        // relationship management
-        $relation = new AcknowledgedEvent;
-        $relation->event_id = $event->id;
-        $relation->user_id = Auth::user()->id;
-        $relation->save();
+        (new EventController())->logEvent($projectId, $description);
     }
 
 

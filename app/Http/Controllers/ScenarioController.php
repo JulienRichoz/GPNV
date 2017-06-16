@@ -69,16 +69,7 @@ class ScenarioController extends Controller
     //$scenarioId = Scenario::newItem($checkListId, $requete->get('name'));
 
     // Logging the scenario creation in the logbook
-    $event = new Event;
-    $event->user_id = Auth::user()->id;
-    $event->project_id = $projectId;
-    $event->description = "Création du scénario \"" . $requete->get('name') . "\"";
-    $event->save();
-
-    $acknowledgement = new AcknowledgedEvent;
-    $acknowledgement->user_id = Auth::user()->id;
-    $acknowledgement->event_id = $event->id;
-    $acknowledgement->save();
+    (new EventController())->logEvent($projectId, "Création du scénario \"" . $requete->get('name') . "\"");
 
     return redirect()->route('scenario.show', ['projectId'=>$projectId, 'scenarioId'=>$scenario->id]);
   }
@@ -91,17 +82,9 @@ class ScenarioController extends Controller
   */
   function delete($projectId, $scenarioId){
     $scenario = Scenario::find($scenarioId);
-    // Logging the scenario removal in the logbook
-    $event = new Event;
-    $event->user_id = Auth::user()->id;
-    $event->project_id = $projectId;
-    $event->description = "Suppression du scénario \"$scenario->name\"";
-    $event->save();
 
-    $acknowledgement = new AcknowledgedEvent;
-    $acknowledgement->user_id = Auth::user()->id;
-    $acknowledgement->event_id = $event->id;
-    $acknowledgement->save();
+    // Logging the scenario removal in the logbook
+    (new EventController())->logEvent($projectId, "Suppression du scénario \"$scenario->name\"");
 
     $scenario->delete();
     return redirect()->back();
