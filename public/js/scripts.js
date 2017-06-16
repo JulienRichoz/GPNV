@@ -77,7 +77,8 @@ $(document).ready(function() {
   $('a.saveDescription').click(function () {
     var description = $('#summernote').summernote('code');
     var projectid = this.getAttribute('data-projectid');
-    var data = "_method=PUT&_token="+token.val()+"&description="+description;
+    var token = $(".tableRow.active input[name='_token']");
+    var data = "_method=POST&_token="+token.val()+"&description="+description;
     $.ajax({
         url: projectid + "/editDescription/",
         type: "POST",
