@@ -269,7 +269,7 @@ class ProjectController extends Controller
     }
 
     /**
-    * Create a task
+    * Store a project
     * @param $request Define the request data send by POST
     * @return view of project
     */
@@ -660,15 +660,15 @@ class ProjectController extends Controller
       $objectiveName = $objective->first()->title;
       $objective->delete();
 
-      // Log the objective removal 
+      // Log the objective removal
       (new EventController())->logEvent($projectID, "Suppression de l'objectif \"" . $objectiveName . "\"");
 
-      
+
       // Counting scenarios before logging anything in relation
       $scenarioSummary = 'Suppression du/des scenario(s): ';
 
       if (count($scenarios) > 0) {
-        foreach ($scenarios as $scenario) { 
+        foreach ($scenarios as $scenario) {
           $scenarioSummary.= $scenario->name . ", ";
         }
 
