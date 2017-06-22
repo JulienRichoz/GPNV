@@ -8,12 +8,11 @@
     <title>GPNV</title>
 
     <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet'
-          type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ URL::asset('css/font-awesome.4.4.0.min.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('css/fonts.google.lato.css') }}"/>
 
     <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('css/bootstrap.3.3.7.min.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/template.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/project.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('css/logBook.css') }}"/>
@@ -24,7 +23,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('js/summernote-0.8.2/summernote.css') }}">
 
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('css/bootstrap-toggle.2.2.2.min.css') }}">
 
     <style>
         body {
@@ -86,20 +85,21 @@
   <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
 </a>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="{{ URL::asset('js/jquery.2.1.4.min.js') }}"></script>
 <script src="{{ URL::asset('js/jquery.ntm.js') }}"></script>
 <script src="{{ URL::asset('js/bootbox.min.js') }}"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('js/bootstrap.3.3.7.min.js' )}}"></script>
+<script src="{{ URL::asset('js/scripts.js') }}"></script>
 <script src="{{ URL::asset('js/scripts.js') }}"></script>
 <script src="{{ URL::asset('js/checkList.js') }}"></script>
 <script src="{{ URL::asset('js/tasks.js') }}"></script>
 <script src="{{ URL::asset('js/scenario.js') }}"></script>
 <script src="{{ URL::asset('js/objectifs.js') }}"></script>
 
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="{{ URL::asset('css/jquery-ui.1.12.1.css') }}"></script>
+<script src="{{ URL::asset('js/jquery-ui.1.12.1.min.js') }}"></script>
 <script src="{{ URL::asset('js/summernote-0.8.2/summernote.min.js') }}"></script>
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="{{ URL::asset('js/bootstrap-toggle.2.2.2.min.js') }}"></script>
 
 
 <script>
