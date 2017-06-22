@@ -10,7 +10,7 @@
                     <div class="panel-body">
 
                     </div>
-                    <form class="form-horizontal" id="createProject" role="form" method="POST" action="{{route('project.store')}}">
+                    <form class="form-horizontal" id="createProject" role="form" method="POST" action="{{ url('/project') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
