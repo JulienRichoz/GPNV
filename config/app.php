@@ -159,8 +159,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
-        User11001\EloquentModelGenerator\EloquentModelGeneratorProvider::class,
         Mortimer\Rootrelativeurls\RootrelativeurlsServiceProvider::class,
         Mortimer\HeaderTokenGuard\ServiceProvider::class,
 
