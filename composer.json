@@ -5,23 +5,22 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
-        "illuminate/support": ">=5.0",
-        "illuminate/view": ">=5.0",
-        "laravelcollective/html": "5.2.*",
+        "php": ">=7.0.0",
+        "fideloper/proxy": "~3.3",
+        "laravel/framework": "5.5.*",
+        "illuminate/support": "5.5.*",
+        "illuminate/view": "5.5.*",
+        "laravelcollective/html": "5.5",
         "mortimer/rootrelativeurls": "dev-master",
         "mortimer/header-token-guard": "dev-master"
     },
     "require-dev": {
+        "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~1.0",
+        "phpunit/phpunit": "~6.0",
         "symfony/css-selector": "2.8.*|3.0.*",
-        "symfony/dom-crawler": "2.8.*|3.0.*",
-        "xethron/migrations-generator": "dev-l5",
-        "way/generators": "dev-feature/laravel-five-stable",
-        "user11001/eloquent-model-generator": "~2.0"
+        "symfony/dom-crawler": "2.8.*|3.0.*"
     },
     "autoload": {
         "classmap": [
@@ -34,7 +33,7 @@
             "Lavary\\Menu\\": "src/"
         },
         "files":[
-          "app/helpers.php"
+            "app/helpers.php"
         ]
     },
     "autoload-dev": {
@@ -44,10 +43,14 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "php artisan key:generate"
+            "@php artisan key:generate"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover"
         ],
         "post-install-cmd": [
             "php artisan clear-compiled",
@@ -64,10 +67,6 @@
         "preferred-install": "dist"
     },
     "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:jamisonvalenta/Laravel-4-Generators.git"
-        },
         {
             "url": "git@github.com:phurni/mortimer-rootrelativeurls.git",
             "type": "git"
